@@ -4,6 +4,8 @@ import { memo } from "react";
 import { Badge } from "@mui/material";
 import { ShoppingCart, Favorite } from "@mui/icons-material";
 import noImgUser from "../../assets/images/noImgUser.png";
+import { useSelector } from "react-redux";
+import { useActions } from "../../hooks/useActions";
 
 const adminPages = [
   { title: "Categories", path: "/categories" },
@@ -13,6 +15,16 @@ const adminPages = [
 ];
 
 const Header = memo(() => {
+  const navigate = useNavigate();
+  const { user, isAuth, role } = useSelector((store) => store.auth);
+
+  const { logout } = useActions();
+
+  const logoutHandler = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -62,7 +74,7 @@ const Header = memo(() => {
                 <i className="fas fa-bell"></i>
               </a>
 
-              {true && (
+              {role === "admin" && (
                 <div className="dropdown mx-2">
                   <a
                     className="text-reset dropdown-toggle hidden-arrow"
@@ -91,7 +103,7 @@ const Header = memo(() => {
                 </div>
               )}
 
-              {false ? (
+              {isAuth ? (
                 <div className="dropdown">
                   <a
                     className="dropdown-toggle d-flex align-items-center hidden-arrow"
@@ -115,7 +127,7 @@ const Header = memo(() => {
                     className="dropdown-menu dropdown-menu-end"
                     aria-labelledby="navbarDropdownMenuAvatar"
                   >
-                    {true && (
+                    {role === "user" && (
                       <li>
                         <Link className="dropdown-item" to="/profile">
                           My Profile
@@ -129,7 +141,9 @@ const Header = memo(() => {
                       </Link>
                     </li>
                     <li>
-                      <button className="dropdown-item">Logout</button>
+                      <button className="dropdown-item" onClick={logoutHandler}>
+                        Logout
+                      </button>
                     </li>
                   </ul>
                 </div>
