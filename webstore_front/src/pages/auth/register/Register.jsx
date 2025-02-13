@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const Register = () => {
   const navigate = useNavigate();
   const { isAuth } = useSelector((state) => state.user);
-  const { signUp } = useActions();  
+  const { signUp } = useActions();
 
   const [formValues, setFormValues] = useState({
     userName: "",
@@ -70,7 +70,10 @@ const Register = () => {
   return (
     <div className="container align-items-center d-flex flex-column my-4">
       <div className="register-box w-50">
-        <form onSubmit={handleSubmit} className="form d-flex flex-column gap-3 text-start align-items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="form d-flex flex-column gap-3 text-start align-items-center"
+        >
           <h1>Sign Up</h1>
           {[
             { label: "User Name", name: "userName" },
@@ -78,7 +81,11 @@ const Register = () => {
             { label: "Last Name", name: "lastName" },
             { label: "Email Address", name: "email", type: "email" },
             { label: "Password", name: "password", type: "password" },
-            { label: "Confirm Password", name: "confirmPassword", type: "password" },
+            {
+              label: "Confirm Password",
+              name: "confirmPassword",
+              type: "password",
+            },
           ].map(({ label, name, type = "text" }) => (
             <div className="form-group w-50" key={name}>
               <label>{label}</label>
@@ -89,7 +96,9 @@ const Register = () => {
                 value={formValues[name]}
                 className={`form-control ${errors[name] ? "is-invalid" : ""}`}
               />
-              {errors[name] && <div className="invalid-feedback">{errors[name]}</div>}
+              {errors[name] && (
+                <div className="invalid-feedback">{errors[name]}</div>
+              )}
             </div>
           ))}
           <button type="submit" className="btn btn-primary w-25">
