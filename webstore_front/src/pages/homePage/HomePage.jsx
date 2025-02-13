@@ -1,19 +1,7 @@
 import React from 'react';
 import './style.css';
-import { ArrowRight } from 'react-bootstrap-icons';
-
-const products = [
-  { id: 1, title: 'Кросівки Nike', price: 2500, oldPrice: 3000, discount: 20, image: 'https://content.rozetka.com.ua/goods/images/big/508287475.jpg' },
-  { id: 2, title: 'Футболка Adidas', price: 800, oldPrice: 1000, discount: 20, image: 'https://ua-store.com/content/images/30/1440x1800l80mc0/copy_futbolka-adidas-chorna-70566793177564.jpg' },
-  { id: 3, title: 'Шорти Puma', price: 1200, image: 'https://europasport.com.ua/content/images/10/480x480l50nn0/oryhynalnye-zhenskye-shorty-puma-essentials-sweat-shorts-52033864199029.png' },
-  { id: 4, title: 'Кепка Reebok', price: 600, image: 'https://www.reebok.in.ua/image/cache/catalog/img_products/02_2021/GP0124_01-500x500.jpg' },
-];
-
-const categories = [
-  { id: 1, name: 'Одяг', description: 'Спортивний одяг для будь-яких тренувань' },
-  { id: 2, name: 'Взуття', description: 'Зручне та якісне спортивне взуття' },
-  { id: 3, name: 'Аксесуари', description: 'Стильні та корисні аксесуари для спорту' },
-];
+import { products } from '../../data/productsData';
+import { categories } from '../../data/categoriesData';
 
 const heroImages = [
   'https://ager.ua/image/cachewebp/catalog/Banners/1ban/145%20(1)-2560x1107.webp',
@@ -21,7 +9,12 @@ const heroImages = [
   'https://ager.ua/image/cachewebp/catalog/Banners/1ban/777%20(5)-2560x1107.webp'
 ];
 
+
+
 const HomePage = () => {
+  
+  const limitedProducts = products.slice(0, 4);
+
   return (
     <div className="container-fluid p-0">
       <div className="hero-section position-relative mb-5">
@@ -66,7 +59,7 @@ const HomePage = () => {
         </div>
 
         <div className="row g-4">
-          {products.map(product => (
+          {limitedProducts.map(product => (
             <div className="col-12 col-md-6 col-lg-3" key={product.id}>
               <div className="card product-card h-100 border-0 position-relative">
                 {product.discount && (
