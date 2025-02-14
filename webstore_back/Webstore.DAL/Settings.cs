@@ -6,6 +6,6 @@
         public static string UserRole = "user";
         public static string AdminRole = "admin";
         public static string HtmlPagesPath = "templates";
-        public static string UserImagesPath = "images/user";
+        public static string UserImagesPath = "wwwroot/images/user";
     }
 }

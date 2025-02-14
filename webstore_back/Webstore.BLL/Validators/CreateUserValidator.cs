@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Webstore.BLL.Validators
 {
-    public class CreateUserValidator : AbstractValidator<CreateUpdateUserVM>
+    public class CreateUserValidator : AbstractValidator<CreateUserVM>
     {
         public CreateUserValidator() 
         {

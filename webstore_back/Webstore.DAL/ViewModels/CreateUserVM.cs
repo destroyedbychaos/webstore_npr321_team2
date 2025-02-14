@@ -1,6 +1,6 @@
 ﻿namespace Webstore.DAL.ViewModels
 {
-    public class CreateUpdateUserVM
+    public class CreateUserVM
     {
         public string? Id { get; set; }
         public required string UserName { get; set; }

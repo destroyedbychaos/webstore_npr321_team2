@@ -6,6 +6,7 @@ import { ShoppingCart, Favorite } from "@mui/icons-material";
 import noImgUser from "../../assets/images/noImgUser.png";
 import { useSelector } from "react-redux";
 import { useActions } from "../../hooks/useActions";
+import APP_ENV from "../../env";
 
 const adminPages = [
   { title: "Categories", path: "/categories" },
@@ -114,8 +115,7 @@ const Header = memo(() => {
                     aria-expanded="false"
                   >
                     <img
-                      // src={userImage(currentUser?.image)} пофіксить
-                      src={noImgUser}
+                      src={`${APP_ENV.USER_IMAGE_URL}${user.image}`}
                       className="rounded-circle"
                       height="25"
                       width="25"

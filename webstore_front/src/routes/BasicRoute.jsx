@@ -5,6 +5,7 @@ import Login from "../pages/auth/login/Login";
 import Register from "../pages/auth/register/Register";
 import HomePage from "../pages/homePage/HomePage";
 import Layout from "../components/layout/Layout";
+import MyProfilePage from "../pages/myProfile/MyProfilePage";
 
 const BasicRoute = () => {
   return (
@@ -14,7 +15,9 @@ const BasicRoute = () => {
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        
+
+        <Route path="/profile" element={<MyProfilePage />} />
+
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

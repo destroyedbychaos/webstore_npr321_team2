@@ -15,9 +15,12 @@ namespace Webstore.BLL.MappingProfiles
                     src => src.UserRoles.Count > 0 ? src.UserRoles.First().Role.Name : "no role"))
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.Image) ? "avatar.png" : src.Image));
 
-            // CreateUpdateUserVM -> User
-            CreateMap<CreateUpdateUserVM, User>()
+            // CreateUserVM -> User
+            CreateMap<CreateUserVM, User>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+            
+            // UpdateUserVM -> User
+            CreateMap<UpdateUserVM, User>().ReverseMap();
         }
     }
 }

@@ -133,7 +133,7 @@ namespace Webstore.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] CreateUpdateUserVM model)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateUserVM model)
         {
             var validator = new CreateUserValidator();
             var validateResult = await validator.ValidateAsync(model);
@@ -149,9 +149,9 @@ namespace Webstore.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(CreateUpdateUserVM model)
+        public async Task<IActionResult> UpdateAsync(UpdateUserVM model)
         {
-            var validator = new CreateUserValidator();
+            var validator = new UpdateUserValidator();
             var validateResult = await validator.ValidateAsync(model);
 
             if (!validateResult.IsValid)

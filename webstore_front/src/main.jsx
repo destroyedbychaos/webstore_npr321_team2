@@ -7,6 +7,15 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { ToastContainer } from 'react-toastify'
 import { store } from "./store";
 import { Provider } from 'react-redux'
+import { signInByToken } from "./store/reducers/authReducer/actions"
+
+if (localStorage.auth && localStorage.urt) {
+  signInByToken({
+    auth: localStorage.auth,
+    urt: localStorage.urt,
+  })(store.dispatch);
+}
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
