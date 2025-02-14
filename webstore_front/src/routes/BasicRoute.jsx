@@ -6,6 +6,7 @@ import Register from "../pages/auth/register/Register";
 import HomePage from "../pages/homePage/HomePage";
 import Products from "../pages/Products/Products";
 import Layout from "../components/layout/Layout";
+import ProductDetails from "../pages/ProductDetails/ProductDetails";
 
 
 const BasicRoute = () => {
@@ -14,6 +15,7 @@ const BasicRoute = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

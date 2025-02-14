@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart } from 'lucide-react';
 import { products } from '../../data/productsData';
 import { categories } from '../../data/categoriesData';
+import { useNavigate } from 'react-router-dom';
 import './style.css';
 
 const Products = () => {
@@ -14,6 +15,7 @@ const Products = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
   const [sortOption, setSortOption] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
@@ -172,9 +174,13 @@ const Products = () => {
                     <h3 className="h5 mb-2">{product.title}</h3>
                     <p className="h4 mb-3">{product.price.toFixed(2)} грн</p>
                     <div className="d-flex gap-2">
-                      <button type="button" className="Button">
-                        <span data-text="Купити">Купити</span>
-                      </button>
+                    <button 
+                      type="button" 
+                      className="Button"
+                      onClick={() => navigate(`/product/${product.id}`)}
+                    >
+                      <span data-text="Купити">Купити</span>
+                    </button>
                       <button
                         className={`cart-button ${isInCart(product.id) ? 'in-cart' : ''} ${
                           isAnimating ? 'animating' : ''
