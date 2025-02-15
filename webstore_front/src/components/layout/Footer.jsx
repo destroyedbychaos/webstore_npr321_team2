@@ -1,42 +1,43 @@
-import "./layout.css";
+import React from 'react';
+import './layout.css';
+import { FaFacebookF, FaTwitter, FaRss, FaGooglePlusG } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <>
-      <div class="container">
-      <div class="b-example-divider"></div>
-        <footer class="py-3 my-4">
-          <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item">
-              <a href="#" class="nav-link px-2 text-body-secondary">
-                Home
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link px-2 text-body-secondary">
-                Features
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link px-2 text-body-secondary">
-                Pricing
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link px-2 text-body-secondary">
-                FAQs
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link px-2 text-body-secondary">
-                About
-              </a>
-            </li>
-          </ul>
-          <p class="text-center text-body-secondary">© 2024 Company, Inc</p>
-        </footer>
+    <footer className="footer bg-dark text-white py-2 mt-5">
+      <div className="container">
+        <div className="row justify-content-between align-items-center">
+          <div className="col-md-4">
+            <h2 className="logo fw-bold fs-4"><i class="bi bi-shop "></i> Web store</h2>
+          </div>
+          <div className="col-md-4">
+            <ul className="nav justify-content-center">
+              <li className="nav-item">
+                <a href="/" className="nav-link text-white fw-bold fs-10">Home</a>
+              </li>
+              <li className="nav-item">
+                <a href="/products" className="nav-link text-white fw-bold fs-10">Products</a>
+              </li>
+              <li className="nav-item">
+                <a href="#" className="nav-link text-white fw-bold fs-10">About</a>
+              </li>
+              <li className="nav-item">
+                <a href="/" className="nav-link text-white fw-bold fs-10">Suppport</a>
+              </li>
+              
+            </ul>
+          </div>
+          <div className="col-md-4 text-center text-md-end">
+            <a href="#" className="text-white me-3 fs-4"><FaFacebookF /></a>
+            <a href="#" className="text-white me-3 fs-4"><FaTwitter /></a>
+            <a href="#" className="text-white me-3 fs-4"><FaRss /></a>
+            <a href="#" className="text-white me-3 fs-4"><FaGooglePlusG /></a>
+          </div>
+        </div>
+        <hr className="border-secondary" />
+        <p className="text-center ">© Copyright. All rights reserved.</p>
       </div>
-    </>
+    </footer>
   );
 };
 
