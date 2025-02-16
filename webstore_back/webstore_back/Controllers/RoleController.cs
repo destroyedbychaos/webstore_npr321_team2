@@ -1,4 +1,4 @@
-﻿using Webstore.BLL.Services;
+using Webstore.BLL.Services;
 using Webstore.BLL.Services.RoleService;
 using Webstore.DAL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -53,7 +53,7 @@ namespace Webstore.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            if(string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
             {
                 return GetResult(ServiceResponse.BadRequestResponse("id ролі не може бути порожнім"));
             }

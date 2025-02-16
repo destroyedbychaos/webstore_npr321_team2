@@ -51,10 +51,10 @@ namespace Webstore.API.Controllers
             return GetResult(response);
         }
 
-        [HttpGet("emailconfrim")]
+        [HttpGet("EmailConfirm")]
         public async Task<IActionResult> EmailConfirmAsync(string u, string t)
         {
-            if(string.IsNullOrEmpty(u) || string.IsNullOrEmpty(t))
+            if (string.IsNullOrEmpty(u) || string.IsNullOrEmpty(t))
             {
                 return NotFound();
             }

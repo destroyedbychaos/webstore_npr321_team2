@@ -7,7 +7,7 @@ namespace Webstore.API.Controllers
     {
         protected IActionResult GetResult(ServiceResponse serviseResponse)
         {
-            return StatusCode((int)serviseResponse.StatusCode, serviseResponse);
+            return StatusCode((int)serviseResponse.StatusCode, serviseResponse);  
         }
     }
 }

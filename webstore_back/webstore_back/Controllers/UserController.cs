@@ -52,7 +52,7 @@ namespace Webstore.API.Controllers
         //            user.Image = response.Payload.ToString();
         //            await _userManager.UpdateAsync(user);
         //        }
-        //    }
+        //    }                                       
 
         //    return Ok();
         //}
@@ -119,7 +119,7 @@ namespace Webstore.API.Controllers
             var response = await _userService.GetAllAsync(page, size);
             return GetResult(response);
         }
-
+        
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(string id)
         {
