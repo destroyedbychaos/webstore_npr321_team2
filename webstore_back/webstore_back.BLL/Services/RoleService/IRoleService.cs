@@ -9,7 +9,7 @@ namespace webstore_back.BLL.Services.RoleService
         Task<ServiceResponse> GetByIdAsync(string id);
         Task<ServiceResponse> GetByNameAsync(string name);
         Task<ServiceResponse> DeleteAsync(string id);
-        Task<ServiceResponse> CreteAsync(RoleVM model);
+        Task<ServiceResponse> CreateAsync(RoleVM model);
         Task<ServiceResponse> UpdateAsync(RoleVM model);
     }
 }

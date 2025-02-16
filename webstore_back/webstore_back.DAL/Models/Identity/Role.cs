@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using webstore_back.DAL.Models.Identity;
 
 namespace webstore_back.DAL.Models.Identity
 {

@@ -11,7 +11,6 @@ using webstore_back.DAL.Data;
 using webstore_back.DAL;
 using webstore_back.DAL.ViewModels;
 using webstore_back.DAL.Models.Identity;
-using webstore_back.BLL.Services;
 
 namespace webstore_back.BLL.Services.JwtService
 {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using webstore_back.BLL.Services.RoleService;
 using webstore_back.BLL.Services;
 using webstore_back.DAL.Models.Identity;
 using webstore_back.DAL.Repositories.RoleRepository;
@@ -64,7 +65,7 @@ namespace webstore_back.BLL.Services.RoleService
             return ServiceResponse.ByIdentityResult(result, "Роль успішно видалена");
         }
 
-        public async Task<ServiceResponse> CreteAsync(RoleVM model)
+        public async Task<ServiceResponse> CreateAsync(RoleVM model)
         {
             if(!await _roleRepository.IsUniqueNameAsync(model.Name))
             {

@@ -39,7 +39,7 @@ namespace webstore_back.Controllers
         [HttpPost("signup")]
         public async Task<IActionResult> SignUpAsync([FromBody] SignUpVM model)
         {
-            SignUpValidator validator = new SignUpValidator();
+            var validator = new SignUpValidator();
             var validation = await validator.ValidateAsync(model);
 
             if (!validation.IsValid)
@@ -51,7 +51,7 @@ namespace webstore_back.Controllers
             return GetResult(response);
         }
 
-        [HttpGet("EmailConfirm")]
+        [HttpGet("emailconfirm")]
         public async Task<IActionResult> EmailConfirmAsync(string u, string t)
         {
             if (string.IsNullOrEmpty(u) || string.IsNullOrEmpty(t))

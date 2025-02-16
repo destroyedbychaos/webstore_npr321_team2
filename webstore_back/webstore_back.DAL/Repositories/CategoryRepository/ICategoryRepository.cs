@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using webstore_back.DAL.Models.ProductManagement;
+﻿using webstore_back.DAL.Models.ProductManagement;
 
 namespace webstore_back.DAL.Repositories.CategoryRepository
 {
