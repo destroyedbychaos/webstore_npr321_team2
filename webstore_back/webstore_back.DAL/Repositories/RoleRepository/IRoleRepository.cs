@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Linq.Expressions;
-using webstore_back.DAL.Models.Identity;
+using Webstore.DAL.Models.Identity;
 
-namespace webstore_back.DAL.Repositories.RoleRepository
+namespace Webstore.DAL.Repositories.RoleRepository
 {
     public interface IRoleRepository
     {

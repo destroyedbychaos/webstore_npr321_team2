@@ -1,7 +1,7 @@
-﻿using webstore_back.DAL.Models.Identity;
-using webstore_back.DAL.ViewModels;
+﻿using Webstore.DAL.Models.Identity;
+using Webstore.DAL.ViewModels;
 
-namespace webstore_back.BLL.Services.JwtService
+namespace Webstore.BLL.Services.JwtService
 {
     public interface IJwtService
     {

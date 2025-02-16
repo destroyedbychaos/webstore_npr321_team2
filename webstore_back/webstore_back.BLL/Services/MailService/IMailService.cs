@@ -1,7 +1,7 @@
-﻿using MimeKit;
-using webstore_back.DAL.Models.Identity;
+﻿using Webstore.DAL.Models.Identity;
+using MimeKit;
 
-namespace webstore_back.BLL.Services.MailService
+namespace Webstore.BLL.Services.MailService
 {
     public interface IMailService
     {

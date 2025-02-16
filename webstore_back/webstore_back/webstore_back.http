@@ -1,6 +1,6 @@
-@webstore_back_HostAddress = http://localhost:5100
+@Dashboard.API_HostAddress = http://localhost:5120
 
-GET {{webstore_back_HostAddress}}/weatherforecast/
+GET {{Dashboard.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

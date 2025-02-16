@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Webstore.DAL;
+using Webstore.DAL.ViewModels;
 using FluentValidation;
-using webstore_back.DAL.ViewModels;
-using webstore_back.DAL;
 
-namespace webstore_back.BLL.Validators
+namespace Webstore.BLL.Validators
 {
     public class SignInValidator : AbstractValidator<SignInVM>
     {
-        public SignInValidator()
+        public SignInValidator() 
         {
             RuleFor(m => m.Email)
                 .EmailAddress().WithMessage("Невірний формат пошти")

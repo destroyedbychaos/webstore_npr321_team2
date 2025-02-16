@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace webstore_back.BLL.Services.ImageService
+namespace Webstore.BLL.Services.ImageService
 {
     public interface IImageService
     {
