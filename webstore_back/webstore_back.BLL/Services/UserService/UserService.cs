@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Dashboard.BLL.Services.ImageService;
-using Dashboard.DAL;
-using Dashboard.DAL.Models.Identity;
-using Dashboard.DAL.Repositories.UserRepository;
-using Dashboard.DAL.ViewModels;
+using Webstore.DAL;
+using Webstore.DAL.Models.Identity;
+using Webstore.DAL.Repositories.UserRepository;
+using Webstore.DAL.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Webstore.BLL.Services.ImageService;
 
-namespace Dashboard.BLL.Services.UserService
+namespace Webstore.BLL.Services.UserService
 {
     public class UserService : IUserService
     {
@@ -48,7 +48,7 @@ namespace Dashboard.BLL.Services.UserService
             return ServiceResponse.OkResponse("Зображення успішно додано");
         }
 
-        public async Task<ServiceResponse> CreateAsync(CreateUpdateUserVM model)
+        public async Task<ServiceResponse> CreateAsync(CreateUserVM model)
         {
             if (!await _userRepository.IsUniqueUserNameAsync(model.UserName))
             {
@@ -191,7 +191,7 @@ namespace Dashboard.BLL.Services.UserService
             return ServiceResponse.OkResponse("Users", users);
         }
 
-        public async Task<ServiceResponse> UpdateAsync(CreateUpdateUserVM model)
+        public async Task<ServiceResponse> UpdateAsync(UpdateUserVM model)
         {
             if(string.IsNullOrEmpty(model.Id))
             {
@@ -228,9 +228,20 @@ namespace Dashboard.BLL.Services.UserService
             if (user.UserRoles.First().Role.NormalizedName != model.Role.ToUpper())
             {
                 // Видалити попередню роль та записати нову
+                user.UserRoles.Remove(user.UserRoles.First());
+
+                await _userRepository.UpdateAsync(user);
+
+                await _userRepository.AddToRoleAsync(user, model.Role);
             }
 
-            return ServiceResponse.ByIdentityResult(result, "Користувач успішно оновлений");
+            if (result.Succeeded)
+            {
+                return ServiceResponse.OkResponse("Користувача оновлено");
+            }
+            
+            return ServiceResponse.BadRequestResponse(result.Errors.First().Description);
+            
         }
     }
 }

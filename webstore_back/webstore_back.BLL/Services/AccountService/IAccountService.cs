@@ -1,6 +1,6 @@
-﻿using webstore_back.DAL.ViewModels;
+﻿using Webstore.DAL.ViewModels;
 
-namespace webstore_back.BLL.Services.AccountService
+namespace Webstore.BLL.Services.AccountService
 {
     public interface IAccountService
     {

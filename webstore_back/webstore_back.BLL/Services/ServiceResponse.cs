@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Net;
 
-namespace webstore_back.BLL.Services
+namespace Webstore.BLL.Services
 {
     public class ServiceResponse
     {

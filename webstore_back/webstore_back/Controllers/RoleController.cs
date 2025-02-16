@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using webstore_back.BLL.Services.RoleService;
-using webstore_back.BLL.Services;
-using webstore_back.DAL.ViewModels;
+using Webstore.BLL.Services;
+using Webstore.BLL.Services.RoleService;
+using Webstore.DAL.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
-namespace webstore_back.Controllers
+namespace Webstore.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -32,7 +32,7 @@ namespace webstore_back.Controllers
             {
                 var response = await _roleService.GetByIdAsync(id);
 
-                if (response.Success)
+                if(response.Success)
                 {
                     return GetResult(response);
                 }

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using webstore_back.DAL.Models.Identity;
+using Webstore.DAL.Models.Identity;
 
-namespace webstore_back.DAL.Data.Initializer
+namespace Webstore.DAL.Data.Initializer
 {
     public static class DataSeeder
     {
@@ -23,7 +18,7 @@ namespace webstore_back.DAL.Data.Initializer
 
                 await context.Database.MigrateAsync();
 
-                if (!roleManager.Roles.Any())
+                if(!roleManager.Roles.Any())
                 {
                     var adminRole = new Role
                     {
@@ -41,7 +36,7 @@ namespace webstore_back.DAL.Data.Initializer
                     await roleManager.CreateAsync(userRole);
                 }
 
-                if (!userManager.Users.Any())
+                if(!userManager.Users.Any())
                 {
                     var admin = new User
                     {
@@ -63,8 +58,8 @@ namespace webstore_back.DAL.Data.Initializer
                         LastName = "Dashboard"
                     };
 
-                    await userManager.CreateAsync(admin);
-                    await userManager.CreateAsync(user);
+                    await userManager.CreateAsync(admin, "qwerty");
+                    await userManager.CreateAsync(user, "qwerty");
 
                     await userManager.AddToRoleAsync(admin, Settings.AdminRole);
                     await userManager.AddToRoleAsync(user, Settings.UserRole);

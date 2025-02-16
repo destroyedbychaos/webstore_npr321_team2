@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Webstore.DAL;
+using Webstore.DAL.ViewModels;
 using FluentValidation;
-using webstore_back.DAL;
-using webstore_back.DAL.ViewModels;
 
-
-namespace webstore_back.BLL.Validators
+namespace Webstore.BLL.Validators
 {
-    public class CreateUserValidator : AbstractValidator<CreateUpdateUserVM>
+    public class CreateUserValidator : AbstractValidator<CreateUserVM>
     {
-        public CreateUserValidator()
+        public CreateUserValidator() 
         {
             RuleFor(m => m.Email)
                 .EmailAddress().WithMessage("Невірний формат пошти")

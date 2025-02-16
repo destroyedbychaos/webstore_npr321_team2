@@ -1,9 +1,9 @@
-﻿ using AutoMapper;
-using webstore_back.DAL.Models.Identity;
-using webstore_back.DAL.Repositories.RoleRepository;
-using webstore_back.DAL.ViewModels;
+﻿  using AutoMapper;
+using Webstore.DAL.Models.Identity;
+using Webstore.DAL.Repositories.RoleRepository;
+using Webstore.DAL.ViewModels;
 
-namespace webstore_back.BLL.Services.RoleService
+namespace Webstore.BLL.Services.RoleService
 {
     public class RoleService : IRoleService
     {

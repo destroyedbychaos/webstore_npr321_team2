@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using webstore_back.DAL.Models.Identity;
+using Webstore.DAL.Models.Identity;
 
-namespace webstore_back.DAL.Repositories.UserRepository
+namespace Webstore.DAL.Repositories.UserRepository
 {
     public interface IUserRepository
     {

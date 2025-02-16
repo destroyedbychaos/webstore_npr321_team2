@@ -1,20 +1,15 @@
-﻿using webstore_back.DAL.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using webstore_back.DAL.Models.Identity;
-using webstore_back.DAL.Models.ProductManagement;
+using Webstore.DAL.Models;
+using Webstore.DAL.Models.Identity;
 
-namespace webstore_back.DAL.Data
+namespace Webstore.DAL.Data
 {
     public class AppDbContext : IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
         public AppDbContext(DbContextOptions options)
             : base(options) { }
 
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Manufacturer> Manufacturers { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

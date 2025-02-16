@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using webstore_back.DAL.Models.Identity;
+using Webstore.DAL.Models.Identity;
 
-namespace webstore_back.DAL.Repositories.RoleRepository
+namespace Webstore.DAL.Repositories.RoleRepository
 {
     public class RoleRepository : IRoleRepository
     {
@@ -59,21 +56,6 @@ namespace webstore_back.DAL.Repositories.RoleRepository
         {
             var result = await _roleManager.UpdateAsync(model);
             return result;
-        }
-
-        Task<IdentityResult> IRoleRepository.CreateAsync(Role model)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IdentityResult> IRoleRepository.DeleteAsync(Role model)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IdentityResult> IRoleRepository.UpdateAsync(Role model)
-        {
-            throw new NotImplementedException();
         }
     }
 }

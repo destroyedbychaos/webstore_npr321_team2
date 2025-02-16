@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.AspNetCore.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using webstore_back.BLL.Services;
+using Webstore.BLL.Services;
 
-namespace webstore_back.BLL.Middlewares
+namespace Webstore.BLL.Middlewares
 {
     public class MiddlewareExceptionHandling
     {

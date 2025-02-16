@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using webstore_back.BLL.Services.AccountService;
-using webstore_back.BLL.Services.JwtService;
-using webstore_back.BLL.Services;
-using webstore_back.BLL.Validators;
-using webstore_back.DAL.ViewModels;
+﻿using Webstore.BLL.Services;
+using Webstore.BLL.Services.AccountService;
+using Webstore.BLL.Services.JwtService;
+using Webstore.BLL.Validators;
+using Webstore.DAL.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
-namespace webstore_back.Controllers
+namespace Webstore.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -20,7 +20,7 @@ namespace webstore_back.Controllers
             _jwtService = jwtService;
         }
 
-        [HttpPost("SignIn")]
+        [HttpPost("signin")]
         public async Task<IActionResult> SignInAsync([FromBody] SignInVM model)
         {
             var validator = new SignInValidator();
@@ -36,7 +36,7 @@ namespace webstore_back.Controllers
             return GetResult(response);
         }
 
-        [HttpPost("SignUp")]
+        [HttpPost("signup")]
         public async Task<IActionResult> SignUpAsync([FromBody] SignUpVM model)
         {
             SignUpValidator validator = new SignUpValidator();
@@ -63,10 +63,10 @@ namespace webstore_back.Controllers
             return GetResult(response);
         }
 
-        [HttpPost("Refresh")]
+        [HttpPost("refresh")]
         public async Task<IActionResult> RefreshTokensAsync([FromBody] JwtVM model)
         {
-            if (string.IsNullOrEmpty(model.AccessToken) ||
+            if(string.IsNullOrEmpty(model.AccessToken) ||
                 string.IsNullOrEmpty(model.RefreshToken))
             {
                 return GetResult(ServiceResponse.BadRequestResponse("Invalid tokens"));

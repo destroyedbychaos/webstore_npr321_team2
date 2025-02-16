@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 
-
-namespace webstore_back.BLL.Services.ImageService
+namespace Webstore.BLL.Services.ImageService
 {
     public class ImageService : IImageService
     {

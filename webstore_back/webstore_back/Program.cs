@@ -1,29 +1,31 @@
-using Microsoft.Extensions.FileProviders;
-using Microsoft.OpenApi.Models;
-using webstore_back.DAL.Data;
-using webstore_back.DAL.Models.Identity;
+using Webstore.BLL.Middlewares;
+using Webstore.BLL.Services.AccountService;
+using Webstore.BLL.Services.ImageService;
+using Webstore.BLL.Services.JwtService;
+using Webstore.BLL.Services.MailService;
+using Webstore.BLL.Services.RoleService;
+using Webstore.BLL.Services.UserService;
+using Webstore.DAL;
+using Webstore.DAL.Data;
+using Webstore.DAL.Data.Initializer;
+using Webstore.DAL.Models.Identity;
+using Webstore.DAL.Repositories.RoleRepository;
+using Webstore.DAL.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
-using webstore_back.DAL;
+using Microsoft.OpenApi.Models;
 using System.Text;
-using webstore_back.DAL.Repositories.RoleRepository;
-using webstore_back.DAL.Repositories.UserRepository;
-using webstore_back.DAL.Data.Initializer;
-using webstore_back.BLL.Services.RoleService;
-using webstore_back.BLL.Services.AccountService;
-using webstore_back.BLL.Services.MailService;
-using Dashboard.BLL.Services.UserService;
-using webstore_back.BLL.Services.ImageService;
-using webstore_back.BLL.Services.JwtService;
-using webstore_back.BLL.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add database context
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer("name=Default");
+    options.UseNpgsql("name=Default");
+    // options.UseNpgsql("name=PostgreSqlUbuntu");
 });
 
 // Add CORS
@@ -33,12 +35,11 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myAllowSpecificOrigins, policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins("http://localhost:5173")
         .AllowAnyMethod()
         .AllowAnyHeader();
     });
 });
-
 // Add identity
 builder.Services.AddIdentity<User, Role>(options =>
 {
@@ -101,7 +102,34 @@ builder.Services.AddSwaggerGen(optinons =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Ââåä³òü JWT òîêåí"
+        Description = "Ã‚Ã¢Ã¥Ã¤Â³Ã²Ã¼ JWT Ã²Ã®ÃªÃ¥Ã­"
+    });
+
+    optinons.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            //new []{ Settings.AdminRole, Settings.UserRole }
+            Array.Empty<string>()
+        }
+    });
+});
+
+    optinons.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter JWT token"
     });
 
     optinons.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -149,6 +177,10 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/files"
 });
 
+if(!File.Exists(Path.Combine(builder.Environment.WebRootPath, "images")))
+{
+    Directory.CreateDirectory(Path.Combine(builder.Environment.WebRootPath, "images"));
+}
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath, "images")),

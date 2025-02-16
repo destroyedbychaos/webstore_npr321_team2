@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using webstore_back.BLL.Services;
+﻿using Webstore.BLL.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace webstore_back.Controllers
+namespace Webstore.API.Controllers
 {
     public abstract class BaseController : ControllerBase
     {
-        protected IActionResult GetResult(ServiceResponse serviceResponse)
+        protected IActionResult GetResult(ServiceResponse serviseResponse)
         {
-            return StatusCode((int)serviceResponse.StatusCode, serviceResponse);
+            return StatusCode((int)serviseResponse.StatusCode, serviseResponse);  
         }
     }
 }

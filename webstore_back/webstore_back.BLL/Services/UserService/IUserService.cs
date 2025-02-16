@@ -1,9 +1,7 @@
-﻿using MimeKit.Tnef;
-using webstore_back.BLL.Services;
-using webstore_back.DAL.ViewModels;
+﻿using Webstore.DAL.ViewModels;
+using MimeKit.Tnef;
 
-
-namespace Dashboard.BLL.Services.UserService
+namespace Webstore.BLL.Services.UserService
 {
     public interface IUserService
     {
@@ -13,8 +11,8 @@ namespace Dashboard.BLL.Services.UserService
         Task<ServiceResponse> GetAllAsync();
         Task<ServiceResponse> GetAllAsync(int page, int pageSize);
         Task<ServiceResponse> DeleteAsync(string id);
-        Task<ServiceResponse> CreateAsync(CreateUpdateUserVM model);
-        Task<ServiceResponse> UpdateAsync(CreateUpdateUserVM model);
+        Task<ServiceResponse> CreateAsync(CreateUserVM model);
+        Task<ServiceResponse> UpdateAsync(UpdateUserVM model);
         Task<ServiceResponse> AddImageFromUserAsync(UserImageVM model);
         Task<ServiceResponse> GetUsersByRoleAsync(string role);
     }
