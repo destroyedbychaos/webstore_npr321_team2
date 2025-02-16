@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Webstore.DAL.ViewModels
+namespace webstore_back.DAL.ViewModels
 {
     public class UserImageVM
     {

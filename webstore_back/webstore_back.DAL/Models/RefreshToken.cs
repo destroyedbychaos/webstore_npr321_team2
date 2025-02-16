@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Webstore.DAL.Models.Identity;
+using webstore_back.DAL.Models.Identity;
 
-namespace Webstore.DAL.Models
+namespace webstore_back.DAL.Models
 {
     public class RefreshToken
     {

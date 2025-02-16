@@ -1,4 +1,4 @@
-﻿namespace Webstore.DAL.ViewModels.Apis
+﻿namespace webstore_back.DAL.ViewModels.Apis
 {
     public class WeatherVM
     {

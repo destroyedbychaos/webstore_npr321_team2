@@ -1,4 +1,4 @@
-﻿namespace Webstore.DAL
+﻿namespace webstore_back.DAL
 {
     public class Settings
     {

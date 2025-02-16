@@ -1,16 +1,3 @@
-using Webstore.BLL.Middlewares;
-using Webstore.BLL.Services.AccountService;
-using Webstore.BLL.Services.ImageService;
-using Webstore.BLL.Services.JwtService;
-using Webstore.BLL.Services.MailService;
-using Webstore.BLL.Services.RoleService;
-using Webstore.BLL.Services.UserService;
-using Webstore.DAL;
-using Webstore.DAL.Data;
-using Webstore.DAL.Data.Initializer;
-using Webstore.DAL.Models.Identity;
-using Webstore.DAL.Repositories.RoleRepository;
-using Webstore.DAL.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +5,22 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using webstore_back.DAL.Repositories.RoleRepository;
+using webstore_back.DAL.Repositories.UserRepository;
+using webstore_back.DAL.Data.Initializer;
+using webstore_back.DAL.Data;
+using webstore_back.DAL;
+using webstore_back.DAL.Models.Identity;
+using webstore_back.BLL.Services.AccountService;
+using webstore_back.BLL.Services.MailService;
+using webstore_back.BLL.Services.JwtService;
+using webstore_back.BLL.Services.RoleService;
+using webstore_back.BLL.Middlewares;
+using webstore_back.BLL.Services.ImageService;
+using webstore_back.BLL.Services.UserService;
+using webstore_back.DAL.Repositories.ProductRepository;
+using webstore_back.DAL.Repositories.CategoryRepository;
+using webstore_back.DAL.Repositories.ManufacturerRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,6 +87,9 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 // Add repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
 
 // Add automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -103,33 +109,6 @@ builder.Services.AddSwaggerGen(optinons =>
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
         Description = "Ââåä³òü JWT òîêåí"
-    });
-
-    optinons.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            //new []{ Settings.AdminRole, Settings.UserRole }
-            Array.Empty<string>()
-        }
-    });
-});
-
-    optinons.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Enter JWT token"
     });
 
     optinons.AddSecurityRequirement(new OpenApiSecurityRequirement

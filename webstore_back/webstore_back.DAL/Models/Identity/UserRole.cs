@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Webstore.DAL.Models.Identity
+namespace webstore_back.DAL.Models.Identity
 {
     public class UserRole : IdentityUserRole<string>
     {

@@ -1,9 +1,9 @@
-using Webstore.BLL.Services;
-using Webstore.BLL.Services.RoleService;
-using Webstore.DAL.ViewModels;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using webstore_back.DAL.ViewModels;
+using webstore_back.BLL.Services;
+using webstore_back.BLL.Services.RoleService;
 
-namespace Webstore.API.Controllers
+namespace webstore_back.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

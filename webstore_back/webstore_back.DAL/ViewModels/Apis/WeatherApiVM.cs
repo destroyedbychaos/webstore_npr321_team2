@@ -1,4 +1,4 @@
-﻿namespace Webstore.DAL.ViewModels.Apis
+﻿namespace webstore_back.DAL.ViewModels.Apis
 {
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Condition

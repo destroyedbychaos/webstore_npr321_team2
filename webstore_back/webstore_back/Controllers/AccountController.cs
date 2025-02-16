@@ -1,11 +1,11 @@
-﻿using Webstore.BLL.Services;
-using Webstore.BLL.Services.AccountService;
-using Webstore.BLL.Services.JwtService;
-using Webstore.BLL.Validators;
-using Webstore.DAL.ViewModels;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using webstore_back.DAL.ViewModels;
+using webstore_back.BLL.Services.AccountService;
+using webstore_back.BLL.Services.JwtService;
+using webstore_back.BLL.Services;
+using webstore_back.BLL.Validators;
 
-namespace Webstore.API.Controllers
+namespace webstore_back.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

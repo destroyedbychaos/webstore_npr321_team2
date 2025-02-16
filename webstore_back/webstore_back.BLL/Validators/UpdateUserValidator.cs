@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using Webstore.DAL.ViewModels;
+using webstore_back.DAL.ViewModels;
 
-namespace Webstore.BLL.Validators;
+namespace webstore_back.BLL.Validators;
 
 public class UpdateUserValidator : AbstractValidator<UpdateUserVM>
 {

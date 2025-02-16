@@ -1,8 +1,8 @@
-﻿using Webstore.DAL;
-using Webstore.DAL.ViewModels;
-using FluentValidation;
+﻿using FluentValidation;
+using webstore_back.DAL;
+using webstore_back.DAL.ViewModels;
 
-namespace Webstore.BLL.Validators
+namespace webstore_back.BLL.Validators
 {
     public class SignInValidator : AbstractValidator<SignInVM>
     {

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Webstore.DAL;
-using Webstore.DAL.Models.Identity;
-using Webstore.DAL.Repositories.UserRepository;
-using Webstore.DAL.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using Webstore.BLL.Services.ImageService;
+using webstore_back.DAL.ViewModels;
+using webstore_back.DAL.Repositories.UserRepository;
+using webstore_back.DAL;
+using webstore_back.DAL.Models.Identity;
+using webstore_back.BLL.Services.ImageService;
 
-namespace Webstore.BLL.Services.UserService
+namespace webstore_back.BLL.Services.UserService
 {
     public class UserService : IUserService
     {

@@ -1,7 +1,7 @@
-﻿using Webstore.BLL.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using webstore_back.BLL.Services;
 
-namespace Webstore.API.Controllers
+namespace webstore_back.Controllers
 {
     public abstract class BaseController : ControllerBase
     {

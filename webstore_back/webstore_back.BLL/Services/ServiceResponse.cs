@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Net;
 
-namespace Webstore.BLL.Services
+namespace webstore_back.BLL.Services
 {
     public class ServiceResponse
     {
@@ -40,11 +40,11 @@ namespace Webstore.BLL.Services
         {
             if (result.Succeeded)
             {
-                return ServiceResponse.OkResponse(successMessage);
+                return OkResponse(successMessage);
             }
             else
             {
-                return ServiceResponse.BadRequestResponse(result.Errors.First().Description);
+                return BadRequestResponse(result.Errors.First().Description);
             }
         }
     }

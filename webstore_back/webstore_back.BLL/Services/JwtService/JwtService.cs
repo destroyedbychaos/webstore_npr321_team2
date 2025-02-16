@@ -1,18 +1,19 @@
-﻿using Webstore.DAL;
-using Webstore.DAL.Data;
-using Webstore.DAL.Models;
-using Webstore.DAL.Models.Identity;
-using Webstore.DAL.Repositories.UserRepository;
-using Webstore.DAL.ViewModels;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using webstore_back.DAL.Repositories.UserRepository;
+using webstore_back.DAL.Models;
+using webstore_back.DAL.Data;
+using webstore_back.DAL;
+using webstore_back.DAL.ViewModels;
+using webstore_back.DAL.Models.Identity;
+using webstore_back.BLL.Services;
 
-namespace Webstore.BLL.Services.JwtService
+namespace webstore_back.BLL.Services.JwtService
 {
     public class JwtService : IJwtService
     {

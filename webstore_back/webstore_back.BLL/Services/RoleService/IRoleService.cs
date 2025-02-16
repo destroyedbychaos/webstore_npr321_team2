@@ -1,6 +1,7 @@
-﻿using Webstore.DAL.ViewModels;
+﻿using webstore_back.BLL.Services;
+using webstore_back.DAL.ViewModels;
 
-namespace Webstore.BLL.Services.RoleService
+namespace webstore_back.BLL.Services.RoleService
 {
     public interface IRoleService
     {

@@ -1,14 +1,15 @@
-﻿using Webstore.DAL;
-using Webstore.DAL.Models.Identity;
-using Webstore.DAL.Repositories.UserRepository;
-using Webstore.DAL.ViewModels;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
-using Webstore.BLL.Services.JwtService;
-using Webstore.BLL.Services.MailService;
+using webstore_back.DAL.Repositories.UserRepository;
+using webstore_back.DAL;
+using webstore_back.DAL.Models.Identity;
+using webstore_back.DAL.ViewModels;
+using webstore_back.BLL.Services.MailService;
+using webstore_back.BLL.Services.JwtService;
+using webstore_back.BLL.Services;
 
-namespace Webstore.BLL.Services.AccountService
+namespace webstore_back.BLL.Services.AccountService
 {
     public class AccountService : IAccountService
     {

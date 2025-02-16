@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Webstore.DAL.Models.Identity;
+using webstore_back.DAL.Models.Identity;
 
-namespace Webstore.DAL.Repositories.UserRepository
+namespace webstore_back.DAL.Repositories.UserRepository
 {
     public class UserRepository : IUserRepository
     {

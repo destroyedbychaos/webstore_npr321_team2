@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Linq.Expressions;
-using Webstore.DAL.Models.Identity;
+using webstore_back.DAL.Models.Identity;
 
-namespace Webstore.DAL.Repositories.UserRepository
+namespace webstore_back.DAL.Repositories.UserRepository
 {
     public interface IUserRepository
     {

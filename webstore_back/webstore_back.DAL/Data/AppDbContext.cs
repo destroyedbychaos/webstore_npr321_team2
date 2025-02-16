@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Webstore.DAL.Models;
-using Webstore.DAL.Models.Identity;
+using webstore_back.DAL.Models;
+using webstore_back.DAL.Models.Identity;
+using webstore_back.DAL.Models.ProductManagement;
 
-namespace Webstore.DAL.Data
+namespace webstore_back.DAL.Data
 {
     public class AppDbContext : IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
@@ -11,6 +12,9 @@ namespace Webstore.DAL.Data
             : base(options) { }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,13 +1,13 @@
-﻿using Webstore.DAL;
-using Webstore.DAL.Models.Identity;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System.Text;
+using webstore_back.DAL;
+using webstore_back.DAL.Models.Identity;
 
-namespace Webstore.BLL.Services.MailService
+namespace webstore_back.BLL.Services.MailService
 {
     public class MailService : IMailService
     {

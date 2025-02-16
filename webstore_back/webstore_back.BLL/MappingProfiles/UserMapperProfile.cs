@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Webstore.DAL;
-using Webstore.DAL.Models.Identity;
-using Webstore.DAL.ViewModels;
+using webstore_back.DAL.Models.Identity;
+using webstore_back.DAL.ViewModels;
 
-namespace Webstore.BLL.MappingProfiles
+namespace webstore_back.BLL.MappingProfiles
 {
     public class UserMapperProfile : Profile
     {

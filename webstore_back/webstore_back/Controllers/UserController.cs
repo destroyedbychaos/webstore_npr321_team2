@@ -1,16 +1,16 @@
-﻿using Webstore.BLL.Services;
-using Webstore.BLL.Services.ImageService;
-using Webstore.BLL.Services.UserService;
-using Webstore.BLL.Validators;
-using Webstore.DAL.Models.Identity;
-using Webstore.DAL.ViewModels;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
+using webstore_back.DAL.ViewModels;
+using webstore_back.DAL.Models.Identity;
+using webstore_back.BLL.Services;
+using webstore_back.BLL.Services.ImageService;
+using webstore_back.BLL.Services.UserService;
+using webstore_back.BLL.Validators;
 
-namespace Webstore.API.Controllers
+namespace webstore_back.Controllers
 {
     // from base64
     //public class UserImageVM

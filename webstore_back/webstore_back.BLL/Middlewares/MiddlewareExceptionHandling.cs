@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Text.Json;
-using Webstore.BLL.Services;
+using webstore_back.BLL.Services;
 
-namespace Webstore.BLL.Middlewares
+namespace webstore_back.BLL.Middlewares
 {
     public class MiddlewareExceptionHandling
     {

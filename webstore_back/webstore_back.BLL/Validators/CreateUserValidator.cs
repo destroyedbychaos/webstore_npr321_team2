@@ -1,8 +1,8 @@
-﻿using Webstore.DAL;
-using Webstore.DAL.ViewModels;
-using FluentValidation;
+﻿using FluentValidation;
+using webstore_back.DAL.ViewModels;
+using webstore_back.DAL;
 
-namespace Webstore.BLL.Validators
+namespace webstore_back.BLL.Validators
 {
     public class CreateUserValidator : AbstractValidator<CreateUserVM>
     {

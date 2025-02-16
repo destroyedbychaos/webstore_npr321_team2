@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Webstore.DAL.Models.Identity;
+using webstore_back.DAL.Models.Identity;
 
-namespace Webstore.DAL.Data.Initializer
+namespace webstore_back.DAL.Data.Initializer
 {
     public static class DataSeeder
     {

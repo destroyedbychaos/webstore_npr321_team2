@@ -1,7 +1,8 @@
-﻿using Webstore.DAL.ViewModels;
-using MimeKit.Tnef;
+﻿using MimeKit.Tnef;
+using webstore_back.BLL.Services;
+using webstore_back.DAL.ViewModels;
 
-namespace Webstore.BLL.Services.UserService
+namespace webstore_back.BLL.Services.UserService
 {
     public interface IUserService
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using webstore_back.DAL.Models;
 
-namespace Webstore.DAL.Models.Identity
+namespace webstore_back.DAL.Models.Identity
 {
     public class User : IdentityUser<string>
     {
