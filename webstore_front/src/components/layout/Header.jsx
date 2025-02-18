@@ -6,7 +6,7 @@ import { ShoppingCart, Favorite } from "@mui/icons-material";
 import noImgUser from "../../assets/images/noImgUser.png";
 
 const adminPages = [
-  { title: "Categories", path: "/categories" },
+  { title: "Categories", path: "/categoriesList" },
   { title: "Manufacturers", path: "/manufacturers" },
   { title: "Users", path: "/users" },
   { title: "Products", path: "/productList" },
@@ -17,7 +17,7 @@ const Header = memo(() => {
     <>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="/">
             Web Store
           </a>
           <button

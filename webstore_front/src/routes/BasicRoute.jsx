@@ -10,6 +10,9 @@ import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import ProductList from "../pages/Products.CRUD/ProductList.jsx";
 import ProductCreate from "../pages/Products.CRUD/ProductCreate.jsx";
 import ProductEdit from "../pages/Products.CRUD/ProductEdit.jsx";
+import CategoriesList from "../pages/Categories.CRUD/CategoriesList.jsx";
+import CategoryCreate from "../pages/Categories.CRUD/CategoryCreate.jsx";
+import CategoryEdit from "../pages/Categories.CRUD/categoryEdit.jsx";
 
 
 const BasicRoute = () => {
@@ -24,6 +27,10 @@ const BasicRoute = () => {
         <Route path="/productCreate" element={<ProductCreate />} />
         <Route path="/productEdit/:id" element={<ProductEdit />} />
 
+        <Route path="/categoriesList" element={<CategoriesList />} />
+        <Route path="/categoryCreate" element={<CategoryCreate />} />
+        <Route path="/categoryEdit/:id" element={<CategoryEdit />} />
+        
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         
