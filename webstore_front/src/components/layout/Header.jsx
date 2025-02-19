@@ -9,10 +9,10 @@ import { useActions } from "../../hooks/useActions";
 import APP_ENV from "../../env";
 
 const adminPages = [
-  { title: "Categories", path: "/categories" },
+  { title: "Categories", path: "/categoriesList" },
   { title: "Manufacturers", path: "/manufacturers" },
   { title: "Users", path: "/users" },
-  { title: "Products", path: "/products" },
+  { title: "Products", path: "/productList" },
 ];
 
 const Header = memo(() => {
@@ -30,7 +30,7 @@ const Header = memo(() => {
     <>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="/">
             Web Store
           </a>
           <button
@@ -46,12 +46,12 @@ const Header = memo(() => {
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link to="/" class="nav-link active">
                   Home
                 </Link>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link to="/Products" class="nav-link">
                   Products
                 </Link>
