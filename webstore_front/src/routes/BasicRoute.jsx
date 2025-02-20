@@ -14,6 +14,9 @@ import ProductEdit from "../pages/Products.CRUD/ProductEdit.jsx";
 import CategoriesList from "../pages/Categories.CRUD/CategoriesList.jsx";
 import CategoryCreate from "../pages/Categories.CRUD/CategoryCreate.jsx";
 import CategoryEdit from "../pages/Categories.CRUD/categoryEdit.jsx";
+import UsersList from "../pages/Users.CRUD/UsersList.jsx";
+import UserCreate from "../pages/Users.CRUD/UserCreate.jsx";
+import UserEdit from "../pages/Users.CRUD/UserEdit.jsx";
 
 
 const BasicRoute = () => {
@@ -31,6 +34,10 @@ const BasicRoute = () => {
         <Route path="/categoriesList" element={<CategoriesList />} />
         <Route path="/categoryCreate" element={<CategoryCreate />} />
         <Route path="/categoryEdit/:id" element={<CategoryEdit />} />
+
+        <Route path="/UsersList" element={<UsersList />} />
+        <Route path="/UserCreate" element={<UserCreate />} />
+        <Route path="/userEdit/:id" element={<UserEdit />} />
         
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

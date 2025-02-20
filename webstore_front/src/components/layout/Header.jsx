@@ -56,6 +56,11 @@ const Header = memo(() => {
                   Products
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link to="/UsersList" class="nav-link">
+                  Users
+                </Link>
+              </li>
             </ul>
 
             <div className="d-flex align-items-center">
