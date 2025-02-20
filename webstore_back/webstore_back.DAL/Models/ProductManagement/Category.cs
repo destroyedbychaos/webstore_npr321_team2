@@ -14,6 +14,6 @@ namespace webstore_back.DAL.Models.ProductManagement
         [MaxLength(50)]
         public required string Name { get; set; }
 
-        public ICollection<Product> Products { get; set; }
+        public ICollection<ClothingItem> Products { get; set; }
     }
 }

@@ -13,9 +13,9 @@ namespace webstore_back.BLL.Services.ProductService
         Task<ServiceResponse> GetByNameAsync(string name);
         Task<ServiceResponse> GetByManufacturerIdAsync(string manufacturerId);
         Task<ServiceResponse> GetByManufacturerNameAsync(string manufacturerName);
-        Task<ServiceResponse> CreateProductAsync(ProductVM model);
+        Task<ServiceResponse> CreateProductAsync(ClothingItemVM model);
         Task<ServiceResponse> GetAllAsync();
-        Task<ServiceResponse> UpdateProductAsync(ProductVM model);
+        Task<ServiceResponse> UpdateProductAsync(ClothingItemVM model);
         Task<ServiceResponse> DeleteProductAsync(string id);
         Task<ServiceResponse> GetByCategoryNameAsync(string categoryName);
         Task<ServiceResponse> GetByCategoryIdAsync(string categoryId);

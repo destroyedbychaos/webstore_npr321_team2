@@ -12,7 +12,7 @@ namespace webstore_back.DAL.Data
             : base(options) { }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<ClothingItem> ClothingItems { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Category> Categories { get; set; }
 

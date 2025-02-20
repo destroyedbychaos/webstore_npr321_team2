@@ -7,7 +7,7 @@ using webstore_back.DAL.Models.ProductManagement;
 
 namespace webstore_back.BLL.Services.CategoryService
 {
-    public interface ICategoryService
+    public interface IClothingItemService
     {
         Task<ServiceResponse> GetByIdAsync(string id);
         Task<ServiceResponse> GetByNameAsync(string name);

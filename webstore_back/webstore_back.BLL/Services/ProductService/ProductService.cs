@@ -14,10 +14,10 @@ namespace webstore_back.BLL.Services.ProductService
 {
     public class ProductService : IProductService
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IClothingItemRepository _productRepository;
         private readonly IManufacturerRepository _manufacturerRepository;
         private readonly ICategoryRepository _categoryRepository;
-        public ProductService(IProductRepository productRepository, IManufacturerRepository manufacturerRepository, ICategoryRepository categoryRepository)
+        public ProductService(IClothingItemRepository productRepository, IManufacturerRepository manufacturerRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _manufacturerRepository = manufacturerRepository;
@@ -64,14 +64,14 @@ namespace webstore_back.BLL.Services.ProductService
             return ServiceResponse.OkResponse("Товар отримано.", products);
         }
 
-        public async Task<ServiceResponse> CreateProductAsync(ProductVM model)
+        public async Task<ServiceResponse> CreateProductAsync(ClothingItemVM model)
         {
             var manufacturer = await _manufacturerRepository.GetByNameAsync(model.Manufacturer);
             var category = await _categoryRepository.GetByNameAsync(model.Category);
 
             if (category != null && manufacturer != null)
             {
-                var product = new Product
+                var product = new ClothingItem
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = model.Name,
@@ -92,7 +92,7 @@ namespace webstore_back.BLL.Services.ProductService
             return ServiceResponse.OkResponse("Товар отримано", products);
         }
 
-        public async Task<ServiceResponse> UpdateProductAsync(ProductVM model)
+        public async Task<ServiceResponse> UpdateProductAsync(ClothingItemVM model)
         {
             var product = await _productRepository.GetByIdAsync(model.Id.ToString());
             if (product == null)

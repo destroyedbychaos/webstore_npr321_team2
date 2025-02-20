@@ -9,11 +9,11 @@ using webstore_back.DAL.Repositories.CategoryRepository;
 
 namespace webstore_back.BLL.Services.CategoryService
 {
-    public class CategoryService : ICategoryService
+    public class ClothingItemService : IClothingItemService
     {
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public ClothingItemService(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }

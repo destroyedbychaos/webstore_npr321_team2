@@ -22,7 +22,7 @@ namespace webstore_back.DAL.Models.ProductManagement
 
         [ForeignKey("Product")]
         public string ProductId { get; set; }
-        public Product Product { get; set; }
+        public ClothingItem Product { get; set; }
 
         [ForeignKey("Order")]
         public string OrderId { get; set; }

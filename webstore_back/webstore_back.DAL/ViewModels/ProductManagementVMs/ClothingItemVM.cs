@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace webstore_back.DAL.ViewModels.ProductManagementVMs
 {
-    public class ProductVM
+    public class ClothingItemVM
     {
         public string Id { get; set; }
         public string Name { get; set; }
