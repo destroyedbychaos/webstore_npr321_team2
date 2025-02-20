@@ -13,11 +13,15 @@ namespace webstore_back.DAL.Models.ProductManagement
     {
         [Key]
         public required string Id { get; set; } = Guid.NewGuid().ToString();
+
         [MaxLength(50)]
         public required string Name { get; set; }
+
         public required double Price {  get; set; }
+
         [MaxLength(80)]
         public string Description { get; set; }
+
         public int StockQuantity { get; set; }
 
         [ForeignKey("Manufacturer")]

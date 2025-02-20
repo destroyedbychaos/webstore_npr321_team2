@@ -21,8 +21,8 @@ namespace webstore_back.DAL.Models.ProductManagement
         public User User { get; set; }
 
         [ForeignKey("Product")]
-        public string ProductId { get; set; }
-        public ClothingItem Product { get; set; }
+        public string ClothingItemId { get; set; }
+        public ClothingItem ClothingItem { get; set; }
 
         [ForeignKey("Order")]
         public string OrderId { get; set; }

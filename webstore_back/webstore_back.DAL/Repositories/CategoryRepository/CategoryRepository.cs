@@ -62,5 +62,15 @@ namespace webstore_back.DAL.Repositories.CategoryRepository
 
             return category;
         }
+
+        public async Task<ICollection<ClothingItem?>?> GetCategoryClothingItemsById(string id)
+        {
+            var category = await _appDbContext.Categories.Include(c => c.ClothingItems).FirstOrDefaultAsync(c => c.Id == id);
+            if (category == null)
+            {
+                return null;
+            }
+            return category.ClothingItems;
+        }
     }
 }

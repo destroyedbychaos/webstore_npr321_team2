@@ -11,9 +11,10 @@ namespace webstore_back.DAL.Models.ProductManagement
     {
         [Key]
         public required string Id { get; set; } = Guid.NewGuid().ToString();
+
         [MaxLength(50)]
         public required string Name { get; set; }
 
-        public ICollection<ClothingItem> Products { get; set; }
+        public ICollection<ClothingItem> ClothingItems { get; set; }
     }
 }
