@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css';
+import { Link } from 'react-router-dom';
 import { products } from '../../data/productsData';
 import { categories } from '../../data/categoriesData';
 
@@ -97,11 +98,13 @@ const HomePage = () => {
                   <p className="text-muted mb-0">{category.description}</p>
                 </div>
                 <div className="mt-3">
-                  <a href={`/products?category=${category.id}`} className="text-decoration-none d-flex align-items-center gap-2">
-                    Переглянути
-                    <i className="bi bi-arrow-right"></i>
-                    
-                  </a>
+                    <Link
+                        to={`/products?category=${category.name}`}
+                        className="text-decoration-none d-flex align-items-center gap-2"
+                    >
+                        Переглянути
+                        <i className="bi bi-arrow-right"></i>
+                    </Link>
                 </div>
               </div>
             </div>

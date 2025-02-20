@@ -2,20 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart } from 'lucide-react';
 import { products } from '../../data/productsData';
 import { categories } from '../../data/categoriesData';
-import { useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import './style.css';
 
 const Products = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
   const [cartItems, setCartItems] = useState(() => {
     const savedCart = localStorage.getItem('cart');
     return savedCart ? JSON.parse(savedCart) : [];
   });
+
+  const getInitialCategory = () => {
+    const queryParams = new URLSearchParams(location.search);
+    const categoryParam = queryParams.get('category');
+    return categoryParam || 'Всі категорії';
+  };
+  
   const [isAnimating, setIsAnimating] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('Всі категорії');
+  const [selectedCategory, setSelectedCategory] = useState(getInitialCategory());
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
   const [sortOption, setSortOption] = useState('');
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+
+    if (selectedCategory !== 'Всі категорії') {
+      queryParams.set('category', selectedCategory);
+    } else {
+      queryParams.delete('category');
+    }
+
+    const newSearch = queryParams.toString();
+    const searchString = newSearch ? `?${newSearch}` : '';
+
+    navigate(`/products${searchString}`, { replace: true });
+  }, [selectedCategory, navigate, location.search]);
+
+
+  useEffect(() => {
+    setSelectedCategory(getInitialCategory());
+  }, [location.search]);
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
@@ -101,13 +130,13 @@ const Products = () => {
               <div className="mb-4">
                 <h3 className="h6 mb-2">Категорія</h3>
                 <select
-                  className="form-select"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="form-select"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
                 >
                   <option>Всі категорії</option>
                   {categories.map((category) => (
-                    <option>{category.name}</option>
+                      <option key={category.id}>{category.name}</option>
                   ))}
                 </select>
               </div>

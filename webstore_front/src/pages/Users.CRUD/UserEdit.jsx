@@ -90,7 +90,6 @@ const UserEdit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Update user in the array
         const userIndex = users.findIndex(u => u.id === parseInt(id));
         if (userIndex !== -1) {
             users[userIndex] = {
