@@ -23,10 +23,19 @@ const Header = memo(() => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  const [favoriteItems, setFavoriteItems] = useState(() => {
+    const savedFavorites = localStorage.getItem('favorites');
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
+
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
+    const savedFavorites = localStorage.getItem('favorites');
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
+    }
+    if (savedFavorites) {
+      setFavoriteItems(JSON.parse(savedFavorites));
     }
   }, []);
 
@@ -100,9 +109,10 @@ const Header = memo(() => {
                   <Link to="/favoriteProducts" className="text-reset position-relative">
                     <Favorite className="fs-4" />
                     <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                      0
+                      {favoriteItems.length}
                     </span>
                   </Link>
+
 
                   <Link to="/cartItems" className="text-reset position-relative">
                     <ShoppingCart className="fs-4" />

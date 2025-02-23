@@ -17,6 +17,7 @@ import CategoryEdit from "../pages/Categories.CRUD/categoryEdit.jsx";
 import UsersList from "../pages/Users.CRUD/UsersList.jsx";
 import UserCreate from "../pages/Users.CRUD/UserCreate.jsx";
 import UserEdit from "../pages/Users.CRUD/UserEdit.jsx";
+import FavoriteProducts from "../pages/FavoriteProducts/FavoriteProducts.jsx";
 
 
 const BasicRoute = () => {
@@ -38,6 +39,8 @@ const BasicRoute = () => {
         <Route path="/usersList" element={<UsersList />} />
         <Route path="/userCreate" element={<UserCreate />} />
         <Route path="/userEdit/:id" element={<UserEdit />} />
+
+        <Route path="/favoriteProducts" element={<FavoriteProducts />} />
         
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

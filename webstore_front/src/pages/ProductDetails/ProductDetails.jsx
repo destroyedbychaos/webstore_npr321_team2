@@ -13,6 +13,10 @@ const ProductDetails = () => {
     const savedCart = localStorage.getItem('cart');
     return savedCart ? JSON.parse(savedCart) : [];
   });
+  const [favoriteItems, setFavoriteItems] = useState(() => {
+    const savedFavorites = localStorage.getItem('favorites');
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
@@ -26,8 +30,12 @@ const ProductDetails = () => {
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
+    const savedFavorites = localStorage.getItem('favorites');
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
+    }
+    if (savedFavorites) {
+      setFavoriteItems(JSON.parse(savedFavorites));
     }
   }, []);
 
@@ -39,6 +47,14 @@ const ProductDetails = () => {
     }
   }, [cartItems]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem('favorites', JSON.stringify(favoriteItems));
+    } catch (error) {
+      console.error('Error saving favorites to localStorage:', error);
+    }
+  }, [favoriteItems]);
+
   const toggleCart = (productId) => {
     setIsAnimating(true);
     setTimeout(() => setIsAnimating(false), 300);
@@ -47,14 +63,28 @@ const ProductDetails = () => {
       if (prevItems.includes(productId)) {
         return prevItems.filter(id => id !== productId);
       } else {
+        setFavoriteItems(prevFavorites =>
+            prevFavorites.filter(id => id !== productId)
+        );
         return [...prevItems, productId];
       }
     });
   };
 
-  const isInCart = (productId) => {
-    return cartItems.includes(productId);
+  const toggleFavorite = (productId) => {
+    setFavoriteItems(prevItems => {
+      if (prevItems.includes(productId)) {
+        return prevItems.filter(id => id !== productId);
+      } else {
+        setCartItems(prevCart =>
+            prevCart.filter(id => id !== productId)
+        );
+        return [...prevItems, productId];
+      }
+    });
   };
+  const isInCart = (productId) => cartItems.includes(productId);
+  const isInFavorites = (productId) => favoriteItems.includes(productId);
 
   if (isLoading) {
     return (
@@ -120,17 +150,23 @@ const ProductDetails = () => {
             </div>
 
             <div className="d-flex gap-2 mb-4">
-              <button 
-                className={`btn ${isInCart(product.id) ? 'btn-success' : 'btn-dark'} flex-grow-1 py-2 d-flex align-items-center justify-content-center gap-2 ${
-                  isAnimating ? 'animating' : ''
-                }`}
-                onClick={() => toggleCart(product.id)}
+              <button
+                  className={`btn ${isInCart(product.id) ? 'btn-success' : 'btn-dark'} flex-grow-1 py-2 d-flex align-items-center justify-content-center gap-2 ${
+                      isAnimating ? 'animating' : ''
+                  }`}
+                  onClick={() => toggleCart(product.id)}
               >
                 <ShoppingCart size={20} />
                 {isInCart(product.id) ? 'ДОДАНО В КОШИК' : 'ДОДАТИ У КОШИК'}
               </button>
-              <button className="btn btn-outline-dark py-2 px-3">
-                <Heart size={20} />
+              <button
+                  className="btn btn-outline-danger py-2 px-3"
+                  onClick={() => toggleFavorite(product.id)}
+              >
+                <Heart
+                    size={20}
+                    fill={favoriteItems.includes(product.id) ? "currentColor" : "none"}
+                />
               </button>
             </div>
 
