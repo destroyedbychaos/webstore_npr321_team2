@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = () => {
     const navigate = useNavigate();
-    const { isAuth } = useSelector((state) => state.auth);
+    const { isAuth } = useSelector((store) => store.auth);
     const { signIn } = useActions();
     const [rememberMe, setRememberMe] = useState(false);
 

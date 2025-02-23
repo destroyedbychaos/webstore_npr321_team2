@@ -31,6 +31,7 @@ export const signIn = (model) => async (dispatch) => {
     const tokens = data.payload;
     const user = await saveToken(tokens.accessToken);
     localStorage.setItem("urt", tokens.refreshToken);
+    console.log(tokens);
 
     dispatch({ type: "SIGN_IN", payload: user });
 

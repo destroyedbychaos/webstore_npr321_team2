@@ -6,7 +6,8 @@ import Register from "../pages/auth/register/Register";
 import HomePage from "../pages/homePage/HomePage";
 import Products from "../pages/Products/Products";
 import Layout from "../components/layout/Layout";
-import MyProfilePage from "../pages/myProfile/MyProfilePage";
+import MyProfilePage from "../pages/myProfile/MyProfilePage.jsx";
+import CartItempage from "../pages/cartItems/CartitemsPage.jsx";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import ProductList from "../pages/Products.CRUD/ProductList.jsx";
 import ProductCreate from "../pages/Products.CRUD/ProductCreate.jsx";
@@ -17,16 +18,18 @@ import CategoryEdit from "../pages/Categories.CRUD/categoryEdit.jsx";
 import UsersList from "../pages/Users.CRUD/UsersList.jsx";
 import UserCreate from "../pages/Users.CRUD/UserCreate.jsx";
 import UserEdit from "../pages/Users.CRUD/UserEdit.jsx";
-
+import { useSelector } from "react-redux";
 
 const BasicRoute = () => {
+  const role = useSelector((store) => store.auth.role);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-        
+
         <Route path="/productList" element={<ProductList />} />
         <Route path="/productCreate" element={<ProductCreate />} />
         <Route path="/productEdit/:id" element={<ProductEdit />} />
@@ -38,11 +41,13 @@ const BasicRoute = () => {
         <Route path="/UsersList" element={<UsersList />} />
         <Route path="/UserCreate" element={<UserCreate />} />
         <Route path="/userEdit/:id" element={<UserEdit />} />
-        
+
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
         <Route path="/profile" element={<MyProfilePage />} />
+
+        <Route path="/cart" element={<CartItempage />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Route>

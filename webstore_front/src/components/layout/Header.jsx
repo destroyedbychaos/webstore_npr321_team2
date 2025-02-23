@@ -28,13 +28,13 @@ const Header = memo(() => {
 
   return (
     <>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container">
-          <a class="navbar-brand" href="/">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <div className="container">
+          <a className="navbar-brand" href="/">
             Web Store
           </a>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -42,22 +42,22 @@ const Header = memo(() => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to="/" class="nav-link active">
+                <Link to="/" className="nav-link active">
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/Products" class="nav-link">
+                <Link to="/Products" className="nav-link">
                   Products
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/UsersList" class="nav-link">
+                <Link to="/UsersList" className="nav-link">
                   Users
                 </Link>
               </li>
@@ -70,7 +70,7 @@ const Header = memo(() => {
                 </Badge>
               </Link>
 
-              <Link to="/cartItems" className="text-reset me-3">
+              <Link to="/cart" className="text-reset me-3">
                 <Badge color="error">
                   <ShoppingCart />
                 </Badge>

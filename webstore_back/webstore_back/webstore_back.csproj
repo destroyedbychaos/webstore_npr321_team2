@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\images\user\avatar.png" />
     <None Include="wwwroot\templates\emailconfirmation.html" />
   </ItemGroup>
 
