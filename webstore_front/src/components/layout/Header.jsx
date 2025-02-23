@@ -1,25 +1,34 @@
-import "./layout.css";
+import React, {memo, useEffect, useState} from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { memo } from "react";
-import { Badge } from "@mui/material";
 import { ShoppingCart, Favorite } from "@mui/icons-material";
-import noImgUser from "../../assets/images/noImgUser.png";
 import { useSelector } from "react-redux";
 import { useActions } from "../../hooks/useActions";
 import APP_ENV from "../../env";
+import './layout.css';
 
 const adminPages = [
   { title: "Categories", path: "/categoriesList" },
-  { title: "Manufacturers", path: "/manufacturers" },
-  { title: "Users", path: "/users" },
+  { title: "Users", path: "/usersList" },
   { title: "Products", path: "/productList" },
+  { title: "Manufacturers", path: "/manufacturers" },
 ];
 
 const Header = memo(() => {
   const navigate = useNavigate();
   const { user, isAuth, role } = useSelector((store) => store.auth);
-
   const { logout } = useActions();
+
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
+  }, []);
 
   const logoutHandler = () => {
     logout();
@@ -27,146 +36,141 @@ const Header = memo(() => {
   };
 
   return (
-    <>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container">
-          <a class="navbar-brand" href="/">
-            Web Store
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link to="/" class="nav-link active">
-                  Home
+      <header className="shadow-sm">
+        <div className="bg-white py-3">
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-auto">
+                <Link to="/" className="text-decoration-none">
+                  <h1 className="m-0 h2 fw-bold text-uppercase">WEB STORE</h1>
                 </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/Products" class="nav-link">
-                  Products
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/UsersList" class="nav-link">
-                  Users
-                </Link>
-              </li>
-            </ul>
+              </div>
 
-            <div className="d-flex align-items-center">
-              <Link to="/favoriteProducts" className="text-reset me-3">
-                <Badge color="error">
-                  <Favorite />
-                </Badge>
-              </Link>
+              <div className="col">
+                <ul className="nav gap-4 justify-content-center">
+                  <li className="nav-item">
+                    <Link
+                        to="/"
+                        className="nav-link px-0 text-dark fw-medium position-relative"
+                        style={{
+                          textDecoration: 'none',
+                          ':hover': {
+                            '&::after': {
+                              content: '""',
+                              position: 'absolute',
+                              width: '100%',
+                              height: '2px',
+                              bottom: 0,
+                              left: 0,
+                              backgroundColor: 'currentColor',
+                              transform: 'scaleX(0)',
+                              transition: 'transform 0.3s ease'
+                            }
+                          }
+                        }}
+                    >
+                      Home
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/Products" className="nav-link px-0 text-dark fw-medium">
+                      New Arrivals
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/products?category=Взуття" className="nav-link px-0 text-dark fw-medium">
+                      Shoes
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/products?category=Аксесуари" className="nav-link px-0 text-dark fw-medium">
+                      Accessories
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/products?category=Одяг" className="nav-link px-0 text-dark fw-medium">
+                      Сlothes
+                    </Link>
+                  </li>
+                </ul>
+              </div>
 
-              <Link to="/cartItems" className="text-reset me-3">
-                <Badge color="error">
-                  <ShoppingCart />
-                </Badge>
-              </Link>
-
-              <a className="text-reset me-2" href="#">
-                <i className="fas fa-bell"></i>
-              </a>
-
-              {role === "admin" && (
-                <div className="dropdown mx-2">
-                  <a
-                    className="text-reset dropdown-toggle hidden-arrow"
-                    href="#"
-                    id="navbarDropdownMenuLink"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <span className="badge rounded-pill badge-notification bg-danger">
-                      Admin
+              <div className="col-auto">
+                <div className="d-flex align-items-center gap-4">
+                  <Link to="/favoriteProducts" className="text-reset position-relative">
+                    <Favorite className="fs-4" />
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                      0
                     </span>
-                  </a>
-                  <ul
-                    className="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="navbarDropdownMenuLink"
-                  >
-                    {adminPages.map((page) => (
-                      <li key={page.path}>
-                        <Link className="dropdown-item" to={page.path}>
-                          {page.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {isAuth ? (
-                <div className="dropdown">
-                  <a
-                    className="dropdown-toggle d-flex align-items-center hidden-arrow"
-                    href="#"
-                    id="navbarDropdownMenuAvatar"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <img
-                      src={`${APP_ENV.USER_IMAGE_URL}${user.image}`}
-                      className="rounded-circle"
-                      height="25"
-                      width="25"
-                      alt="User Avatar"
-                      loading="lazy"
-                    />
-                  </a>
-                  <ul
-                    className="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="navbarDropdownMenuAvatar"
-                  >
-                    {role === "user" && (
-                      <li>
-                        <Link className="dropdown-item" to="/profile">
-                          My Profile
-                        </Link>
-                      </li>
-                    )}
-
-                    <li>
-                      <Link className="dropdown-item" to="/settings">
-                        Settings
-                      </Link>
-                    </li>
-                    <li>
-                      <button className="dropdown-item" onClick={logoutHandler}>
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              ) : (
-                <div className="d-flex gap-3">
-                  <Link to="/login" className="btn btn-outline-primary">
-                    Login
                   </Link>
-                  <Link to="/register" className="btn btn-primary text-white">
-                    Register
+
+                  <Link to="/cartItems" className="text-reset position-relative">
+                    <ShoppingCart className="fs-4" />
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                      {cartItems.length}
+                    </span>
                   </Link>
+
+                  {isAuth ? (
+                      <div className="dropdown">
+                        <a
+                            className="dropdown-toggle d-flex align-items-center text-decoration-none text-dark"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                          <img
+                              src={`${APP_ENV.USER_IMAGE_URL}${user.image}`}
+                              className="rounded-circle me-2"
+                              height="35"
+                              width="35"
+                              alt="User Avatar"
+                              loading="lazy"
+                          />
+                          <span className="fw-medium">{user.name}</span>
+                        </a>
+                        <ul className="dropdown-menu dropdown-menu-end shadow">
+                          {role === "admin" && adminPages.map((page) => (
+                              <li key={page.path}>
+                                <Link className="dropdown-item" to={page.path}>
+                                  {page.title}
+                                </Link>
+                              </li>
+                          ))}
+                          {role === "user" && (
+                              <li>
+                                <Link className="dropdown-item" to="/profile">
+                                  My Profile
+                                </Link>
+                              </li>
+                          )}
+                          <li><Link className="dropdown-item" to="/settings">Settings</Link></li>
+                          <li><hr className="dropdown-divider" /></li>
+                          <li>
+                            <button className="dropdown-item text-danger" onClick={logoutHandler}>
+                              Logout
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                  ) : (
+                      
+                      <div className="d-flex gap-2">
+                        <Link to="/login" className="btn btn-outline-dark">
+                          Login
+                        </Link>
+                        <Link to="/register" className="btn btn-dark">
+                          Register
+                        </Link>
+                      </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
-      </nav>
-    </>
+      </header>
   );
 });
 

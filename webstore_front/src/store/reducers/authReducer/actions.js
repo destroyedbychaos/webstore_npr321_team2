@@ -110,6 +110,6 @@ const getUser = async (id) => {
 
     return response.data.payload;
   } catch (error) {
-    return { success: false, message: errorMessage };
+    return { success: false, message: error.response?.data || "Failed to fetch user" };
   }
 };

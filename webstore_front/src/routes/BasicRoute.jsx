@@ -35,8 +35,8 @@ const BasicRoute = () => {
         <Route path="/categoryCreate" element={<CategoryCreate />} />
         <Route path="/categoryEdit/:id" element={<CategoryEdit />} />
 
-        <Route path="/UsersList" element={<UsersList />} />
-        <Route path="/UserCreate" element={<UserCreate />} />
+        <Route path="/usersList" element={<UsersList />} />
+        <Route path="/userCreate" element={<UserCreate />} />
         <Route path="/userEdit/:id" element={<UserEdit />} />
         
         <Route path="/register" element={<Register />} />
