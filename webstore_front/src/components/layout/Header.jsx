@@ -168,10 +168,10 @@ const Header = memo(() => {
                       
                       <div className="d-flex gap-2">
                         <Link to="/login" className="btn btn-outline-dark">
-                          Login
+                          Sign in
                         </Link>
                         <Link to="/register" className="btn btn-dark">
-                          Register
+                          Sign Up
                         </Link>
                       </div>
                   )}

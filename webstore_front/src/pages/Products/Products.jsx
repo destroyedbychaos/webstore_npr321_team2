@@ -178,6 +178,7 @@ const Products = () => {
                 onClick={() => {
                   setSelectedCategory('Всі категорії');
                   setSearchQuery('');
+                  setSortOption('Без сортування');
                   setPriceRange({ min: '', max: '' });
                 }}
               >

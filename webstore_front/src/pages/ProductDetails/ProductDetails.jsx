@@ -137,7 +137,7 @@ const ProductDetails = () => {
                   <button
                     key={size}
                     className={`btn ${selectedSize === size ? 'btn-dark' : 'btn-outline-dark'}`}
-                    style={{ width: '48px', height: '48px' }}
+                    style={{ width: '55px', height: '55px' }}
                     onClick={() => setSelectedSize(size)}
                   >
                     {size}
