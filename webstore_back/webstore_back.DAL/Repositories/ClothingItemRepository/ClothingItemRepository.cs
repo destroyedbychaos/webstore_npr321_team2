@@ -73,12 +73,12 @@ namespace webstore_back.DAL.Repositories.ProductRepository
             return product;
         }
 
-        public async Task<List<ClothingItem?>?> GetByCategoryNameAsync(string categoryName)
+        public async Task<List<ClothingItem>> GetByCategoryNameAsync(string categoryName)
         {
             return await _appDbContext.ClothingItems.Where(p => p.Category.Name == categoryName).ToListAsync();
         }
 
-        public async Task<List<ClothingItem?>?> GetByCategoryIdAsync(string categoryId)
+        public async Task<List<ClothingItem>> GetByCategoryIdAsync(string categoryId)
         {
             return await _appDbContext.ClothingItems.Where(p => p.CategoryId == categoryId).ToListAsync();
         }

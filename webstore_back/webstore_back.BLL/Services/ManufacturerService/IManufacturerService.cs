@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using webstore_back.DAL.Models.ProductManagement;
+using webstore_back.DAL.ViewModels.ProductManagementVMs;
 
 namespace webstore_back.BLL.Services.ManufacturerService
 {
@@ -11,9 +12,9 @@ namespace webstore_back.BLL.Services.ManufacturerService
     {
         Task<ServiceResponse> GetByIdAsync(string id);
         Task<ServiceResponse> GetByNameAsync(string name);
-        Task<ServiceResponse> CreateManufacturerAsync(Manufacturer manufacturer);
+        Task<ServiceResponse> CreateManufacturerAsync(ManufacturerVM model);
         Task<ServiceResponse> GetAllAsync();
-        Task<ServiceResponse> UpdateManufacturerAsync(Manufacturer manufacturer);
+        Task<ServiceResponse> UpdateManufacturerAsync(ManufacturerVM model);
         Task<ServiceResponse> DeleteManufacturerAsync(string id);
     }
 }

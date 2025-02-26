@@ -23,7 +23,7 @@ namespace webstore_back.DAL.Repositories.ManufacturerRepository
             return await _appDbContext.Manufacturers.FirstOrDefaultAsync(m => m.Name == name);
         }
 
-        public async Task<Manufacturer> CreateManufacturerAsync(Manufacturer manufacturer)
+        public async Task<Manufacturer?> CreateManufacturerAsync(Manufacturer manufacturer)
         {
             _appDbContext.Manufacturers.Add(manufacturer);
             await _appDbContext.SaveChangesAsync();

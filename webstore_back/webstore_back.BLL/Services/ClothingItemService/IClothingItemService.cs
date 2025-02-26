@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using webstore_back.DAL.Models.ProductManagement;
+using webstore_back.DAL.ViewModels.ProductManagementVMs;
 
 namespace webstore_back.BLL.Services.CategoryService
 {
@@ -11,9 +12,13 @@ namespace webstore_back.BLL.Services.CategoryService
     {
         Task<ServiceResponse> GetByIdAsync(string id);
         Task<ServiceResponse> GetByNameAsync(string name);
-        Task<ServiceResponse> CreateCategoryAsync(Category category);
+        Task<ServiceResponse> GetByManufacturerIdAsync(string manufacturerId);
+        Task<ServiceResponse> GetByManufacturerNameAsync(string manufacturerName);
+        Task<ServiceResponse> CreateProductAsync(ClothingItemVM model);
         Task<ServiceResponse> GetAllAsync();
-        Task<ServiceResponse> UpdateCategoryAsync(Category category);
-        Task<ServiceResponse> DeleteCategoryAsync(string id);
+        Task<ServiceResponse> UpdateProductAsync(ClothingItemVM model);
+        Task<ServiceResponse> DeleteProductAsync(string id);
+        Task<ServiceResponse> GetByCategoryNameAsync(string categoryName);
+        Task<ServiceResponse> GetByCategoryIdAsync(string categoryId);
     }
 }
