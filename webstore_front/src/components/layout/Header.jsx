@@ -11,7 +11,7 @@ const adminPages = [
   { title: "Categories", path: "/categoriesList" },
   { title: "Users", path: "/usersList" },
   { title: "Products", path: "/productList" },
-  { title: "Manufacturers", path: "/manufacturers" },
+  { title: "Manufacturers", path: "/manufacterersList" },
 ];
 
 const Header = memo(() => {

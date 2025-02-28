@@ -18,6 +18,9 @@ import UsersList from "../pages/Users.CRUD/UsersList.jsx";
 import UserCreate from "../pages/Users.CRUD/UserCreate.jsx";
 import UserEdit from "../pages/Users.CRUD/UserEdit.jsx";
 import FavoriteProducts from "../pages/FavoriteProducts/FavoriteProducts.jsx";
+import ManufacturersList from "../pages/Manufacturers.CRUD/ManufacturersList.jsx";
+import ManufacterCreate from "../pages/Manufacturers.CRUD/ManufacterCreate.jsx";
+import ManufacterEdit from "../pages/Manufacturers.CRUD/ManufacterEdit.jsx";
 
 
 const BasicRoute = () => {
@@ -40,6 +43,10 @@ const BasicRoute = () => {
         <Route path="/userCreate" element={<UserCreate />} />
         <Route path="/userEdit/:id" element={<UserEdit />} />
 
+        <Route path="/manufacturersList" element={<ManufacturersList />} />
+        <Route path="/manufacterCreate" element={<ManufacterCreate />} />
+        <Route path="/manufacterEdit/:id" element={<ManufacterEdit />} />
+        
         <Route path="/favoriteProducts" element={<FavoriteProducts />} />
         
         <Route path="/register" element={<Register />} />
