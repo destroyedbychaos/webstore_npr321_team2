@@ -11,5 +11,6 @@ namespace webstore_back.DAL.ViewModels.ProductManagementVMs
         public string Id { get; set; }
         public string Name { get; set; }
         public int Rating { get; set; }
+        public ICollection<ClothingItemVM> ClothingItems { get; set; } = [];
     }
 }

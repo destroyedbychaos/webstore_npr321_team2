@@ -64,7 +64,7 @@ const ManufacterCreate = () => {
                                         type="button"
                                         className="btn btn-outline-secondary px-4"
                                         style={{ borderColor: '#6f42c1', color: '#6f42c1' }}
-                                        onClick={() => navigate('/manufacturersList')}>
+                                        onClick={() => navigate('/manufacturers')}>
                                         <i className="bi bi-x-circle me-2"></i>
                                         Скасувати
                                     </button>
@@ -75,7 +75,7 @@ const ManufacterCreate = () => {
                                             backgroundColor: '#6f42c1',
                                             transition: 'all 0.3s ease'
                                         }}
-                                        onClick={() => navigate('/manufacturersList')}>
+                                        onClick={() => navigate('/manufacturers')}>
                                         <i className="bi bi-check-circle me-2"></i>
                                         Створити виробника
                                     </button>

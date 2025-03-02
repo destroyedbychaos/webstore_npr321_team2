@@ -23,7 +23,7 @@ namespace webstore_back.DAL.Repositories.ManufacturerRepository
             return await _appDbContext.Manufacturers.FirstOrDefaultAsync(m => m.Name == name);
         }
 
-        public async Task<Manufacturer> CreateManufacturerAsync(Manufacturer manufacturer)
+        public async Task<Manufacturer?> CreateManufacturerAsync(Manufacturer manufacturer)
         {
             _appDbContext.Manufacturers.Add(manufacturer);
             await _appDbContext.SaveChangesAsync();
@@ -59,6 +59,18 @@ namespace webstore_back.DAL.Repositories.ManufacturerRepository
 
             _appDbContext.Manufacturers.Remove(manufacturer);
             await _appDbContext.SaveChangesAsync();
+
+            return manufacturer;
+        }
+
+        public async Task<Manufacturer> LoadClothingAsync(Manufacturer manufacturer)
+        {
+            await _appDbContext
+                .Entry(manufacturer)
+                .Collection(m => m.ClothingItems)
+                .Query()
+                .Include(c => c.Category)
+                .LoadAsync();
 
             return manufacturer;
         }

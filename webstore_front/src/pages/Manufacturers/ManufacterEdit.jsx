@@ -1,18 +1,20 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { manufacturers } from "../../data/manufacturersData";
+import { useSelector } from 'react-redux';
 
 const ManufacterEdit = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [manufacterData, setManufacterData] = useState(null);
+    const {manufacturers} = useSelector(state => state.manufacturer);
 
     const [formData, setFormData] = useState({
         name: '',
     });
 
     useEffect(() => {
-        const manufacter = manufacturers.find(c => c.id === parseInt(id));
+        const manufacter = manufacturers.find(c => c.id === id);
+        
         if (manufacter) {
             setManufacterData(manufacter);
             setFormData({
@@ -20,7 +22,7 @@ const ManufacterEdit = () => {
                 description: manufacter.description
             });
         } else {
-            navigate('/manufacturersList');
+            navigate('/manufacturers');
         }
     }, [id, navigate]);
 
@@ -35,7 +37,7 @@ const ManufacterEdit = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Updated category data:', formData);
-        navigate('/manufacturersList');
+        navigate('/manufacturers');
     };
 
     if (!manufacterData) {
@@ -93,7 +95,7 @@ const ManufacterEdit = () => {
                                         className="btn btn-danger"
                                         onClick={() => {
                                             if (window.confirm('Ви впевнені, що хочете видалити цього виробника?')) {
-                                                navigate('/manufacturersList');
+                                                navigate('/manufacturers');
                                             }
                                         }}
                                     >
@@ -106,7 +108,7 @@ const ManufacterEdit = () => {
                                             type="button"
                                             className="btn btn-outline-secondary px-4"
                                             style={{ borderColor: '#6f42c1', color: '#6f42c1' }}
-                                            onClick={() => navigate('/manufacturersList')}
+                                            onClick={() => navigate('/manufacturers')}
                                         >
                                             <i className="bi bi-x-circle me-2"></i>
                                             Скасувати

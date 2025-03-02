@@ -1,13 +1,16 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Search, Plus, Edit2, Trash2, XCircle } from 'lucide-react';
 import './style.css';
-import {manufacturers} from '../../data/manufacturersData';
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useActions } from '../../hooks/useActions';
 
 const ManufacturersList = () => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
     const [manufacturersToDelete, setManufacturersToDelete] = useState(null);
+    const {manufacturers} = useSelector(state => state.manufacturer);
+    const {loadManufacturers} = useActions();
 
     const filteredManufacturers = manufacturers.filter(manufacter =>
         manufacter.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -17,6 +20,10 @@ const ManufacturersList = () => {
         console.log(`Виробника з id ${id} видалено`);
         setManufacturersToDelete(null);
     };
+
+    useEffect(() => {
+        loadManufacturers();
+    }, []);
 
     return (
         <div className="  manufacter-list-container">

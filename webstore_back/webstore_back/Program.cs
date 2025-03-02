@@ -21,6 +21,7 @@ using webstore_back.BLL.Services.UserService;
 using webstore_back.DAL.Repositories.ProductRepository;
 using webstore_back.DAL.Repositories.CategoryRepository;
 using webstore_back.DAL.Repositories.ManufacturerRepository;
+using webstore_back.BLL.Services.ManufacturerService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +84,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
 
 // Add repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
