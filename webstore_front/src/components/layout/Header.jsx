@@ -1,8 +1,9 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, { memo } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart, Favorite } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { useActions } from "../../hooks/useActions";
+import { useShopping } from "../../context/ShoppingContext";
 import APP_ENV from "../../env";
 import './layout.css';
 
@@ -17,27 +18,7 @@ const Header = memo(() => {
   const navigate = useNavigate();
   const { user, isAuth, role } = useSelector((store) => store.auth);
   const { logout } = useActions();
-
-  const [cartItems, setCartItems] = useState(() => {
-    const savedCart = localStorage.getItem('cart');
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
-
-  const [favoriteItems, setFavoriteItems] = useState(() => {
-    const savedFavorites = localStorage.getItem('favorites');
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
-  });
-
-  useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    const savedFavorites = localStorage.getItem('favorites');
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
-    if (savedFavorites) {
-      setFavoriteItems(JSON.parse(savedFavorites));
-    }
-  }, []);
+  const { cartItems, favoriteItems } = useShopping();
 
   const logoutHandler = () => {
     logout();
@@ -165,7 +146,7 @@ const Header = memo(() => {
                         </ul>
                       </div>
                   ) : (
-                      
+
                       <div className="d-flex gap-2">
                         <Link to="/login" className="btn btn-outline-dark">
                           Sign in

@@ -62,5 +62,17 @@ namespace webstore_back.DAL.Repositories.ManufacturerRepository
 
             return manufacturer;
         }
+
+        public async Task<Manufacturer> LoadClothingAsync(Manufacturer manufacturer)
+        {
+            await _appDbContext
+                .Entry(manufacturer)
+                .Collection(m => m.ClothingItems)
+                .Query()
+                .Include(c => c.Category)
+                .LoadAsync();
+
+            return manufacturer;
+        }
     }
 }

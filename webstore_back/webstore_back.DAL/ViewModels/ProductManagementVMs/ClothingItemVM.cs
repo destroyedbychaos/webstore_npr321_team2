@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace webstore_back.DAL.ViewModels.ProductManagementVMs
+﻿namespace webstore_back.DAL.ViewModels.ProductManagementVMs
 {
     public class ClothingItemVM
     {

@@ -18,39 +18,48 @@ import UsersList from "../pages/Users.CRUD/UsersList.jsx";
 import UserCreate from "../pages/Users.CRUD/UserCreate.jsx";
 import UserEdit from "../pages/Users.CRUD/UserEdit.jsx";
 import FavoriteProducts from "../pages/FavoriteProducts/FavoriteProducts.jsx";
-
+import * as Manufacturers from "../pages/Manufacturers";
 
 const BasicRoute = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<HomePage />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        
-        <Route path="/productList" element={<ProductList />} />
-        <Route path="/productCreate" element={<ProductCreate />} />
-        <Route path="/productEdit/:id" element={<ProductEdit />} />
+    return (
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                <Route index element={<HomePage />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/product/:id" element={<ProductDetails />} />
 
-        <Route path="/categoriesList" element={<CategoriesList />} />
-        <Route path="/categoryCreate" element={<CategoryCreate />} />
-        <Route path="/categoryEdit/:id" element={<CategoryEdit />} />
+                <Route path="/productList" element={<ProductList />} />
+                <Route path="/productCreate" element={<ProductCreate />} />
+                <Route path="/productEdit/:id" element={<ProductEdit />} />
 
-        <Route path="/usersList" element={<UsersList />} />
-        <Route path="/userCreate" element={<UserCreate />} />
-        <Route path="/userEdit/:id" element={<UserEdit />} />
+                <Route path="/categoriesList" element={<CategoriesList />} />
+                <Route path="/categoryCreate" element={<CategoryCreate />} />
+                <Route path="/categoryEdit/:id" element={<CategoryEdit />} />
 
-        <Route path="/favoriteProducts" element={<FavoriteProducts />} />
-        
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+                <Route path="/usersList" element={<UsersList />} />
+                <Route path="/userCreate" element={<UserCreate />} />
+                <Route path="/userEdit/:id" element={<UserEdit />} />
 
-        <Route path="/profile" element={<MyProfilePage />} />
+                <Route path="manufacturers" >
+                    <Route index element={<Manufacturers.List />} />
+                    <Route path="create" element={<Manufacturers.Create />} />
+                    <Route path="edit/:id" element={<Manufacturers.Edit />} />
+                </Route>
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
-  );
+                <Route
+                    path="/favoriteProducts"
+                    element={<FavoriteProducts />}
+                />
+
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+
+                <Route path="/profile" element={<MyProfilePage />} />
+
+                <Route path="*" element={<NotFoundPage />} />
+            </Route>
+        </Routes>
+    );
 };
 
 export default BasicRoute;

@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify'
 import { store } from "./store";
 import { Provider } from 'react-redux'
 import { signInByToken } from "./store/reducers/authReducer/actions"
-
+import { ShoppingProvider } from './context/ShoppingContext';
 if (localStorage.auth && localStorage.urt) {
   signInByToken({
     auth: localStorage.auth,
@@ -31,8 +31,11 @@ createRoot(document.getElementById('root')).render(
       pauseOnHover={false}
       theme="light"
     />
-    <Provider store={store}>
-      <App />
-    </Provider>
+      <ShoppingProvider>
+          <Provider store={store}>
+              <App />
+          </Provider>
+      </ShoppingProvider>
+    
   </StrictMode>,
 )

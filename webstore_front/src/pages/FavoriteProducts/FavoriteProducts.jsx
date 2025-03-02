@@ -1,29 +1,20 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, ShoppingCart, Check } from 'lucide-react';
 import { products } from '../../data/productsData';
+import { useShopping } from '../../context/ShoppingContext';
 
 const FavoriteProducts = () => {
-    const [favoriteItems, setFavoriteItems] = useState(() => {
-        const savedFavorites = localStorage.getItem('favorites');
-        return savedFavorites ? JSON.parse(savedFavorites) : [];
-    });
-
-    const [cartItems, setCartItems] = useState(() => {
-        const savedCart = localStorage.getItem('cart');
-        return savedCart ? JSON.parse(savedCart) : [];
-    });
+    const {
+        cartItems,
+        favoriteItems,
+        addToCart,
+        removeFromFavorites,
+        isInCart
+    } = useShopping();
 
     const [selectedItems, setSelectedItems] = useState([]);
     const [isSelectMode, setIsSelectMode] = useState(false);
-
-    useEffect(() => {
-        localStorage.setItem('favorites', JSON.stringify(favoriteItems));
-    }, [favoriteItems]);
-
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cartItems));
-    }, [cartItems]);
 
     const toggleFavorite = (productId) => {
         if (isSelectMode) {
@@ -31,16 +22,7 @@ const FavoriteProducts = () => {
             return;
         }
 
-        setFavoriteItems(prevItems => {
-            if (prevItems.includes(productId)) {
-                return prevItems.filter(id => id !== productId);
-            } else {
-                setCartItems(prevCart =>
-                    prevCart.filter(id => id !== productId)
-                );
-                return [...prevItems, productId];
-            }
-        });
+        removeFromFavorites(productId);
     };
 
     const toggleSelect = (productId) => {
@@ -64,35 +46,22 @@ const FavoriteProducts = () => {
     };
 
     const addSelectedToCart = () => {
-
-        setCartItems(prevCart => {
-            const newCart = [...prevCart];
-
-            selectedItems.forEach(productId => {
-                if (!newCart.includes(productId)) {
-                    newCart.push(productId);
-                }
-            });
-
-            return newCart;
+        selectedItems.forEach(productId => {
+            if (!isInCart(productId)) {
+                addToCart(productId);
+            }
         });
-
-
-        setFavoriteItems(prevFavorites =>
-            prevFavorites.filter(id => !selectedItems.includes(id))
-        );
-
-
+        
+        selectedItems.forEach(productId => {
+            removeFromFavorites(productId);
+        });
+        
         setSelectedItems([]);
         setIsSelectMode(false);
     };
 
     const canAddToFavorites = (productId) => {
-        return !cartItems.includes(productId);
-    };
-    
-    const canAddToCart = (productId) => {
-        return !favoriteItems.includes(productId);
+        return !isInCart(productId);
     };
 
     const favoriteProducts = products.filter(product => favoriteItems.includes(product.id));

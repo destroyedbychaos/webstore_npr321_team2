@@ -56,7 +56,10 @@ namespace webstore_back.BLL.Services.ManufacturerService
 
         public async Task<ServiceResponse> GetAllAsync()
         {
-            var manufacturers = await _manufacturerRepository.GetAllAsync().ToListAsync();
+            var models = await _manufacturerRepository.GetAllAsync().ToListAsync();
+
+            var manufacturers = _mapper.Map<List<ManufacturerVM>>(models);
+
             return ServiceResponse.OkResponse("Виробники отримані", manufacturers);
         }
 
