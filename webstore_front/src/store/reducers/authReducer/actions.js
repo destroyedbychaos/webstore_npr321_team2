@@ -13,13 +13,13 @@ const saveToken = async (token) => {
     return null;
   }
 
-  localStorage.setItem("auth", token);
-
   const decodedToken = jwtDecode(token);
 
   const user = await getUser(decodedToken.id);
 
   if (!user) return;
+
+  localStorage.setItem("auth", token);
 
   return user;
 };

@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using webstore_back.DAL.Models.ProductManagement;
 using webstore_back.DAL.Repositories.ManufacturerRepository;
+using webstore_back.DAL.ViewModels.ProductManagementVMs;
 
 namespace webstore_back.BLL.Services.ManufacturerService
 {
     public class ManufacturerService : IManufacturerService
     {
         private readonly IManufacturerRepository _manufacturerRepository;
+        private readonly IMapper _mapper;
 
-        public ManufacturerService(IManufacturerRepository manufacturerRepository)
+        public ManufacturerService(IManufacturerRepository manufacturerRepository, IMapper mapper)
         {
             _manufacturerRepository = manufacturerRepository;
+            _mapper = mapper;
         }
 
         public async Task<ServiceResponse> GetByIdAsync(string id)
@@ -46,7 +50,10 @@ namespace webstore_back.BLL.Services.ManufacturerService
 
         public async Task<ServiceResponse> GetAllAsync()
         {
-            var manufacturers = await _manufacturerRepository.GetAllAsync().ToListAsync();
+            var models = await _manufacturerRepository.GetAllAsync().ToListAsync();
+
+            var manufacturers = _mapper.Map<List<ManufacturerVM>>(models);
+
             return ServiceResponse.OkResponse("Виробники отримані", manufacturers);
         }
 

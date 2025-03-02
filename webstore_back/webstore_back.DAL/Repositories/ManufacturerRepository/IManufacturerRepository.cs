@@ -10,5 +10,6 @@ namespace webstore_back.DAL.Repositories.ManufacturerRepository
         IQueryable<Manufacturer> GetAllAsync();
         Task<Manufacturer?> UpdateManufacturerAsync (Manufacturer manufacturer);
         Task<Manufacturer?> DeleteManufacturerAsync (string id);
+        Task<Manufacturer> LoadClothingAsync(Manufacturer manufacturer);
     }
 }
