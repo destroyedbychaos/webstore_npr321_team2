@@ -37,7 +37,7 @@ const ManufacturersList = () => {
                     </div>
                     <button className="add-button"
                             type="button"
-                            onClick={() => navigate(`/manufacterCreate`)}>
+                            onClick={() => navigate(`create`)}>
                         <Plus size={20} />
                     </button>
                 </div>
@@ -67,7 +67,7 @@ const ManufacturersList = () => {
                                 <div className="action-buttons">
                                     <button className="edit-button"
                                             type="button"
-                                            onClick={() => navigate(`/manufacterEdit/${manufacter.id}`)}>
+                                            onClick={() => navigate(`edit/${manufacter.id}`)}>
                                         <Edit2 size={20} />
                                     </button>
                                     <button className="delete-button"
