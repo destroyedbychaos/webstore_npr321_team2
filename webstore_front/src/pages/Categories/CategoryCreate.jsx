@@ -80,7 +80,7 @@ const CategoryCreate = () => {
                                         type="button"
                                         className="btn btn-outline-secondary px-4"
                                         style={{ borderColor: '#6f42c1', color: '#6f42c1' }}
-                                        onClick={() => navigate('/categoriesList')}>
+                                        onClick={() => navigate('/categories')}>
                                         <i className="bi bi-x-circle me-2"></i>
                                         Скасувати
                                     </button>
@@ -91,7 +91,7 @@ const CategoryCreate = () => {
                                             backgroundColor: '#6f42c1',
                                             transition: 'all 0.3s ease'
                                         }}
-                                        onClick={() => navigate('/categoriesList')}>
+                                        onClick={() => navigate('/categories')}>
                                         <i className="bi bi-check-circle me-2"></i>
                                         Створити категорію
                                     </button>

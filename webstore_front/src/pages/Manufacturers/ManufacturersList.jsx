@@ -4,6 +4,8 @@ import './style.css';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useActions } from '../../hooks/useActions';
+import ConfirmationModal from '../../components/DeleteComponent/ConfirmationModal';
+
 
 const ManufacturersList = () => {
     const navigate = useNavigate();
@@ -89,29 +91,17 @@ const ManufacturersList = () => {
                     </tbody>
                 </table>
             </div>
-            
-            {manufacturersToDelete && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <button className="modal-close"
-                                onClick={() => setManufacturersToDelete(null)}>
-                            <XCircle size={24} />
-                        </button>
-                        <h2>Видалити виробника?</h2>
-                        <p>Ви впевнені, що хочете видалити виробника з id <strong>{manufacturersToDelete}</strong>?</p>
-                        <div className="modal-actions">
-                            <button className="confirm-button"
-                                    onClick={() => handleDelete(manufacturersToDelete)}>
-                                Так, видалити
-                            </button>
-                            <button className="cancel-button"
-                                    onClick={() => setManufacturersToDelete(null)}>
-                                Скасувати
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+
+            <ConfirmationModal
+                isOpen={manufacturersToDelete !== null}
+                onClose={() => setManufacturersToDelete(null)}
+                onConfirm={handleDelete}
+                title="Видалити виробника?"
+                message="Ви впевнені, що хочете видалити виробника з id"
+                confirmText="Так, видалити"
+                cancelText="Скасувати"
+                itemId={manufacturersToDelete}
+            />
         </div>
     );
 };

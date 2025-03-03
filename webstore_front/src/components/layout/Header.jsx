@@ -8,9 +8,9 @@ import APP_ENV from "../../env";
 import './layout.css';
 
 const adminPages = [
-  { title: "Categories", path: "/categoriesList" },
-  { title: "Users", path: "/usersList" },
-  { title: "Products", path: "/productList" },
+  { title: "Categories", path: "/categories" },
+  { title: "Users", path: "/users" },
+  { title: "Clothing", path: "/clothing" },
   { title: "Manufacturers", path: "/manufacturers" },
 ];
 

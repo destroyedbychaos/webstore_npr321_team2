@@ -1,10 +1,11 @@
 ﻿import React, { useState } from 'react';
-import { Search, Plus, Edit2, Trash2, XCircle } from 'lucide-react';
+import { Search, Plus, Edit2, Trash2 } from 'lucide-react';
 import './style.css';
 import { products } from '../../data/productsData';
 import { useNavigate } from "react-router-dom";
+import ConfirmationModal from '../../components/DeleteComponent/ConfirmationModal';
 
-const ProductList = () => {
+const ClothingList = () => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
     const [productToDelete, setProductToDelete] = useState(null);
@@ -22,7 +23,7 @@ const ProductList = () => {
         <div className="product-list-container">
             <div className="product-list-header">
                 <h1 className="product-title">
-                    Продукти ({products.length})
+                    Одяг ({products.length})
                 </h1>
                 <div className="header-controls">
                     <div className="search-container">
@@ -37,7 +38,7 @@ const ProductList = () => {
                     </div>
                     <button className="add-button"
                             type="button"
-                            onClick={() => navigate(`/productCreate`)}>
+                            onClick={() => navigate(`create`)}>
                         <Plus size={20} />
                     </button>
                 </div>
@@ -84,7 +85,7 @@ const ProductList = () => {
                                 <div className="action-buttons">
                                     <button className="edit-button"
                                             type="button"
-                                            onClick={() => navigate(`/productEdit/${product.id}`)}>
+                                            onClick={() => navigate(`edit/${product.id}`)}>
                                         <Edit2 size={20} />
                                     </button>
                                     <button className="delete-button"
@@ -100,31 +101,18 @@ const ProductList = () => {
                 </table>
             </div>
 
-            {/* Модальне вікно підтвердження видалення */}
-            {productToDelete && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <button className="modal-close"
-                                onClick={() => setProductToDelete(null)}>
-                            <XCircle size={24} />
-                        </button>
-                        <h2>Видалити товар?</h2>
-                        <p>Ви впевнені, що хочете видалити товар з id <strong>{productToDelete}</strong>?</p>
-                        <div className="modal-actions">
-                            <button className="confirm-button"
-                                    onClick={() => handleDelete(productToDelete)}>
-                                Так, видалити
-                            </button>
-                            <button className="cancel-button"
-                                    onClick={() => setProductToDelete(null)}>
-                                Скасувати
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ConfirmationModal
+                isOpen={productToDelete !== null}
+                onClose={() => setProductToDelete(null)}
+                onConfirm={handleDelete}
+                title="Видалити товар?"
+                message="Ви впевнені, що хочете видалити товар з id"
+                confirmText="Так, видалити"
+                cancelText="Скасувати"
+                itemId={productToDelete}
+            />
         </div>
     );
 };
 
-export default ProductList;
+export default ClothingList;
