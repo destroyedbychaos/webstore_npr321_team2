@@ -5,11 +5,15 @@ import { categories } from '../../data/categoriesData';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './style.css';
 import { useShopping } from '../../context/ShoppingContext';
+import {useSelector} from "react-redux";
+import {useActions} from "../../hooks/useActions.js";
 
 const Products = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { cartItems, addToCart, removeFromCart, isInCart } = useShopping();
+  const {manufacturers} = useSelector(state => state.manufacturer);
+  const {loadManufacturers} = useActions();
 
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -23,6 +27,7 @@ const Products = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
   const [sortOption, setSortOption] = useState('');
+  const [selectedManufacturers, setSelectedManufacturers] = useState([]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -40,6 +45,10 @@ const Products = () => {
   }, [selectedCategory, navigate, location.search]);
 
   useEffect(() => {
+    loadManufacturers();
+  }, []);
+
+  useEffect(() => {
     setSelectedCategory(getInitialCategory());
   }, [location.search]);
 
@@ -54,6 +63,14 @@ const Products = () => {
     }
   };
 
+  const toggleManufacturer = (manufacturer) => {
+    setSelectedManufacturers(prev =>
+        prev.includes(manufacturer)
+            ? prev.filter(m => m !== manufacturer)
+            : [...prev, manufacturer]
+    );
+  };
+
   const filteredProducts = products
       .filter((product) => {
         const matchesCategory = selectedCategory === 'Всі категорії' || product.category === selectedCategory;
@@ -61,8 +78,11 @@ const Products = () => {
         const matchesPrice =
             (priceRange.min === '' || product.price >= parseInt(priceRange.min)) &&
             (priceRange.max === '' || product.price <= parseInt(priceRange.max));
+        const matchesManufacturer =
+            selectedManufacturers.length === 0 ||
+            selectedManufacturers.includes(product.manufacturer);
 
-        return matchesCategory && matchesSearch && matchesPrice;
+        return matchesCategory && matchesSearch && matchesPrice && matchesManufacturer;
       })
       .sort((a, b) => {
         if (sortOption === 'price-desc') {
@@ -110,6 +130,26 @@ const Products = () => {
                 </div>
 
                 <div className="mb-4">
+                  <h3 className="h6 mb-2">Виробники</h3>
+                  <div className="manufacturer-filter">
+                    {manufacturers.map((manufacturer) => (
+                        <div
+                            key={manufacturer.id}
+                            className={`manufacturer-item ${
+                                selectedManufacturers.includes(manufacturer.name) ? 'selected' : ''
+                            }`}
+                            onClick={() => toggleManufacturer(manufacturer.name)}
+                        >
+                        <span className="manufacturer-checkbox">
+                          {selectedManufacturers.includes(manufacturer.name) && '✓'}
+                        </span>
+                          <span className="manufacturer-name">{manufacturer.name}</span>
+                        </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mb-4">
                   <h3 className="h6 mb-2">Сортування</h3>
                   <select
                       className="form-select"
@@ -123,6 +163,7 @@ const Products = () => {
                     <option value="name-desc">Назва: від Я до А</option>
                   </select>
                 </div>
+
                 <div className="mb-4">
                   <h3 className="h6 mb-2">Ціна (грн)</h3>
                   <input
@@ -148,6 +189,7 @@ const Products = () => {
                       setSearchQuery('');
                       setSortOption('');
                       setPriceRange({ min: '', max: '' });
+                      setSelectedManufacturers([]);
                     }}
                 >
                   Скинути фільтри
