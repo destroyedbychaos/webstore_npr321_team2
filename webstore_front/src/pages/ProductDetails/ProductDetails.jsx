@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { Heart, ShoppingCart, ChevronRight } from 'lucide-react';
 import { products } from '../../data/productsData';
 import { useShopping } from '../../context/ShoppingContext';
 
@@ -11,13 +11,14 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
-  
+
   const {
     cartItems,
-    favoriteItems,
+    toggleFavorite,
     addToCart,
     removeFromCart,
-    addToFavorites,
+    isInCart,
+    isInFavorites,
     removeFromFavorites
   } = useShopping();
 
@@ -43,20 +44,7 @@ const ProductDetails = () => {
       addToCart(productId);
     }
   };
-
-  const toggleFavorite = (productId) => {
-    if (isInFavorites(productId)) {
-      removeFromFavorites(productId);
-    } else {
-      if (isInCart(productId)) {
-        removeFromCart(productId);
-      }
-      addToFavorites(productId);
-    }
-  };
-
-  const isInCart = (productId) => cartItems.some(item => item === productId);
-  const isInFavorites = (productId) => favoriteItems.some(item => item === productId);
+  
 
   if (isLoading) {
     return (
@@ -86,6 +74,36 @@ const ProductDetails = () => {
 
   return (
       <div className="container py-4">
+        <nav aria-label="breadcrumb" className="mb-4">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item d-flex align-items-center">
+              <Link to="/" className="text-dark text-decoration-none">Головна</Link>
+              <ChevronRight size={14} className="ms-1" />
+            </li>
+            <li className="breadcrumb-item d-flex align-items-center">
+              <Link to="/products" className="text-dark text-decoration-none">Одяг</Link>
+              <ChevronRight size={14} className="ms-1" />
+            </li>
+            <li className="breadcrumb-item d-flex align-items-center">
+              <Link to={`/products?category=${product.category}`} className="text-dark text-decoration-none">
+                {product.category}
+              </Link>
+              <ChevronRight size={14} className="ms-1" />
+            </li>
+            {product.manufacturer && (
+                <li className="breadcrumb-item d-flex align-items-center">
+                  <Link to={`/products?manufacturers=${product.manufacturer}`} className="text-dark text-decoration-none">
+                    {product.manufacturer}
+                  </Link>
+                  <ChevronRight size={14} className="ms-1" />
+                </li>
+            )}
+            <li className="breadcrumb-item active" aria-current="page">
+              {product.title}
+            </li>
+          </ol>
+        </nav>
+
         <div className="row justify-content-center">
           <div className="col-md-6 mb-4">
             <div className="position-relative">
@@ -181,6 +199,11 @@ const ProductDetails = () => {
                           <p>
                             Категорія: {product.category}
                           </p>
+                          {product.manufacturer && (
+                              <p>
+                                Виробник: {product.manufacturer}
+                              </p>
+                          )}
                           <p>
                             {product.desc}
                           </p>

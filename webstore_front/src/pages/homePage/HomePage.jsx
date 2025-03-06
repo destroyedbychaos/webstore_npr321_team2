@@ -1,20 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './style.css';
 import { Link } from 'react-router-dom';
 import { products } from '../../data/productsData';
 import { categories } from '../../data/categoriesData';
+import {useSelector} from "react-redux";
+import {useActions} from "../../hooks/useActions.js";
 
 const heroImages = [
-  'https://ager.ua/image/cachewebp/catalog/Banners/1ban/145%20(1)-2560x1107.webp',
-  'https://ager.ua/image/cachewebp/catalog/Banners/1ban/24-min-2560x1107.webp',
-  'https://ager.ua/image/cachewebp/catalog/Banners/1ban/777%20(5)-2560x1107.webp'
+    'https://media.boohoo.com/i/boohooamplience/0503_UK_40OFF_SPRING_ESSENTIALS_MENSWEAR_DESK_1920x759?qlt=default&fmt=auto',
+    'https://media.boohoo.com/i/boohooamplience/2702_SMART_SETS_DESK_1920x759_UK?qlt=default&fmt=auto',
+    'https://media.boohoo.com/i/boohooamplience/050325_DSK_1_UK_COWPRINT_V2?qlt=default&fmt=auto',
+    'https://media.boohoo.com/i/boohooamplience/2402_HOLIDAY_SHOP_APP_DESK_UK?qlt=default&fmt=auto',
 ];
 
 
 
 const HomePage = () => {
-  
-  const limitedProducts = products.slice(0, 4);
+    const {manufacturers} = useSelector(state => state.manufacturer);
+    const {loadManufacturers} = useActions();
+    const limitedProducts = products.slice(0, 4);
+
+    useEffect(() => {
+        loadManufacturers();
+    }, []);
 
   return (
     <div className="container-fluid p-0">
@@ -30,10 +38,8 @@ const HomePage = () => {
                     alt={`Спортивний одяг ${index + 1}`} 
                   />
                 </div>
-                <div className="carousel-caption text-start">
-                  <h1 className="display-4 fw-bold">Спортивний одяг</h1>
-                  <p className="lead">Комфорт та стиль для активного життя</p>
-                  <a href="/products" className="btn btn-primary btn-lg">Перейти до каталогу</a>
+                <div className="carousel-caption text-center">
+                  <a href="/products" className="btn btn-primary btn-lg">SHOP NOW</a>
                 </div>
               </div>
             ))}
@@ -85,31 +91,58 @@ const HomePage = () => {
 
         <div className="row mt-5">
           <div className="col-12">
-            <h2 className="mb-4">Категорії</h2>
+            <h2 className="mb-4">Виробники</h2>
           </div>
         </div>
 
-        <div className="row g-4">
-          {categories.map(category => (
-            <div className="col-12 col-md-4" key={category.id}>
-              <div className="category-card p-4 rounded-3 h-100 d-flex flex-column justify-content-between bg-light category-hover">
-                <div>
-                  <h3 className="h4 mb-3">{category.name}</h3>
-                  <p className="text-muted mb-0">{category.description}</p>
-                </div>
-                <div className="mt-3">
-                    <Link
-                        to={`/products?category=${category.name}`}
-                        className="text-decoration-none d-flex align-items-center gap-2"
-                    >
-                        Переглянути
-                        <i className="bi bi-arrow-right"></i>
-                    </Link>
-                </div>
+          <div className="row g-4">
+              {manufacturers.map(manufacturer => (
+                  <div className="col-12 col-md-4" key={manufacturer.id}>
+                      <div className="manufacturer-card d-flex flex-column justify-content-between">
+                          <div>
+                              <h3 className="h4">{manufacturer.name}</h3>
+                              <i className={`bi bi-shop brand-icon`}></i>
+                          </div>
+                          <div className="mt-3">
+                              <Link
+                                  to={`/products?manufacturers=${manufacturer.name}`}
+                                  className="text-decoration-none view-link"
+                              >
+                                  Переглянути
+                                  <i className="bi bi-arrow-right"></i>
+                              </Link>
+                          </div>
+                      </div>
+                  </div>
+              ))}
+          </div>
+          <div className="row mt-5">
+              <div className="col-12">
+                  <h2 className="mb-4">Категорії</h2>
               </div>
-            </div>
-          ))}
-        </div>
+          </div>
+
+          <div className="row g-4">
+              {categories.map(category => (
+                  <div className="col-12 col-md-4" key={category.id}>
+                      <div className="category-card p-4 rounded-3 h-100 d-flex flex-column justify-content-between bg-light category-hover">
+                          <div>
+                              <h3 className="h4 mb-3">{category.name}</h3>
+                              <p className="text-muted mb-0">{category.description}</p>
+                          </div>
+                          <div className="mt-3">
+                              <Link
+                                  to={`/products?category=${category.name}`}
+                                  className="text-decoration-none d-flex align-items-center gap-2"
+                              >
+                                  Переглянути
+                                  <i className="bi bi-arrow-right"></i>
+                              </Link>
+                          </div>
+                      </div>
+                  </div>
+              ))}
+          </div>
         <div class="container mt-10 mt-5">
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <div class="col">

@@ -11,45 +11,77 @@ import {useActions} from "../../hooks/useActions.js";
 const Products = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems, addToCart, removeFromCart, isInCart } = useShopping();
+  const { cartItems, addToCart, removeFromCart, isInCart,isInFavorites,removeFromFavorites } = useShopping();
   const {manufacturers} = useSelector(state => state.manufacturer);
   const {loadManufacturers} = useActions();
 
   const [isAnimating, setIsAnimating] = useState(false);
-
-  const getInitialCategory = () => {
+  
+  const getInitialFilters = () => {
     const queryParams = new URLSearchParams(location.search);
-    const categoryParam = queryParams.get('category');
-    return categoryParam || 'Всі категорії';
+    return {
+      category: queryParams.get('category') || 'Всі категорії',
+      search: queryParams.get('search') || '',
+      minPrice: queryParams.get('minPrice') || '',
+      maxPrice: queryParams.get('maxPrice') || '',
+      sort: queryParams.get('sort') || '',
+      manufacturers: queryParams.get('manufacturers') ? queryParams.get('manufacturers').split(',') : []
+    };
   };
 
-  const [selectedCategory, setSelectedCategory] = useState(getInitialCategory());
-  const [searchQuery, setSearchQuery] = useState('');
-  const [priceRange, setPriceRange] = useState({ min: '', max: '' });
-  const [sortOption, setSortOption] = useState('');
-  const [selectedManufacturers, setSelectedManufacturers] = useState([]);
-
+  const initialFilters = getInitialFilters();
+  const [selectedCategory, setSelectedCategory] = useState(initialFilters.category);
+  const [searchQuery, setSearchQuery] = useState(initialFilters.search);
+  const [priceRange, setPriceRange] = useState({
+    min: initialFilters.minPrice,
+    max: initialFilters.maxPrice
+  });
+  const [sortOption, setSortOption] = useState(initialFilters.sort);
+  const [selectedManufacturers, setSelectedManufacturers] = useState(initialFilters.manufacturers);
+  
+  
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
+    const queryParams = new URLSearchParams();
 
     if (selectedCategory !== 'Всі категорії') {
       queryParams.set('category', selectedCategory);
-    } else {
-      queryParams.delete('category');
+    }
+    
+
+    if (priceRange.min) {
+      queryParams.set('minPrice', priceRange.min);
+    }
+
+    if (priceRange.max) {
+      queryParams.set('maxPrice', priceRange.max);
+    }
+
+    if (sortOption) {
+      queryParams.set('sort', sortOption);
+    }
+
+    if (selectedManufacturers.length > 0) {
+      queryParams.set('manufacturers', selectedManufacturers.join(','));
     }
 
     const newSearch = queryParams.toString();
     const searchString = newSearch ? `?${newSearch}` : '';
 
     navigate(`/products${searchString}`, { replace: true });
-  }, [selectedCategory, navigate, location.search]);
+  }, [selectedCategory, searchQuery, priceRange, sortOption, selectedManufacturers, navigate]);
 
   useEffect(() => {
     loadManufacturers();
   }, []);
 
+
   useEffect(() => {
-    setSelectedCategory(getInitialCategory());
+    const newFilters = getInitialFilters();
+    setSelectedCategory(newFilters.category);
+    setSearchQuery(newFilters.search);
+    setPriceRange({ min: newFilters.minPrice, max: newFilters.maxPrice });
+    setSortOption(newFilters.sort);
+    setSelectedManufacturers(newFilters.manufacturers);
   }, [location.search]);
 
   const toggleCart = (productId) => {
@@ -59,6 +91,9 @@ const Products = () => {
     if (isInCart(productId)) {
       removeFromCart(productId);
     } else {
+      if (isInFavorites(productId)) {
+        removeFromFavorites(productId);
+      }
       addToCart(productId);
     }
   };
@@ -69,6 +104,14 @@ const Products = () => {
             ? prev.filter(m => m !== manufacturer)
             : [...prev, manufacturer]
     );
+  };
+
+  const resetFilters = () => {
+    setSelectedCategory('Всі категорії');
+    setSearchQuery('');
+    setSortOption('');
+    setPriceRange({ min: '', max: '' });
+    setSelectedManufacturers([]);
   };
 
   const filteredProducts = products
@@ -184,13 +227,7 @@ const Products = () => {
 
                 <button
                     className="btn btn-primary w-100 mb-2"
-                    onClick={() => {
-                      setSelectedCategory('Всі категорії');
-                      setSearchQuery('');
-                      setSortOption('');
-                      setPriceRange({ min: '', max: '' });
-                      setSelectedManufacturers([]);
-                    }}
+                    onClick={resetFilters}
                 >
                   Скинути фільтри
                 </button>
