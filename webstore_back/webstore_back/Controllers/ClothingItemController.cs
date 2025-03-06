@@ -4,6 +4,7 @@ using webstore_back.BLL.Services.CategoryService;
 using webstore_back.BLL.Validators;
 using webstore_back.DAL.Repositories.ProductRepository;
 using webstore_back.DAL.ViewModels.ProductManagementVMs;
+using webstore_back.DAL.ViewModels.ProductManagementVMs.Category;
 
 namespace webstore_back.Controllers
 {
@@ -17,14 +18,14 @@ namespace webstore_back.Controllers
             _clothingItemService = clothingItemService;
         }
         
-        [HttpGet("getall")]
+        [HttpGet("get-all")]
         public async Task<IActionResult> GetAllAsync()
         {
             var response = await _clothingItemService.GetAllAsync();
             return GetResult(response);
         }
         
-        [HttpGet("getbyid")]
+        [HttpGet("get-by-id")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id)) {
@@ -39,7 +40,7 @@ namespace webstore_back.Controllers
 
         }
         
-        [HttpGet("getbyname")]
+        [HttpGet("get-by-name")]
         public async Task<IActionResult> GetByNameAsync(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -55,7 +56,7 @@ namespace webstore_back.Controllers
 
         }
         
-        [HttpGet("getbymanufacturerid")]
+        [HttpGet("get-by-manufacturer-id")]
         public async Task<IActionResult> GetByManufacturerIdAsync(string manufacturerId)
         {
             if (string.IsNullOrEmpty(manufacturerId))
@@ -70,7 +71,7 @@ namespace webstore_back.Controllers
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не знайдено."));
         }
         
-        [HttpGet("getbymanufacturername")]
+        [HttpGet("get-by-manufacturer-name")]
         public async Task<IActionResult> GetByManufacturerNameAsync(string manufacturerName)
         {
             if (string.IsNullOrEmpty(manufacturerName))
@@ -85,7 +86,7 @@ namespace webstore_back.Controllers
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не знайдено."));
         }
         
-        [HttpGet("getbycategoryid")]
+        [HttpGet("get-by-category-id")]
         public async Task<IActionResult> GetByCategoryIdAsync(string categoryId)
         {
             if (string.IsNullOrEmpty(categoryId))
@@ -100,7 +101,7 @@ namespace webstore_back.Controllers
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не знайдено."));
         }
         
-        [HttpGet("getbycategoryname")]
+        [HttpGet("get-by-category-name")]
         public async Task<IActionResult> GetByCategoryNameAsync(string categoryName)
         {
             if (string.IsNullOrEmpty(categoryName))
@@ -116,9 +117,9 @@ namespace webstore_back.Controllers
         }
         
         [HttpPost("create")]
-        public async Task<IActionResult> CreateClothingItemASync(ClothingItemVM model)
+        public async Task<IActionResult> CreateClothingItemASync(CreateClothingItemVM model)
         {
-            var validator = new ClothingItemVMValidator();
+            var validator = new CreateClothingItemVMValidator();
             var validateResult = await validator.ValidateAsync(model);
             if(!validateResult.IsValid)
             {
@@ -128,10 +129,10 @@ namespace webstore_back.Controllers
             return GetResult(response);
         }
         
-        [HttpPost("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateClothingItemAsync(ClothingItemVM model)
         {
-            var validator = new ClothingItemVMValidator();
+            var validator = new UpdateClothingItemVMValidator();
             var validateResult = await validator.ValidateAsync(model);
             if (!validateResult.IsValid)
             {

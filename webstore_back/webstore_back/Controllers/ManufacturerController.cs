@@ -17,14 +17,14 @@ namespace webstore_back.Controllers
             _manufacturerService = manufacturerService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet("get-all")]
         public async Task<IActionResult> GetAllAsync()
         {
             var response = await _manufacturerService.GetAllAsync();
             return GetResult(response);
         }
 
-        [HttpGet("getbyid")]
+        [HttpGet("get-by-id")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -36,7 +36,7 @@ namespace webstore_back.Controllers
             return GetResult(response);
         }
 
-        [HttpGet("getbyname")]
+        [HttpGet("get-by-name")]
         public async Task<IActionResult> GetByNameAsync(string name)
         {
             if (string.IsNullOrEmpty(name))

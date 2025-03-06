@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Net.Mime;
+using Microsoft.EntityFrameworkCore;
 using webstore_back.DAL.Data;
 using webstore_back.DAL.Models.ProductManagement;
 
@@ -30,12 +31,13 @@ namespace webstore_back.DAL.Repositories.ProductRepository
 
         public async Task<List<ClothingItem>> GetByManufacturerNameAsync(string manufacturerName)
         {
-            return await _appDbContext.ClothingItems.Where(p => p.Manufacturer.Name.Contains(manufacturerName)).ToListAsync();
+            return await _appDbContext.ClothingItems.Where(p => p.Manufacturer.Name.Contains(manufacturerName))
+                .ToListAsync();
         }
 
         public async Task<ClothingItem> CreateProductAsync(ClothingItem product)
         {
-            _appDbContext.ClothingItems.Add(product);
+            await _appDbContext.ClothingItems.AddAsync(product);
             await _appDbContext.SaveChangesAsync();
             return product;
         }
@@ -47,16 +49,22 @@ namespace webstore_back.DAL.Repositories.ProductRepository
 
         public async Task<ClothingItem?> UpdateProductAsync(ClothingItem product)
         {
-            var existingProduct = await _appDbContext.ClothingItems.FindAsync(product.Id);
+            var existingProduct = await _appDbContext.ClothingItems.AsNoTracking()
+                .Include(c => c.Images)
+                .FirstOrDefaultAsync(m => m.Id == product.Id);
+
             if (existingProduct == null)
             {
                 return null;
             }
 
-            await _appDbContext.ClothingItems.AddAsync(product);
+            _appDbContext.ChangeTracker.Clear();
+
+            _appDbContext.ClothingItems.Update(product);
+
             await _appDbContext.SaveChangesAsync();
 
-            return existingProduct;
+            return product;
         }
 
         public async Task<ClothingItem?> DeleteProductAsync(string id)

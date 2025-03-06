@@ -419,13 +419,13 @@ namespace webstore_back.DAL.Migrations
             modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItem", b =>
                 {
                     b.HasOne("webstore_back.DAL.Models.ProductManagement.Category", "Category")
-                        .WithMany("ClothingItems")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webstore_back.DAL.Models.ProductManagement.Manufacturer", "Manufacturer")
-                        .WithMany("ClothingItems")
+                        .WithMany()
                         .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -477,19 +477,9 @@ namespace webstore_back.DAL.Migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Category", b =>
-                {
-                    b.Navigation("ClothingItems");
-                });
-
             modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItem", b =>
                 {
                     b.Navigation("Images");
-                });
-
-            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Manufacturer", b =>
-                {
-                    b.Navigation("ClothingItems");
                 });
 #pragma warning restore 612, 618
         }

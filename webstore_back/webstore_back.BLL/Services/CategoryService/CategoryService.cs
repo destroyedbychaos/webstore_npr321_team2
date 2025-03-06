@@ -77,14 +77,14 @@ namespace webstore_back.BLL.Services.CategoryService
             return ServiceResponse.OkResponse("Категорію видалено", deletedCategory);
         }
 
-        public async Task<ServiceResponse> GetCategoryClothingItemsById(string id)
-        {
-            var category = await _categoryRepository.GetCategoryClothingItemsById(id);
-            if (category == null)
-            {
-                return ServiceResponse.BadRequestResponse("Категорію не знайдено", null);
-            }
-            return ServiceResponse.OkResponse("Категорію отримано", category);
-        }
+        // public async Task<ServiceResponse> GetCategoryClothingItemsById(string id)
+        // {
+        //     var category = await _categoryRepository.GetCategoryClothingItemsById(id);
+        //     if (category == null)
+        //     {
+        //         return ServiceResponse.BadRequestResponse("Категорію не знайдено", null);
+        //     }
+        //     return ServiceResponse.OkResponse("Категорію отримано", category);
+        // }
     }
 }

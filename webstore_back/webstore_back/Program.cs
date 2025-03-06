@@ -88,6 +88,7 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
 
 // Add repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();

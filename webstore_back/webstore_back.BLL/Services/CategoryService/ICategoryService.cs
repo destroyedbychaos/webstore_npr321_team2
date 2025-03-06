@@ -12,6 +12,6 @@ namespace webstore_back.BLL.Services.CategoryService
         Task<ServiceResponse> GetAllAsync();
         Task<ServiceResponse> UpdateCategoryAsync(CategoryVM model);
         Task<ServiceResponse> DeleteCategoryAsync(string id);
-        Task<ServiceResponse> GetCategoryClothingItemsById(string id);
+       //Task<ServiceResponse> GetCategoryClothingItemsById(string id);
     }
 }

@@ -5,10 +5,12 @@ using webstore_back.DAL.ViewModels.ProductManagementVMs;
 
 namespace webstore_back.BLL.Validators
 {
-    public class ClothingItemVMValidator : AbstractValidator<ClothingItemVM>
+    public class UpdateClothingItemVMValidator : AbstractValidator<ClothingItemVM>
     {
-        public ClothingItemVMValidator()
+        public UpdateClothingItemVMValidator()
         {
+            RuleFor(m => m.Id)
+                .NotEmpty().WithMessage("Вкажіть id.");
             RuleFor(m => m.Name)
                 .MaximumLength(50).WithMessage("Максимальна довжина назви 50 символів.")
                 .NotEmpty().WithMessage("Вкажіть назву.");
@@ -18,7 +20,7 @@ namespace webstore_back.BLL.Validators
                 .MaximumLength(80).WithMessage("Максимальна довжина опису 80 символівю");
             RuleFor(m => m.StockQuantity)
                 .GreaterThan(0).WithMessage("Мінімальна кількість = 1");
-            RuleFor(m => m.Manufacturer)
+            RuleFor(m => m.ManufacturerId)
                 .NotEmpty().WithMessage("Вкажіть виробника.");
         }
     }

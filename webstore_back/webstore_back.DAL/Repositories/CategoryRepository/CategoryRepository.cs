@@ -37,17 +37,16 @@ namespace webstore_back.DAL.Repositories.CategoryRepository
 
         public async Task<Category?> UpdateCategoryAsync(Category category)
         {
-            var existingCategory = await _appDbContext.Categories.FindAsync(category.Id);
+            var existingCategory = await _appDbContext.Categories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == category.Id);
             if (existingCategory == null)
             {
                 return null;
             }
-            
-            existingCategory.Name = category.Name;
-            
+
+            _appDbContext.Update(existingCategory);
             await _appDbContext.SaveChangesAsync();
 
-            return existingCategory;
+            return category;
         }
 
         public async Task<Category?> DeleteCategoryAsync(string id)
@@ -62,16 +61,6 @@ namespace webstore_back.DAL.Repositories.CategoryRepository
             await _appDbContext.SaveChangesAsync();
 
             return category;
-        }
-
-        public async Task<ICollection<ClothingItem?>?> GetCategoryClothingItemsById(string id)
-        {
-            var category = await _appDbContext.Categories.Include(c => c.ClothingItems).FirstOrDefaultAsync(c => c.Id == id);
-            if (category == null)
-            {
-                return null;
-            }
-            return category.ClothingItems;
         }
     }
 }

@@ -37,18 +37,17 @@ namespace webstore_back.DAL.Repositories.ManufacturerRepository
 
         public async Task<Manufacturer?> UpdateManufacturerAsync(Manufacturer manufacturer)
         {
-            var existingManufacturer = await _appDbContext.Manufacturers.FindAsync(manufacturer.Id);
+            var existingManufacturer = await _appDbContext.Manufacturers.AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == manufacturer.Id);
             if (existingManufacturer == null)
             {
                 return null;
             }
-            
-            existingManufacturer.Name = manufacturer.Name;
-            existingManufacturer.Rating = manufacturer.Rating;
 
+            _appDbContext.Manufacturers.Update(manufacturer);
             await _appDbContext.SaveChangesAsync();
 
-            return existingManufacturer;
+            return manufacturer;
         }
 
         public async Task<Manufacturer?> DeleteManufacturerAsync(string id)
@@ -65,16 +64,16 @@ namespace webstore_back.DAL.Repositories.ManufacturerRepository
             return manufacturer;
         }
 
-        public async Task<Manufacturer> LoadClothingAsync(Manufacturer manufacturer)
-        {
-            await _appDbContext
-                .Entry(manufacturer)
-                .Collection(m => m.ClothingItems)
-                .Query()
-                .Include(c => c.Category)
-                .LoadAsync();
-
-            return manufacturer;
-        }
+        // public async Task<Manufacturer> LoadClothingAsync(Manufacturer manufacturer)
+        // {
+        //     await _appDbContext
+        //         .Entry(manufacturer)
+        //         .Collection(m => m.ClothingItems)
+        //         .Query()
+        //         .Include(c => c.Category)
+        //         .LoadAsync();
+        //
+        //     return manufacturer;
+        // }
     }
 }

@@ -16,14 +16,14 @@ namespace webstore_back.Controllers
             _categoryService = categoryService;
         }
         
-        [HttpGet("getall")]
+        [HttpGet("get-all")]
         public async Task<IActionResult> GetAllAsync()
         {
             var response = await _categoryService.GetAllAsync();
             return GetResult(response);
         }
         
-        [HttpGet("getbyid")]
+        [HttpGet("get-by-id")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -38,7 +38,7 @@ namespace webstore_back.Controllers
             return BadRequest(ServiceResponse.BadRequestResponse("Категорію не знайдено."));
         }
         
-        [HttpGet("getbyname")]
+        [HttpGet("get-by-name")]
         public async Task<IActionResult> GetByNameAsync(string name)
         {
             if (string.IsNullOrEmpty(name))

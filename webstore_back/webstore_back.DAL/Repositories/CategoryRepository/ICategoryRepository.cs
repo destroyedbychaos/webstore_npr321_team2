@@ -10,6 +10,5 @@ namespace webstore_back.DAL.Repositories.CategoryRepository
         IQueryable<Category> GetAllAsync();
         Task<Category?> UpdateCategoryAsync (Category category); 
         Task<Category?> DeleteCategoryAsync (string id);
-        Task<ICollection<ClothingItem?>?> GetCategoryClothingItemsById(string id);
     }
 }

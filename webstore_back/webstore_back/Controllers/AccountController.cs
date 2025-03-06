@@ -51,7 +51,7 @@ namespace webstore_back.Controllers
             return GetResult(response);
         }
 
-        [HttpGet("emailconfirm")]
+        [HttpGet("email-confirm")]
         public async Task<IActionResult> EmailConfirmAsync(string u, string t)
         {
             if (string.IsNullOrEmpty(u) || string.IsNullOrEmpty(t))

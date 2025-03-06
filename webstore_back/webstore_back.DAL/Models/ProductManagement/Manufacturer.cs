@@ -10,6 +10,5 @@ namespace webstore_back.DAL.Models.ProductManagement
         public required string Name { get; set; }
         [Range(0, 10)]
         public int Rating { get; set; } = 0;
-        public ICollection<ClothingItem> ClothingItems { get; set; } = [];
     }
 }

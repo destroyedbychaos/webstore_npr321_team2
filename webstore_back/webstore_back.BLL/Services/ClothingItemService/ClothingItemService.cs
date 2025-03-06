@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using webstore_back.DAL.Models.ProductManagement;
 using webstore_back.DAL.Repositories.CategoryRepository;
@@ -17,11 +18,13 @@ namespace webstore_back.BLL.Services.CategoryService
         private readonly IClothingItemRepository _productRepository;
         private readonly IManufacturerRepository _manufacturerRepository;
         private readonly ICategoryRepository _categoryRepository;
-        public ClothingItemService(IClothingItemRepository productRepository, IManufacturerRepository manufacturerRepository, ICategoryRepository categoryRepository)
+        private readonly IMapper _mapper;
+        public ClothingItemService(IClothingItemRepository productRepository, IManufacturerRepository manufacturerRepository, ICategoryRepository categoryRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _manufacturerRepository = manufacturerRepository;
             _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
         public async Task<ServiceResponse> GetByIdAsync(string id)
@@ -64,21 +67,14 @@ namespace webstore_back.BLL.Services.CategoryService
             return ServiceResponse.OkResponse("Товар отримано.", products);
         }
 
-        public async Task<ServiceResponse> CreateProductAsync(ClothingItemVM model)
+        public async Task<ServiceResponse> CreateProductAsync(CreateClothingItemVM model)
         {
-            var manufacturer = await _manufacturerRepository.GetByNameAsync(model.Manufacturer);
-            var category = await _categoryRepository.GetByNameAsync(model.Category);
+            var manufacturer = await _manufacturerRepository.GetByIdAsync(model.ManufacturerId);
+            var category = await _categoryRepository.GetByIdAsync(model.CategoryId);
 
             if (category != null && manufacturer != null)
             {
-                var product = new ClothingItem
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = model.Name,
-                    Price = model.Price,
-                    ManufacturerId = manufacturer.Id,
-                    CategoryId = category.Id
-                };
+                var product = _mapper.Map<ClothingItem>(model);
                 var createdProduct = await _productRepository.CreateProductAsync(product);
 
                 return ServiceResponse.OkResponse("Товар створено", createdProduct);
@@ -94,25 +90,25 @@ namespace webstore_back.BLL.Services.CategoryService
 
         public async Task<ServiceResponse> UpdateProductAsync(ClothingItemVM model)
         {
-            var product = await _productRepository.GetByIdAsync(model.Id.ToString());
-            if (product == null)
+            var isProductExist = await _productRepository.GetByIdAsync(model.Id.ToString());
+            if (isProductExist == null)
             {
                 return ServiceResponse.BadRequestResponse("Товару не знайдено");
             }
+            
+            var manufacturer = await _manufacturerRepository.GetByIdAsync(model.ManufacturerId);
+            if (manufacturer == null)
+            {
+                return ServiceResponse.BadRequestResponse("Інформацію не про товар оновлено. Виробника не знайдено.");
+            }
+            var category = await _categoryRepository.GetByIdAsync(model.CategoryId);
+            if (category == null)
+            {
+                return ServiceResponse.BadRequestResponse("Інформацію не про товар оновлено. Категорію не знайдено.");
 
-            product.Name = model.Name;
-            product.Price = model.Price;
-            var manufacturer = await _manufacturerRepository.GetByNameAsync(model.Manufacturer);
-            if (manufacturer != null)
-            {
-                product.ManufacturerId = manufacturer.Id;
             }
-            var category = await _categoryRepository.GetByNameAsync(model.Category);
-            if (category != null)
-            {
-                product.CategoryId = category.Id;
-            }
-            var updatedProduct = await _productRepository.UpdateProductAsync(product);
+            
+            var updatedProduct = await _productRepository.UpdateProductAsync(_mapper.Map<ClothingItem>(model));
 
             return ServiceResponse.OkResponse("Інформацію про товар оновлено");
         }
