@@ -1,11 +1,13 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { categories } from "../../data/categoriesData.js";
+import ConfirmationModal from '../../components/DeleteComponent/ConfirmationModal';
 
 const CategoryEdit = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [categoryData, setCategoryData] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -36,8 +38,9 @@ const CategoryEdit = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Updated category data:', formData);
-        navigate('/categoriesList');
+        navigate('/categories');
     };
+    
 
     if (!categoryData) {
         return (
@@ -104,11 +107,7 @@ const CategoryEdit = () => {
                                     <button
                                         type="button"
                                         className="btn btn-danger"
-                                        onClick={() => {
-                                            if (window.confirm('Ви впевнені, що хочете видалити цю категорію?')) {
-                                                navigate('/categoriesList');
-                                            }
-                                        }}
+                                        onClick={() => setShowDeleteModal(true)}
                                     >
                                         <i className="bi bi-trash me-2"></i>
                                         Видалити категорію
@@ -119,7 +118,7 @@ const CategoryEdit = () => {
                                             type="button"
                                             className="btn btn-outline-secondary px-4"
                                             style={{ borderColor: '#6f42c1', color: '#6f42c1' }}
-                                            onClick={() => navigate('/categoriesList')}
+                                            onClick={() => navigate('/categories')}
                                         >
                                             <i className="bi bi-x-circle me-2"></i>
                                             Скасувати
@@ -142,6 +141,16 @@ const CategoryEdit = () => {
                     </div>
                 </div>
             </div>
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={() => navigate('/categories')}
+                title="Видалити категорію?"
+                message="Ви впевнені, що хочете видалити категорію з id"
+                confirmText="Так, видалити"
+                cancelText="Скасувати"
+                itemId={categoryData?.id}
+            />
         </div>
     );
 };

@@ -3,7 +3,7 @@ import { Search, Plus, Edit2, Trash2, XCircle } from 'lucide-react';
 import './style.css';
 import {categories} from '../../data/categoriesData';
 import { useNavigate } from "react-router-dom";
-
+import ConfirmationModal from '../../components/DeleteComponent/ConfirmationModal';
 const CategoriesList = () => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
@@ -37,7 +37,7 @@ const CategoriesList = () => {
                     </div>
                     <button className="add-button"
                             type="button"
-                            onClick={() => navigate(`/categoryCreate`)}>
+                            onClick={() => navigate(`create`)}>
                         <Plus size={20} />
                     </button>
                 </div>
@@ -69,7 +69,7 @@ const CategoriesList = () => {
                                 <div className="action-buttons">
                                     <button className="edit-button"
                                             type="button"
-                                            onClick={() => navigate(`/categoryEdit/${category.id}`)}>
+                                            onClick={() => navigate(`edit/${category.id}`)}>
                                         <Edit2 size={20} />
                                     </button>
                                     <button className="delete-button"
@@ -85,29 +85,16 @@ const CategoriesList = () => {
                 </table>
             </div>
 
-            {/* Модальне вікно підтвердження видалення */}
-            {categoriesToDelete && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <button className="modal-close"
-                                onClick={() => setCategoriesToDelete(null)}>
-                            <XCircle size={24} />
-                        </button>
-                        <h2>Видалити категорію?</h2>
-                        <p>Ви впевнені, що хочете видалити категорію з id <strong>{categoriesToDelete}</strong>?</p>
-                        <div className="modal-actions">
-                            <button className="confirm-button"
-                                    onClick={() => handleDelete(categoriesToDelete)}>
-                                Так, видалити
-                            </button>
-                            <button className="cancel-button"
-                                    onClick={() => setCategoriesToDelete(null)}>
-                                Скасувати
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ConfirmationModal
+                isOpen={categoriesToDelete !== null}
+                onClose={() => setCategoriesToDelete(null)}
+                onConfirm={handleDelete}
+                title="Видалити категорію?"
+                message="Ви впевнені, що хочете видалити категорію з id"
+                confirmText="Так, видалити"
+                cancelText="Скасувати"
+                itemId={categoriesToDelete}
+            />
         </div>
     );
 };

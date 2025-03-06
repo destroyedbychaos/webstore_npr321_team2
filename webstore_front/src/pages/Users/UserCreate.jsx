@@ -84,7 +84,7 @@ const UserCreate = () => {
                         </div>
 
                         <div className="card-body p-4">
-                            <form onSubmit={() => navigate('/usersList')}>
+                            <form onSubmit={() => navigate('/users')}>
                                 <div className="row">
                                     <div className="col-md-6 pe-md-4">
                                         {/* Left Column */}
@@ -212,7 +212,7 @@ const UserCreate = () => {
                                         type="button"
                                         className="btn btn-outline-secondary px-4"
                                         style={{ borderColor: '#6f42c1', color: '#6f42c1' }}
-                                        onClick={() => navigate('/usersList')}>
+                                        onClick={() => navigate('/users')}>
                                         <i className="bi bi-x-circle me-2"></i>
                                         Скасувати
                                     </button>

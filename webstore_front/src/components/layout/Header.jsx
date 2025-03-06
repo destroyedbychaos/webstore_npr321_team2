@@ -8,9 +8,9 @@ import APP_ENV from "../../env";
 import './layout.css';
 
 const adminPages = [
-  { title: "Categories", path: "/categoriesList" },
-  { title: "Users", path: "/usersList" },
-  { title: "Products", path: "/productList" },
+  { title: "Categories", path: "/categories" },
+  { title: "Users", path: "/users" },
+  { title: "Clothing", path: "/clothing" },
   { title: "Manufacturers", path: "/manufacturers" },
 ];
 
@@ -121,7 +121,15 @@ const Header = memo(() => {
                           />
                           <span className="fw-medium">{user.name}</span>
                         </a>
+                        
                         <ul className="dropdown-menu dropdown-menu-end shadow">
+                          {role === "admin" && (
+                              <li>
+                                <Link className="dropdown-item" to="/profile">
+                                  My Profile
+                                </Link>
+                              </li>
+                          )}
                           {role === "admin" && adminPages.map((page) => (
                               <li key={page.path}>
                                 <Link className="dropdown-item" to={page.path}>
@@ -129,6 +137,7 @@ const Header = memo(() => {
                                 </Link>
                               </li>
                           ))}
+                          
                           {role === "user" && (
                               <li>
                                 <Link className="dropdown-item" to="/profile">
@@ -136,7 +145,6 @@ const Header = memo(() => {
                                 </Link>
                               </li>
                           )}
-                          <li><Link className="dropdown-item" to="/settings">Settings</Link></li>
                           <li><hr className="dropdown-divider" /></li>
                           <li>
                             <button className="dropdown-item text-danger" onClick={logoutHandler}>

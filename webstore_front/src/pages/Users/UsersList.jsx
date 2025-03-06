@@ -3,7 +3,7 @@ import { Search, Plus, Edit2, Trash2, XCircle } from 'lucide-react';
 import './style.css';
 import { users } from '../../data/usersData';
 import { useNavigate } from "react-router-dom";
-
+import ConfirmationModal from '../../components/DeleteComponent/ConfirmationModal';
 const UsersList = () => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
@@ -39,7 +39,7 @@ const UsersList = () => {
                     </div>
                     <button className="add-button"
                             type="button"
-                            onClick={() => navigate(`/userCreate`)}>
+                            onClick={() => navigate(`create`)}>
                         <Plus size={20} />
                     </button>
                 </div>
@@ -78,7 +78,7 @@ const UsersList = () => {
                                 <div className="action-buttons">
                                     <button className="edit-button"
                                             type="button"
-                                            onClick={() => navigate(`/userEdit/${user.id}`)}>
+                                            onClick={() => navigate(`edit/${user.id}`)}>
                                         <Edit2 size={20} />
                                     </button>
                                     <button className="delete-button"
@@ -94,29 +94,16 @@ const UsersList = () => {
                 </table>
             </div>
 
-            {/* Модальне вікно підтвердження видалення */}
-            {userToDelete && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <button className="modal-close"
-                                onClick={() => setUserToDelete(null)}>
-                            <XCircle size={24} />
-                        </button>
-                        <h2>Видалити користувача?</h2>
-                        <p>Ви впевнені, що хочете видалити користувача з id <strong>{userToDelete}</strong>?</p>
-                        <div className="modal-actions">
-                            <button className="confirm-button"
-                                    onClick={() => handleDelete(userToDelete)}>
-                                Так, видалити
-                            </button>
-                            <button className="cancel-button"
-                                    onClick={() => setUserToDelete(null)}>
-                                Скасувати
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ConfirmationModal
+                isOpen={userToDelete !== null}
+                onClose={() => setUserToDelete(null)}
+                onConfirm={handleDelete}
+                title="Видалити каристувача?"
+                message="Ви впевнені, що хочете видалити користувача з id"
+                confirmText="Так, видалити"
+                cancelText="Скасувати"
+                itemId={userToDelete}
+            />
         </div>
     );
 };

@@ -1,8 +1,10 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import ConfirmationModal from '../../components/DeleteComponent/ConfirmationModal';
 
 const ManufacterEdit = () => {
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const { id } = useParams();
     const navigate = useNavigate();
     const [manufacterData, setManufacterData] = useState(null);
@@ -26,6 +28,11 @@ const ManufacterEdit = () => {
         }
     }, [id, navigate]);
 
+
+    const handleDelete = (id) => {
+        console.log(`Виробник з id ${id} видалено`);
+        navigate('/manufacturers');
+    };
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -93,11 +100,7 @@ const ManufacterEdit = () => {
                                     <button
                                         type="button"
                                         className="btn btn-danger"
-                                        onClick={() => {
-                                            if (window.confirm('Ви впевнені, що хочете видалити цього виробника?')) {
-                                                navigate('/manufacturers');
-                                            }
-                                        }}
+                                        onClick={() => setShowDeleteModal(true)}
                                     >
                                         <i className="bi bi-trash me-2"></i>
                                         Видалити виробника
@@ -131,6 +134,16 @@ const ManufacterEdit = () => {
                     </div>
                 </div>
             </div>
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleDelete}
+                title="Видалити виробника?"
+                message="Ви впевнені, що хочете видалити виробника з id"
+                confirmText="Так, видалити"
+                cancelText="Скасувати"
+                itemId={manufacterData?.id}
+            />
         </div>
     );
 };

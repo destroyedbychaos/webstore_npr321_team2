@@ -68,48 +68,129 @@ const Register = () => {
   }, [isAuth, navigate]);
 
   return (
-    <div className="container align-items-center d-flex flex-column my-4">
-      <div className="register-box w-50">
-        <form
-          onSubmit={handleSubmit}
-          className="form d-flex flex-column gap-3 text-start align-items-center"
-        >
-          <h1>Sign Up</h1>
-          {[
-            { label: "User Name", name: "userName" },
-            { label: "First Name", name: "firstName" },
-            { label: "Last Name", name: "lastName" },
-            { label: "Email Address", name: "email", type: "email" },
-            { label: "Password", name: "password", type: "password" },
-            {
-              label: "Confirm Password",
-              name: "confirmPassword",
-              type: "password",
-            },
-          ].map(({ label, name, type = "text" }) => (
-            <div className="form-group w-50" key={name}>
-              <label>{label}</label>
-              <input
-                type={type}
-                name={name}
-                onChange={handleChange}
-                value={formValues[name]}
-                className={`form-control ${errors[name] ? "is-invalid" : ""}`}
-              />
-              {errors[name] && (
-                <div className="invalid-feedback">{errors[name]}</div>
-              )}
+      <div className="register-container" style={{
+        background: 'linear-gradient(135deg, #f3e7fd, #e6d4fc)',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: "'Montserrat', sans-serif",
+        padding: '20px'
+      }}>
+        <div className="register-box" style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          borderRadius: '20px',
+          boxShadow: '0 10px 25px rgba(128, 72, 178, 0.2)',
+          padding: '40px',
+          width: '500px'
+        }}>
+          <form
+              onSubmit={handleSubmit}
+              className="form d-flex flex-column gap-3 text-center"
+          >
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+
+            }}>
+              <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 10L85 30V70L50 90L15 70V30L50 10Z" fill="#8A4FFF" />
+                <path d="M50 50L15 30L50 10L85 30L50 50Z" fill="#B687FF" />
+                <path d="M50 50V90L15 70V30L50 50Z" fill="#6A3BAD" />
+              </svg>
             </div>
-          ))}
-          <button type="submit" className="btn btn-primary w-25">
-            Sign Up
-          </button>
-          <div className="login-link">
-            <Link to="/login">Already have an account? Sign in</Link>
-          </div>
-        </form>
+            <h1 style={{
+              color: '#6A3BAD',
+              fontWeight: 'bold',
+
+            }}>
+              Register
+            </h1>
+            {[
+              { label: "User Name", name: "userName" },
+              { label: "First Name", name: "firstName" },
+              { label: "Last Name", name: "lastName" },
+              { label: "Email Address", name: "email", type: "email" },
+              { label: "Password", name: "password", type: "password" },
+              {
+                label: "Confirm Password",
+                name: "confirmPassword",
+                type: "password",
+              },
+            ].map(({ label, name, type = "text" }) => (
+                <div key={name} style={{ width: '100%' }}>
+                  <label style={{
+                    color: '#6A3BAD',
+                    marginBottom: '10px',
+                    display: 'block',
+                    textAlign: 'left'
+                  }}>
+                    {label}
+                  </label>
+                  <input
+                      type={type}
+                      name={name}
+                      onChange={handleChange}
+                      value={formValues[name]}
+                      className={`form-control ${errors[name] ? "is-invalid" : ""}`}
+                      style={{
+                        borderColor: '#8A4FFF',
+                        boxShadow: 'none',
+                        backgroundColor: '#f3e7fd'
+                      }}
+                  />
+                  {errors[name] && (
+                      <div
+                          className="invalid-feedback"
+                          style={{
+                            display: 'block',
+                            textAlign: 'left',
+                            color: '#FF4D4D'
+                          }}
+                      >
+                        {errors[name]}
+                      </div>
+                  )}
+                </div>
+            ))}
+            <button
+                type="submit"
+                className="btn"
+                style={{
+                  backgroundColor: '#8A4FFF',
+                  color: 'white',
+                  borderRadius: '25px',
+                  width: '100%',
+                  padding: '10px',
+                  transition: 'background-color 0.3s ease',
+                  marginTop: '20px'
+                }}
+                onMouseOver={(e) => e.target.style.backgroundColor = '#B687FF'}
+                onMouseOut={(e) => e.target.style.backgroundColor = '#8A4FFF'}
+            >
+              Sign Up
+            </button>
+            <div
+                className="login-link"
+                style={{
+                  marginTop: '15px',
+                  textAlign: 'center'
+                }}
+            >
+              <Link
+                  to="/login"
+                  style={{
+                    color: '#6A3BAD',
+                    textDecoration: 'none',
+                    fontWeight: 'bold'
+                  }}
+              >
+                Already have an account? Sign in
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
   );
 };
 

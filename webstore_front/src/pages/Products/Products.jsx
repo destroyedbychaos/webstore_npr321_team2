@@ -5,42 +5,83 @@ import { categories } from '../../data/categoriesData';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './style.css';
 import { useShopping } from '../../context/ShoppingContext';
+import {useSelector} from "react-redux";
+import {useActions} from "../../hooks/useActions.js";
 
 const Products = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems, addToCart, removeFromCart, isInCart } = useShopping();
+  const { cartItems, addToCart, removeFromCart, isInCart,isInFavorites,removeFromFavorites } = useShopping();
+  const {manufacturers} = useSelector(state => state.manufacturer);
+  const {loadManufacturers} = useActions();
 
   const [isAnimating, setIsAnimating] = useState(false);
-
-  const getInitialCategory = () => {
+  
+  const getInitialFilters = () => {
     const queryParams = new URLSearchParams(location.search);
-    const categoryParam = queryParams.get('category');
-    return categoryParam || 'Всі категорії';
+    return {
+      category: queryParams.get('category') || 'Всі категорії',
+      search: queryParams.get('search') || '',
+      minPrice: queryParams.get('minPrice') || '',
+      maxPrice: queryParams.get('maxPrice') || '',
+      sort: queryParams.get('sort') || '',
+      manufacturers: queryParams.get('manufacturers') ? queryParams.get('manufacturers').split(',') : []
+    };
   };
 
-  const [selectedCategory, setSelectedCategory] = useState(getInitialCategory());
-  const [searchQuery, setSearchQuery] = useState('');
-  const [priceRange, setPriceRange] = useState({ min: '', max: '' });
-  const [sortOption, setSortOption] = useState('');
-
+  const initialFilters = getInitialFilters();
+  const [selectedCategory, setSelectedCategory] = useState(initialFilters.category);
+  const [searchQuery, setSearchQuery] = useState(initialFilters.search);
+  const [priceRange, setPriceRange] = useState({
+    min: initialFilters.minPrice,
+    max: initialFilters.maxPrice
+  });
+  const [sortOption, setSortOption] = useState(initialFilters.sort);
+  const [selectedManufacturers, setSelectedManufacturers] = useState(initialFilters.manufacturers);
+  
+  
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
+    const queryParams = new URLSearchParams();
 
     if (selectedCategory !== 'Всі категорії') {
       queryParams.set('category', selectedCategory);
-    } else {
-      queryParams.delete('category');
+    }
+    
+
+    if (priceRange.min) {
+      queryParams.set('minPrice', priceRange.min);
+    }
+
+    if (priceRange.max) {
+      queryParams.set('maxPrice', priceRange.max);
+    }
+
+    if (sortOption) {
+      queryParams.set('sort', sortOption);
+    }
+
+    if (selectedManufacturers.length > 0) {
+      queryParams.set('manufacturers', selectedManufacturers.join(','));
     }
 
     const newSearch = queryParams.toString();
     const searchString = newSearch ? `?${newSearch}` : '';
 
     navigate(`/products${searchString}`, { replace: true });
-  }, [selectedCategory, navigate, location.search]);
+  }, [selectedCategory, searchQuery, priceRange, sortOption, selectedManufacturers, navigate]);
 
   useEffect(() => {
-    setSelectedCategory(getInitialCategory());
+    loadManufacturers();
+  }, []);
+
+
+  useEffect(() => {
+    const newFilters = getInitialFilters();
+    setSelectedCategory(newFilters.category);
+    setSearchQuery(newFilters.search);
+    setPriceRange({ min: newFilters.minPrice, max: newFilters.maxPrice });
+    setSortOption(newFilters.sort);
+    setSelectedManufacturers(newFilters.manufacturers);
   }, [location.search]);
 
   const toggleCart = (productId) => {
@@ -50,8 +91,27 @@ const Products = () => {
     if (isInCart(productId)) {
       removeFromCart(productId);
     } else {
+      if (isInFavorites(productId)) {
+        removeFromFavorites(productId);
+      }
       addToCart(productId);
     }
+  };
+
+  const toggleManufacturer = (manufacturer) => {
+    setSelectedManufacturers(prev =>
+        prev.includes(manufacturer)
+            ? prev.filter(m => m !== manufacturer)
+            : [...prev, manufacturer]
+    );
+  };
+
+  const resetFilters = () => {
+    setSelectedCategory('Всі категорії');
+    setSearchQuery('');
+    setSortOption('');
+    setPriceRange({ min: '', max: '' });
+    setSelectedManufacturers([]);
   };
 
   const filteredProducts = products
@@ -61,8 +121,11 @@ const Products = () => {
         const matchesPrice =
             (priceRange.min === '' || product.price >= parseInt(priceRange.min)) &&
             (priceRange.max === '' || product.price <= parseInt(priceRange.max));
+        const matchesManufacturer =
+            selectedManufacturers.length === 0 ||
+            selectedManufacturers.includes(product.manufacturer);
 
-        return matchesCategory && matchesSearch && matchesPrice;
+        return matchesCategory && matchesSearch && matchesPrice && matchesManufacturer;
       })
       .sort((a, b) => {
         if (sortOption === 'price-desc') {
@@ -110,6 +173,26 @@ const Products = () => {
                 </div>
 
                 <div className="mb-4">
+                  <h3 className="h6 mb-2">Виробники</h3>
+                  <div className="manufacturer-filter">
+                    {manufacturers.map((manufacturer) => (
+                        <div
+                            key={manufacturer.id}
+                            className={`manufacturer-item ${
+                                selectedManufacturers.includes(manufacturer.name) ? 'selected' : ''
+                            }`}
+                            onClick={() => toggleManufacturer(manufacturer.name)}
+                        >
+                        <span className="manufacturer-checkbox">
+                          {selectedManufacturers.includes(manufacturer.name) && '✓'}
+                        </span>
+                          <span className="manufacturer-name">{manufacturer.name}</span>
+                        </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mb-4">
                   <h3 className="h6 mb-2">Сортування</h3>
                   <select
                       className="form-select"
@@ -123,6 +206,7 @@ const Products = () => {
                     <option value="name-desc">Назва: від Я до А</option>
                   </select>
                 </div>
+
                 <div className="mb-4">
                   <h3 className="h6 mb-2">Ціна (грн)</h3>
                   <input
@@ -143,12 +227,7 @@ const Products = () => {
 
                 <button
                     className="btn btn-primary w-100 mb-2"
-                    onClick={() => {
-                      setSelectedCategory('Всі категорії');
-                      setSearchQuery('');
-                      setSortOption('');
-                      setPriceRange({ min: '', max: '' });
-                    }}
+                    onClick={resetFilters}
                 >
                   Скинути фільтри
                 </button>

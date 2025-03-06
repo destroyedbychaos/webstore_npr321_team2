@@ -8,18 +8,11 @@ import Products from "../pages/Products/Products";
 import Layout from "../components/layout/Layout";
 import MyProfilePage from "../pages/myProfile/MyProfilePage";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
-import ProductList from "../pages/Products.CRUD/ProductList.jsx";
-import ProductCreate from "../pages/Products.CRUD/ProductCreate.jsx";
-import ProductEdit from "../pages/Products.CRUD/ProductEdit.jsx";
-import CategoriesList from "../pages/Categories.CRUD/CategoriesList.jsx";
-import CategoryCreate from "../pages/Categories.CRUD/CategoryCreate.jsx";
-import CategoryEdit from "../pages/Categories.CRUD/categoryEdit.jsx";
-import UsersList from "../pages/Users.CRUD/UsersList.jsx";
-import UserCreate from "../pages/Users.CRUD/UserCreate.jsx";
-import UserEdit from "../pages/Users.CRUD/UserEdit.jsx";
 import FavoriteProducts from "../pages/FavoriteProducts/FavoriteProducts.jsx";
 import * as Manufacturers from "../pages/Manufacturers";
-
+import * as Clothing from "../pages/Clothing";
+import * as Users from "../pages/Users";
+import * as Categories from "../pages/Categories";
 const BasicRoute = () => {
     return (
         <Routes>
@@ -28,17 +21,23 @@ const BasicRoute = () => {
                 <Route path="/products" element={<Products />} />
                 <Route path="/product/:id" element={<ProductDetails />} />
 
-                <Route path="/productList" element={<ProductList />} />
-                <Route path="/productCreate" element={<ProductCreate />} />
-                <Route path="/productEdit/:id" element={<ProductEdit />} />
+                <Route path="clothing" >
+                    <Route index element={< Clothing.List />} />
+                    <Route path="create" element={< Clothing.Create />} />
+                    <Route path="edit/:id" element={< Clothing.Edit />} />
+                </Route>
 
-                <Route path="/categoriesList" element={<CategoriesList />} />
-                <Route path="/categoryCreate" element={<CategoryCreate />} />
-                <Route path="/categoryEdit/:id" element={<CategoryEdit />} />
+                <Route path="categories" >
+                    <Route index element={< Categories.List />} />
+                    <Route path="create" element={< Categories.Create />} />
+                    <Route path="edit/:id" element={< Categories.Edit />} />
+                </Route>
 
-                <Route path="/usersList" element={<UsersList />} />
-                <Route path="/userCreate" element={<UserCreate />} />
-                <Route path="/userEdit/:id" element={<UserEdit />} />
+                <Route path="users" >
+                    <Route index element={<Users.List />} />
+                    <Route path="create" element={<Users.Create />} />
+                    <Route path="edit/:id" element={<Users.Edit />} />
+                </Route>
 
                 <Route path="manufacturers" >
                     <Route index element={<Manufacturers.List />} />

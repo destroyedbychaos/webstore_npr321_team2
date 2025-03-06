@@ -12,7 +12,7 @@ export const ShoppingProvider = ({ children }) => {
         const savedFavorites = localStorage.getItem('favorites');
         return savedFavorites ? JSON.parse(savedFavorites) : [];
     });
-    
+
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems]);
@@ -53,25 +53,38 @@ export const ShoppingProvider = ({ children }) => {
         if (isInFavorites(productId)) {
             removeFromFavorites(productId);
         } else {
+            if (isInCart(productId)) {
+                removeFromCart(productId);
+            }
             addToFavorites(productId);
         }
     };
 
+    const toggleCart = (productId) => {
+        if (isInCart(productId)) {
+            removeFromCart(productId);
+        } else {
+            if (isInFavorites(productId)) {
+                removeFromFavorites(productId);
+            }
+            addToCart(productId);
+        }
+    };
+
     return (
-        <ShoppingContext.Provider
-            value={{
-                cartItems,
-                favoriteItems,
-                addToCart,
-                removeFromCart,
-                clearCart,
-                isInCart,
-                addToFavorites,
-                removeFromFavorites,
-                isInFavorites,
-                toggleFavorite
-            }}
-        >
+        <ShoppingContext.Provider value={{
+            cartItems,
+            favoriteItems,
+            addToCart,
+            removeFromCart,
+            clearCart,
+            isInCart,
+            addToFavorites,
+            removeFromFavorites,
+            isInFavorites,
+            toggleFavorite,
+            toggleCart
+        }}>
             {children}
         </ShoppingContext.Provider>
     );

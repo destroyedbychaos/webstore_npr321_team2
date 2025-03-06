@@ -1,39 +1,40 @@
 ﻿import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {products} from "../../data/productsData.js";
-
-const ProductEdit = () => {
+import {users} from "../../data/usersData";
+import ConfirmationModal from '../../components/DeleteComponent/ConfirmationModal';
+const UserEdit = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [productData, setProductData] = useState(null);
+    const [userData, setUserData] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const [formData, setFormData] = useState({
-        title: '',
-        price: '',
-        category: '',
+        username: '',
+        email: '',
+        role: '',
         image: null,
-        desc: '',
-        quantity: ''
+        firstName: '',
+        lastName: ''
     });
 
     const [imagePreview, setImagePreview] = useState(null);
     const [dragActive, setDragActive] = useState(false);
 
     useEffect(() => {
-        const product = products.find(p => p.id === parseInt(id));
-        if (product) {
-            setProductData(product);
+        const user = users.find(u => u.id === parseInt(id));
+        if (user) {
+            setUserData(user);
             setFormData({
-                title: product.title,
-                price: product.price,
-                category: product.category,
-                image: product.image,
-                desc: product.desc,
-                quantity: product.quantity
+                username: user.username,
+                email: user.email,
+                role: user.role,
+                image: user.image,
+                firstName: user.firstName,
+                lastName: user.lastName
             });
-            setImagePreview(product.image);
+            setImagePreview(user.image);
         } else {
-            navigate('/productList'); // Redirect if product not found
+            navigate('users'); // Redirect if user not found
         }
     }, [id, navigate]);
 
@@ -90,11 +91,23 @@ const ProductEdit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Updated product data:', formData);
-        navigate('/productList');
+        const userIndex = users.findIndex(u => u.id === parseInt(id));
+        if (userIndex !== -1) {
+            users[userIndex] = {
+                ...users[userIndex],
+                username: formData.username,
+                email: formData.email,
+                role: formData.role,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                image: typeof formData.image === 'object' ? imagePreview : formData.image
+            };
+            console.log('Updated user data:', users[userIndex]);
+        }
+        navigate('/users');
     };
 
-    if (!productData) {
+    if (!userData) {
         return (
             <div className="container py-5 text-center">
                 <div className="spinner-border text-primary" role="status">
@@ -116,10 +129,10 @@ const ProductEdit = () => {
                              }}>
                             <h3 className="mb-0 text-center">
                                 <i className="bi bi-pencil-square me-2"></i>
-                                Редагувати продукт
+                                Редагувати користувача
                             </h3>
                             <p className="text-white-50 text-center mb-0 mt-2">
-                                ID: {productData.id}
+                                ID: {userData.id}
                             </p>
                         </div>
 
@@ -128,15 +141,32 @@ const ProductEdit = () => {
                                 <div className="row">
                                     <div className="col-md-6 pe-md-4">
                                         <div className="mb-4">
-                                            <label className="form-label fw-bold">Назва продукту</label>
+                                            <label className="form-label fw-bold">Ім'я користувача</label>
                                             <div className="input-group">
                                                 <span className="input-group-text" style={{ backgroundColor: '#f8f9fa' }}>
-                                                    <i className="bi bi-tag"></i>
+                                                    <i className="bi bi-person"></i>
                                                 </span>
                                                 <input
                                                     type="text"
-                                                    name="title"
-                                                    value={formData.title}
+                                                    name="username"
+                                                    value={formData.username}
+                                                    onChange={handleChange}
+                                                    className="form-control"
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <label className="form-label fw-bold">Електронна пошта</label>
+                                            <div className="input-group">
+                                                <span className="input-group-text" style={{ backgroundColor: '#f8f9fa' }}>
+                                                    <i className="bi bi-envelope"></i>
+                                                </span>
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    value={formData.email}
                                                     onChange={handleChange}
                                                     className="form-control"
                                                     required
@@ -146,58 +176,48 @@ const ProductEdit = () => {
 
                                         <div className="row mb-4">
                                             <div className="col-6">
-                                                <label className="form-label fw-bold">Ціна</label>
-                                                <div className="input-group">
-                                                    <span className="input-group-text" style={{ backgroundColor: '#f8f9fa' }}>₴</span>
-                                                    <input
-                                                        type="number"
-                                                        name="price"
-                                                        value={formData.price}
-                                                        onChange={handleChange}
-                                                        className="form-control"
-                                                        required
-                                                    />
-                                                </div>
+                                                <label className="form-label fw-bold">Ім'я</label>
+                                                <input
+                                                    type="text"
+                                                    name="firstName"
+                                                    value={formData.firstName}
+                                                    onChange={handleChange}
+                                                    className="form-control"
+                                                    required
+                                                />
                                             </div>
                                             <div className="col-6">
-                                                <label className="form-label fw-bold">Кількість</label>
-                                                <div className="input-group">
-                                                    <span className="input-group-text" style={{ backgroundColor: '#f8f9fa' }}>
-                                                        <i className="bi bi-123"></i>
-                                                    </span>
-                                                    <input
-                                                        type="number"
-                                                        name="quantity"
-                                                        value={formData.quantity}
-                                                        onChange={handleChange}
-                                                        className="form-control"
-                                                        required
-                                                    />
-                                                </div>
+                                                <label className="form-label fw-bold">Прізвище</label>
+                                                <input
+                                                    type="text"
+                                                    name="lastName"
+                                                    value={formData.lastName}
+                                                    onChange={handleChange}
+                                                    className="form-control"
+                                                    required
+                                                />
                                             </div>
                                         </div>
 
                                         <div className="mb-4">
-                                            <label className="form-label fw-bold">Категорія</label>
+                                            <label className="form-label fw-bold">Роль</label>
                                             <select
-                                                name="category"
-                                                value={formData.category}
+                                                name="role"
+                                                value={formData.role}
                                                 onChange={handleChange}
                                                 className="form-select"
                                                 required
                                                 style={{ borderColor: '#dee2e6' }}
                                             >
-                                                <option value="">Виберіть категорію</option>
-                                                <option value="Взуття">Взуття</option>
-                                                <option value="Одяг">Одяг</option>
-                                                <option value="Аксесуари">Аксесуари</option>
+                                                <option value="user">Користувач</option>
+                                                <option value="admin">Адміністратор</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div className="col-md-6">
                                         <div className="mb-4">
-                                            <label className="form-label fw-bold">Фото продукту</label>
+                                            <label className="form-label fw-bold">Фото користувача</label>
                                             <div
                                                 className={`drag-drop-zone p-4 text-center border rounded-3 ${dragActive ? 'border-primary' : ''}`}
                                                 style={{
@@ -252,32 +272,14 @@ const ProductEdit = () => {
                                     </div>
                                 </div>
 
-                                <div className="mb-4">
-                                    <label className="form-label fw-bold">Опис</label>
-                                    <textarea
-                                        name="desc"
-                                        value={formData.desc}
-                                        onChange={handleChange}
-                                        rows={4}
-                                        className="form-control"
-                                        required
-                                        style={{ resize: 'none' }}
-                                    />
-                                </div>
-
                                 <div className="d-flex justify-content-between align-items-center mt-4">
                                     <button
                                         type="button"
                                         className="btn btn-danger"
-                                        onClick={() => {
-                                            if (window.confirm('Ви впевнені, що хочете видалити цей продукт?')) {
-                                                // Add delete logic here
-                                                navigate('/productList');
-                                            }
-                                        }}
+                                        onClick={() => setShowDeleteModal(true)}
                                     >
                                         <i className="bi bi-trash me-2"></i>
-                                        Видалити продукт
+                                        Видалити користувача
                                     </button>
 
                                     <div className="d-flex gap-2">
@@ -285,7 +287,7 @@ const ProductEdit = () => {
                                             type="button"
                                             className="btn btn-outline-secondary px-4"
                                             style={{ borderColor: '#6f42c1', color: '#6f42c1' }}
-                                            onClick={() => navigate('/productList')}
+                                            onClick={() => navigate('/users')}
                                         >
                                             <i className="bi bi-x-circle me-2"></i>
                                             Скасувати
@@ -308,8 +310,18 @@ const ProductEdit = () => {
                     </div>
                 </div>
             </div>
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={() => navigate('/users')}
+                title="Видалити каристувача?"
+                message="Ви впевнені, що хочете видалити користувача з id"
+                confirmText="Так, видалити"
+                cancelText="Скасувати"
+                itemId={userData?.id}
+            />
         </div>
     );
 };
 
-export default ProductEdit;
+export default UserEdit;

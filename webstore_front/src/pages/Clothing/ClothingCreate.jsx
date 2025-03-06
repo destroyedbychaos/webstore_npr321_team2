@@ -92,7 +92,6 @@ const ProductCreate = () => {
                             <form onSubmit={handleSubmit}>
                                 <div className="row">
                                     <div className="col-md-6 pe-md-4">
-                                        {/* Left Column */}
                                         <div className="mb-4">
                                             <label className="form-label fw-bold">Назва продукту</label>
                                             <div className="input-group">
@@ -162,7 +161,6 @@ const ProductCreate = () => {
                                     </div>
 
                                     <div className="col-md-6">
-                                        {/* Right Column */}
                                         <div className="mb-4">
                                             <label className="form-label fw-bold">Фото продукту</label>
                                             <div
@@ -224,7 +222,7 @@ const ProductCreate = () => {
                                         type="button"
                                         className="btn btn-outline-secondary px-4"
                                         style={{ borderColor: '#6f42c1', color: '#6f42c1' }}
-                                        onClick={() => navigate(`/productList`)}>
+                                        onClick={() => navigate(`/clothing`)}>
                                         <i className="bi bi-x-circle me-2"></i>
                                         Скасувати
                                     </button>
@@ -235,7 +233,7 @@ const ProductCreate = () => {
                                             backgroundColor: '#6f42c1',
                                             transition: 'all 0.3s ease'
                                         }}
-                                        onClick={() => navigate(`/productList`)}>
+                                        onClick={() => navigate(`/clothing`)}>
                                         <i className="bi bi-check-circle me-2"></i>
                                         Створити продукт
                                     </button>
