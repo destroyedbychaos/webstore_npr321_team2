@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using webstore_back.BLL.Services;
 using webstore_back.BLL.Services.CategoryService;
-using webstore_back.BLL.Validators;
-using webstore_back.DAL.Repositories.CategoryRepository;
-using webstore_back.DAL.ViewModels.ProductManagementVMs;
+using webstore_back.DAL.ViewModels.ProductManagementVMs.Category;
 
 namespace webstore_back.Controllers
 {
@@ -17,12 +15,14 @@ namespace webstore_back.Controllers
         {
             _categoryService = categoryService;
         }
+        
         [HttpGet("getall")]
         public async Task<IActionResult> GetAllAsync()
         {
             var response = await _categoryService.GetAllAsync();
             return GetResult(response);
         }
+        
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
@@ -37,6 +37,7 @@ namespace webstore_back.Controllers
             }
             return BadRequest(ServiceResponse.BadRequestResponse("Категорію не знайдено."));
         }
+        
         [HttpGet("getbyname")]
         public async Task<IActionResult> GetByNameAsync(string name)
         {
@@ -51,30 +52,29 @@ namespace webstore_back.Controllers
             }
             return BadRequest(ServiceResponse.BadRequestResponse("Категорію не знайдено."));
         }
+        
         [HttpPost("create")]
-        public async Task<IActionResult> CreateCategoryAsync(CategoryVM model)
+        public async Task<IActionResult> CreateCategoryAsync(CreateCategoryVM model)
         {
-            var validator = new CategoryVMValidator();
-            var validateResult = await validator.ValidateAsync(model);
-            if (!validateResult.IsValid)
+            if (string.IsNullOrEmpty(model.Name))
             {
-                return GetResult(ServiceResponse.BadRequestResponse(validateResult.Errors.First().ErrorMessage));
+                return GetResult(ServiceResponse.BadRequestResponse("Name can't be empty."));
             }
             var response = await _categoryService.CreateCategoryAsync(model);
             return GetResult(response);
         }
+        
         [HttpPut("update")]
         public async Task<IActionResult> UpdateCategoryAsync(CategoryVM model)
         {
-            var validator = new CategoryVMValidator();
-            var validateResult = await validator.ValidateAsync(model);
-            if (!validateResult.IsValid)
+            if (string.IsNullOrEmpty(model.Name))
             {
-                return GetResult(ServiceResponse.BadRequestResponse(validateResult.Errors.First().ErrorMessage));
+                return GetResult(ServiceResponse.BadRequestResponse("Name can't be empty."));
             }
             var response = await _categoryService.UpdateCategoryAsync(model);
             return GetResult(response);
         }
+        
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteCategoryAsync(string id)
         {

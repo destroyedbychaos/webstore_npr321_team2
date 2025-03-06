@@ -16,6 +16,7 @@ using webstore_back.BLL.Services.MailService;
 using webstore_back.BLL.Services.JwtService;
 using webstore_back.BLL.Services.RoleService;
 using webstore_back.BLL.Middlewares;
+using webstore_back.BLL.Services.CategoryService;
 using webstore_back.BLL.Services.ImageService;
 using webstore_back.BLL.Services.UserService;
 using webstore_back.DAL.Repositories.ProductRepository;
@@ -28,7 +29,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add database context
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseNpgsql("name=Default");
+    // options.UseNpgsql("name=Default");
+    options.UseNpgsql("name=DefaultLocal");
     // options.UseNpgsql("name=PostgreSqlUbuntu");
 });
 
@@ -85,6 +87,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Add repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();

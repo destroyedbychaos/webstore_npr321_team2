@@ -9,11 +9,11 @@ using webstore_back.DAL.Data;
 
 #nullable disable
 
-namespace Webstore.DAL.Persistence.Migrations
+namespace webstore_back.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250302100755_ClothingItems table")]
-    partial class ClothingItemstable
+    [Migration("20250306213015_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -283,6 +283,26 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("ClothingItems");
                 });
 
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItemImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClothingItemId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClothingItemId");
+
+                    b.ToTable("ClothingItemImage");
+                });
+
             modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Manufacturer", b =>
                 {
                     b.Property<string>("Id")
@@ -418,6 +438,17 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("Manufacturer");
                 });
 
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItemImage", b =>
+                {
+                    b.HasOne("webstore_back.DAL.Models.ProductManagement.ClothingItem", "ClothingItem")
+                        .WithMany("Images")
+                        .HasForeignKey("ClothingItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClothingItem");
+                });
+
             modelBuilder.Entity("webstore_back.DAL.Models.RefreshToken", b =>
                 {
                     b.HasOne("webstore_back.DAL.Models.Identity.User", "User")
@@ -452,6 +483,11 @@ namespace Webstore.DAL.Persistence.Migrations
             modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Category", b =>
                 {
                     b.Navigation("ClothingItems");
+                });
+
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItem", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Manufacturer", b =>

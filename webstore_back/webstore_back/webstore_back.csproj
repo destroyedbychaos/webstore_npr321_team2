@@ -17,13 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\images\user\avatar.png" />
     <None Include="wwwroot\templates\emailconfirmation.html" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\webstore_back.BLL\webstore_back.BLL.csproj" />
     <ProjectReference Include="..\webstore_back.DAL\webstore_back.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\product\" />
   </ItemGroup>
 
 </Project>

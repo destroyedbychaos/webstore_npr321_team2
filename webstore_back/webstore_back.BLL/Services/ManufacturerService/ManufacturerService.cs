@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using webstore_back.DAL.Models.ProductManagement;
 using webstore_back.DAL.Repositories.ManufacturerRepository;
 using webstore_back.DAL.ViewModels.ProductManagementVMs;
+using webstore_back.DAL.ViewModels.ProductManagementVMs.Manufacturer;
 
 namespace webstore_back.BLL.Services.ManufacturerService
 {
@@ -43,7 +44,7 @@ namespace webstore_back.BLL.Services.ManufacturerService
             return ServiceResponse.OkResponse("Виробника знайдено", manufacturer);
         }
 
-        public async Task<ServiceResponse> CreateManufacturerAsync(ManufacturerVM model)
+        public async Task<ServiceResponse> CreateManufacturerAsync(CreateManufacturerVM model)
         {
             Manufacturer manufacturer = _mapper.Map<Manufacturer>(model);
             if (manufacturer == null)

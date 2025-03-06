@@ -9,12 +9,12 @@ using webstore_back.DAL.Models.Identity;
 
 namespace webstore_back.DAL.Models.ProductManagement
 {
-    public class OrderItem
+    public class CartItem
     {
         [Key]
         public required string Id { get; set; } = Guid.NewGuid().ToString();
         public required int Quantity { get; set; }
-        public required bool isPaidFor { get; set; }
+        public bool IsFinished { get; private set; } = false;
 
         [ForeignKey("User")]
         public string UserId { get; set; }
@@ -27,6 +27,7 @@ namespace webstore_back.DAL.Models.ProductManagement
         [ForeignKey("Order")]
         public string OrderId { get; set; }
         public Order Order { get; set; }
-
+        
+        public string Size { get; set; }
     }
 }

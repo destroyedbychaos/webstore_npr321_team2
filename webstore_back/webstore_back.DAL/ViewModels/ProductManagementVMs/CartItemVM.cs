@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace webstore_back.DAL.ViewModels.ProductManagementVMs
 {
-    public class ManufacturerVM
+    public class OrderItemVM
     {
         public string Id { get; set; }
-        public string Name { get; set; }
-        public int Rating { get; set; }
-        public ICollection<ClothingItemVM> ClothingItems { get; set; } = [];
+        public int Quantity { get; set; }
+        public bool IsPaidFor { get; set; }
+        public string Size { get; set; }
     }
 }

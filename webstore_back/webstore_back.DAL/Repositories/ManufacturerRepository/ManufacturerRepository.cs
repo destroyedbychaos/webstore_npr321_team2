@@ -42,8 +42,10 @@ namespace webstore_back.DAL.Repositories.ManufacturerRepository
             {
                 return null;
             }
+            
+            existingManufacturer.Name = manufacturer.Name;
+            existingManufacturer.Rating = manufacturer.Rating;
 
-            await _appDbContext.Manufacturers.AddAsync(manufacturer);
             await _appDbContext.SaveChangesAsync();
 
             return existingManufacturer;

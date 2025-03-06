@@ -42,8 +42,9 @@ namespace webstore_back.DAL.Repositories.CategoryRepository
             {
                 return null;
             }
-
-            await _appDbContext.Categories.AddAsync(category);
+            
+            existingCategory.Name = category.Name;
+            
             await _appDbContext.SaveChangesAsync();
 
             return existingCategory;

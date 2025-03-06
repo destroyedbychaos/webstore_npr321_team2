@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using webstore_back.DAL.Models.ProductManagement;
 using webstore_back.DAL.Repositories.CategoryRepository;
 using webstore_back.DAL.ViewModels.ProductManagementVMs;
+using webstore_back.DAL.ViewModels.ProductManagementVMs.Category;
 
 namespace webstore_back.BLL.Services.CategoryService
 {
@@ -11,9 +12,10 @@ namespace webstore_back.BLL.Services.CategoryService
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
         public async Task<ServiceResponse> GetByIdAsync(string id)
@@ -36,9 +38,10 @@ namespace webstore_back.BLL.Services.CategoryService
             return ServiceResponse.OkResponse("Категорію отримано", category);
         }
 
-        public async Task<ServiceResponse> CreateCategoryAsync(CategoryVM model)
+        public async Task<ServiceResponse> CreateCategoryAsync(CreateCategoryVM model)
         {
             var category = _mapper.Map<Category>(model);
+            
             await _categoryRepository.CreateCategoryAsync(category);
             var categoryAdded = _mapper.Map<CategoryVM>(category);
             return ServiceResponse.OkResponse("Категорію створено", categoryAdded);
@@ -56,6 +59,7 @@ namespace webstore_back.BLL.Services.CategoryService
             {
                 return ServiceResponse.BadRequestResponse("Категорію не оновлено", null);
             }
+            
             var category = _mapper.Map<Category>(model);
             await _categoryRepository.UpdateCategoryAsync(category);
             var updatedCategory = _mapper.Map<CategoryVM>(category);

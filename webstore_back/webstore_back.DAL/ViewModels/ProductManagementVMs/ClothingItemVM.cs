@@ -1,4 +1,6 @@
-﻿namespace webstore_back.DAL.ViewModels.ProductManagementVMs
+﻿using webstore_back.DAL.Models.ProductManagement;
+
+namespace webstore_back.DAL.ViewModels.ProductManagementVMs
 {
     public class ClothingItemVM
     {
@@ -9,5 +11,7 @@
         public int StockQuantity { get; set; }
         public string Category { get; set; }
         public string Manufacturer { get; set; }
+        
+        public List<ClothingItemImage> Images { get; private set; } = [];
     }
 }

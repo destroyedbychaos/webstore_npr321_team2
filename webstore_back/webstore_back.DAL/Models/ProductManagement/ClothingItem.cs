@@ -31,6 +31,8 @@ namespace webstore_back.DAL.Models.ProductManagement
         [ForeignKey("Category")]
         public string CategoryId { get; set; }
         public Category Category { get; set; }
+        
+        public List<ClothingItemImage> Images { get; private set; } = [];
 
     }
 }

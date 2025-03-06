@@ -16,12 +16,14 @@ namespace webstore_back.Controllers
         {
             _clothingItemService = clothingItemService;
         }
+        
         [HttpGet("getall")]
         public async Task<IActionResult> GetAllAsync()
         {
             var response = await _clothingItemService.GetAllAsync();
             return GetResult(response);
         }
+        
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
@@ -36,6 +38,7 @@ namespace webstore_back.Controllers
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не знайдено."));
 
         }
+        
         [HttpGet("getbyname")]
         public async Task<IActionResult> GetByNameAsync(string name)
         {
@@ -51,6 +54,7 @@ namespace webstore_back.Controllers
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не знайдено."));
 
         }
+        
         [HttpGet("getbymanufacturerid")]
         public async Task<IActionResult> GetByManufacturerIdAsync(string manufacturerId)
         {
@@ -65,6 +69,7 @@ namespace webstore_back.Controllers
             }
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не знайдено."));
         }
+        
         [HttpGet("getbymanufacturername")]
         public async Task<IActionResult> GetByManufacturerNameAsync(string manufacturerName)
         {
@@ -79,6 +84,7 @@ namespace webstore_back.Controllers
             }
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не знайдено."));
         }
+        
         [HttpGet("getbycategoryid")]
         public async Task<IActionResult> GetByCategoryIdAsync(string categoryId)
         {
@@ -93,6 +99,7 @@ namespace webstore_back.Controllers
             }
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не знайдено."));
         }
+        
         [HttpGet("getbycategoryname")]
         public async Task<IActionResult> GetByCategoryNameAsync(string categoryName)
         {
@@ -107,6 +114,7 @@ namespace webstore_back.Controllers
             }
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не знайдено."));
         }
+        
         [HttpPost("create")]
         public async Task<IActionResult> CreateClothingItemASync(ClothingItemVM model)
         {
@@ -119,6 +127,7 @@ namespace webstore_back.Controllers
             var response = await _clothingItemService.CreateProductAsync(model);
             return GetResult(response);
         }
+        
         [HttpPost("update")]
         public async Task<IActionResult> UpdateClothingItemAsync(ClothingItemVM model)
         {
@@ -131,6 +140,7 @@ namespace webstore_back.Controllers
             var response = await _clothingItemService.UpdateProductAsync(model);
             return GetResult(response);
         }
+        
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteProductAsync(string id)
         {
