@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using webstore_back.DAL.Models.ProductManagement;
+using webstore_back.DAL.Repositories.Common;
 using webstore_back.DAL.ViewModels.ProductManagementVMs.ClothingItem;
 
 namespace webstore_back.BLL.Services.ClothingItemService

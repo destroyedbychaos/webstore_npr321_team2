@@ -24,6 +24,7 @@ using webstore_back.DAL.Repositories.CategoryRepository;
 using webstore_back.DAL.Repositories.ManufacturerRepository;
 using webstore_back.BLL.Services.ManufacturerService;
 using webstore_back.DAL.Repositories.ClothingItemRepository;
+using webstore_back.DAL.Repositories.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,6 +93,7 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
 
 // Add repositories
+builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IClothingItemRepository, ClothingItemRepository>();

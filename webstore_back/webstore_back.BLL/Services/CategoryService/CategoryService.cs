@@ -42,14 +42,14 @@ namespace webstore_back.BLL.Services.CategoryService
         {
             var category = _mapper.Map<Category>(model);
             
-            await _categoryRepository.CreateCategoryAsync(category);
+            await _categoryRepository.CreateAsync(category);
             var categoryAdded = _mapper.Map<CategoryVM>(category);
             return ServiceResponse.OkResponse("Категорію створено", categoryAdded);
         }
 
         public async Task<ServiceResponse> GetAllAsync()
         {
-            var categories = await _categoryRepository.GetAllAsync().ToListAsync();
+            var categories = (await _categoryRepository.GetAllAsync()).ToList();
             return ServiceResponse.OkResponse("Категорії отримано", categories);
         }
 
@@ -61,7 +61,7 @@ namespace webstore_back.BLL.Services.CategoryService
             }
             
             var category = _mapper.Map<Category>(model);
-            await _categoryRepository.UpdateCategoryAsync(category);
+            await _categoryRepository.UpdateAsync(category);
             var updatedCategory = _mapper.Map<CategoryVM>(category);
 
             return ServiceResponse.OkResponse("Категорію оновлено", updatedCategory);
@@ -69,7 +69,7 @@ namespace webstore_back.BLL.Services.CategoryService
 
         public async Task<ServiceResponse> DeleteCategoryAsync(string id)
         {
-            var deletedCategory = await _categoryRepository.DeleteCategoryAsync(id);
+            var deletedCategory = await _categoryRepository.DeleteAsync(id);
             if (deletedCategory == null)
             {
                 return ServiceResponse.BadRequestResponse("Категорію не видалено", null);

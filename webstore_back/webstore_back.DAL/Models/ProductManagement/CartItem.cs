@@ -5,11 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using culinary_tour.Core.Entities;
 using webstore_back.DAL.Models.Identity;
 
 namespace webstore_back.DAL.Models.ProductManagement
 {
-    public class CartItem
+    public class CartItem : IEntity<string>
     {
         [Key]
         public required string Id { get; set; } = Guid.NewGuid().ToString();

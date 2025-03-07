@@ -1,16 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using webstore_back.DAL.Data;
 using webstore_back.DAL.Models.ProductManagement;
+using webstore_back.DAL.Repositories.Common;
 
 namespace webstore_back.DAL.Repositories.ClothingItemRepository
 {
-    public class ClothingItemRepository : IClothingItemRepository
+    public class ClothingItemRepository : Repository<ClothingItem, string>, IClothingItemRepository
     {
-        private readonly AppDbContext _appDbContext;
-
-        public ClothingItemRepository(AppDbContext appDbContext)
+        public ClothingItemRepository(AppDbContext appDbContext) : base(appDbContext)
         {
-            _appDbContext = appDbContext;
         }
 
         public async Task<ClothingItem?> GetByIdAsync(string id)
@@ -38,33 +36,6 @@ namespace webstore_back.DAL.Repositories.ClothingItemRepository
         {
             await _appDbContext.ClothingItems.AddAsync(product);
             await _appDbContext.SaveChangesAsync();
-            return product;
-        }
-
-        public IQueryable<ClothingItem> GetAllAsync()
-        {
-            return _appDbContext.ClothingItems.Include(c => c.Images);
-        }
-
-        public async Task<ClothingItem?> UpdateProductAsync(ClothingItem product)
-        {
-            _appDbContext.ClothingItems.Update(product);
-            await _appDbContext.SaveChangesAsync();
-
-            return product;
-        }
-
-        public async Task<ClothingItem?> DeleteProductAsync(string id)
-        {
-            var product = await _appDbContext.ClothingItems.FindAsync(id);
-            if (product == null)
-            {
-                return null;
-            }
-
-            _appDbContext.ClothingItems.Remove(product);
-            await _appDbContext.SaveChangesAsync();
-
             return product;
         }
 

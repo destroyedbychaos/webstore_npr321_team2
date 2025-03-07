@@ -82,7 +82,7 @@ namespace webstore_back.BLL.Services.ClothingItemService
             if (category != null && manufacturer != null)
             {
                 var product = _mapper.Map<ClothingItem>(model);
-                var createdProduct = await _productRepository.CreateProductAsync(product);
+                var createdProduct = await _productRepository.CreateAsync(product);
 
                 return ServiceResponse.OkResponse("Товар створено", createdProduct);
             }
@@ -92,7 +92,7 @@ namespace webstore_back.BLL.Services.ClothingItemService
 
         public async Task<ServiceResponse> GetAllAsync()
         {
-            var products = await _productRepository.GetAllAsync().ToListAsync();
+            var products = (await _productRepository.GetAllAsync()).ToList();
             return ServiceResponse.OkResponse("Товар отримано", products);
         }
 
@@ -105,7 +105,7 @@ namespace webstore_back.BLL.Services.ClothingItemService
                 return ServiceResponse.BadRequestResponse("Не знайдено товару");
             }
 
-            var deletedProduct = await _productRepository.DeleteProductAsync(id);
+            var deletedProduct = await _productRepository.DeleteAsync(id);
             return ServiceResponse.OkResponse("Товар видалено");
         }
 
@@ -171,7 +171,7 @@ namespace webstore_back.BLL.Services.ClothingItemService
             existingProduct.ManufacturerId = model.ManufacturerId;
             existingProduct.CategoryId = model.CategoryId;
 
-            await _productRepository.UpdateProductAsync(existingProduct);
+            await _productRepository.UpdateAsync(existingProduct);
 
             return ServiceResponse.OkResponse("Товар оновлено.", existingProduct);
         }
@@ -200,7 +200,7 @@ namespace webstore_back.BLL.Services.ClothingItemService
                     })
                 .ToList());
 
-            await _productRepository.UpdateProductAsync(product);
+            await _productRepository.UpdateAsync(product);
 
             return ServiceResponse.OkResponse("Зображення завантажено.", product);
         }
@@ -230,7 +230,7 @@ namespace webstore_back.BLL.Services.ClothingItemService
                 product.Images.Remove(image);
             }
 
-            await _productRepository.UpdateProductAsync(product);
+            await _productRepository.UpdateAsync(product);
 
             return ServiceResponse.OkResponse("Зображення видалено.", product);
         }
