@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using webstore_back.BLL.Services;
 using webstore_back.BLL.Services.CategoryService;
+using webstore_back.BLL.Services.ClothingItemService;
 using webstore_back.BLL.Validators;
-using webstore_back.DAL.Repositories.ProductRepository;
+using webstore_back.BLL.Validators.ClothingItem;
 using webstore_back.DAL.ViewModels.ProductManagementVMs;
 using webstore_back.DAL.ViewModels.ProductManagementVMs.Category;
+using webstore_back.DAL.ViewModels.ProductManagementVMs.ClothingItem;
 
 namespace webstore_back.Controllers
 {
@@ -155,6 +157,24 @@ namespace webstore_back.Controllers
                 return GetResult(response);
             }
             return BadRequest(ServiceResponse.BadRequestResponse("Товар не видалено."));
+        }
+        
+        [HttpPut("upload-images/{productId}")]
+        public async Task<IActionResult> UploadImages(
+            [FromRoute] string productId,
+            [FromForm] IFormFileCollection imagesFiles)
+        {
+            var response = await _clothingItemService.UploadImagesAsync(productId, imagesFiles);
+            return GetResult(response);
+        }
+
+        [HttpPut("delete-image/{productId}")]
+        public async Task<IActionResult> DeleteImage(
+            [FromRoute] string productId,
+            [FromQuery] string imageId)
+        {
+            var response = await _clothingItemService.DeleteImageAsync(productId, imageId);
+            return GetResult(response);
         }
     }
 }

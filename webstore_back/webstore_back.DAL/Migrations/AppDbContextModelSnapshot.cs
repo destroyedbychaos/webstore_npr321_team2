@@ -437,13 +437,11 @@ namespace webstore_back.DAL.Migrations
 
             modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItemImage", b =>
                 {
-                    b.HasOne("webstore_back.DAL.Models.ProductManagement.ClothingItem", "ClothingItem")
+                    b.HasOne("webstore_back.DAL.Models.ProductManagement.ClothingItem", null)
                         .WithMany("Images")
                         .HasForeignKey("ClothingItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ClothingItem");
                 });
 
             modelBuilder.Entity("webstore_back.DAL.Models.RefreshToken", b =>

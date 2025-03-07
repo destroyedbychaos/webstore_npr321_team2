@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using webstore_back.DAL.Models.ProductManagement;
 using webstore_back.DAL.ViewModels.ProductManagementVMs;
+using webstore_back.DAL.ViewModels.ProductManagementVMs.ClothingItem;
 using webstore_back.DAL.ViewModels.ProductManagementVMs.Manufacturer;
 
 

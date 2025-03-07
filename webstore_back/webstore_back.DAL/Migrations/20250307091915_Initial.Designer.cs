@@ -12,7 +12,7 @@ using webstore_back.DAL.Data;
 namespace webstore_back.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250306222131_Initial")]
+    [Migration("20250307091915_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -440,13 +440,11 @@ namespace webstore_back.DAL.Migrations
 
             modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItemImage", b =>
                 {
-                    b.HasOne("webstore_back.DAL.Models.ProductManagement.ClothingItem", "ClothingItem")
+                    b.HasOne("webstore_back.DAL.Models.ProductManagement.ClothingItem", null)
                         .WithMany("Images")
                         .HasForeignKey("ClothingItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ClothingItem");
                 });
 
             modelBuilder.Entity("webstore_back.DAL.Models.RefreshToken", b =>

@@ -17,12 +17,13 @@ using webstore_back.BLL.Services.JwtService;
 using webstore_back.BLL.Services.RoleService;
 using webstore_back.BLL.Middlewares;
 using webstore_back.BLL.Services.CategoryService;
+using webstore_back.BLL.Services.ClothingItemService;
 using webstore_back.BLL.Services.ImageService;
 using webstore_back.BLL.Services.UserService;
-using webstore_back.DAL.Repositories.ProductRepository;
 using webstore_back.DAL.Repositories.CategoryRepository;
 using webstore_back.DAL.Repositories.ManufacturerRepository;
 using webstore_back.BLL.Services.ManufacturerService;
+using webstore_back.DAL.Repositories.ClothingItemRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,10 +85,10 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
 
 // Add repositories
@@ -166,6 +167,7 @@ if(!File.Exists(Path.Combine(builder.Environment.WebRootPath, "images")))
 {
     Directory.CreateDirectory(Path.Combine(builder.Environment.WebRootPath, "images"));
 }
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath, "images")),

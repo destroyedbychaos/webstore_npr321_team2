@@ -1,6 +1,6 @@
 ﻿using webstore_back.DAL.Models.ProductManagement;
 
-namespace webstore_back.DAL.Repositories.ProductRepository
+namespace webstore_back.DAL.Repositories.ClothingItemRepository
 {
     public interface IClothingItemRepository
     {

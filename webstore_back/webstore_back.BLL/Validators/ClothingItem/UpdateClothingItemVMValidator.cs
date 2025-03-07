@@ -1,9 +1,7 @@
 ﻿using FluentValidation;
-using webstore_back.DAL;
-using webstore_back.DAL.ViewModels.ProductManagementVMs;
+using webstore_back.DAL.ViewModels.ProductManagementVMs.ClothingItem;
 
-
-namespace webstore_back.BLL.Validators
+namespace webstore_back.BLL.Validators.ClothingItem
 {
     public class UpdateClothingItemVMValidator : AbstractValidator<ClothingItemVM>
     {

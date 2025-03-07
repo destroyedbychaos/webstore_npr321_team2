@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using webstore_back.DAL.Models.ProductManagement;
-using webstore_back.DAL.ViewModels.ProductManagementVMs;
+﻿using Microsoft.AspNetCore.Http;
+using webstore_back.DAL.ViewModels.ProductManagementVMs.ClothingItem;
 
-namespace webstore_back.BLL.Services.CategoryService
+namespace webstore_back.BLL.Services.ClothingItemService
 {
     public interface IClothingItemService
     {
@@ -16,9 +11,11 @@ namespace webstore_back.BLL.Services.CategoryService
         Task<ServiceResponse> GetByManufacturerNameAsync(string manufacturerName);
         Task<ServiceResponse> CreateProductAsync(CreateClothingItemVM model);
         Task<ServiceResponse> GetAllAsync();
-        Task<ServiceResponse> UpdateProductAsync(ClothingItemVM model);
         Task<ServiceResponse> DeleteProductAsync(string id);
         Task<ServiceResponse> GetByCategoryNameAsync(string categoryName);
         Task<ServiceResponse> GetByCategoryIdAsync(string categoryId);
+        Task<ServiceResponse> UpdateProductAsync(ClothingItemVM model);
+        Task<ServiceResponse> UploadImagesAsync(string productId, IFormFileCollection imagesFiles);
+        Task<ServiceResponse> DeleteImageAsync(string productId, string imageId);
     }
 }

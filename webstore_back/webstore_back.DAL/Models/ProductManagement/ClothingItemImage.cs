@@ -4,11 +4,9 @@ namespace webstore_back.DAL.Models.ProductManagement;
 
 public class ClothingItemImage
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     
     [ForeignKey("ClothingItem")]
     public string ClothingItemId { get; set; }
-    public ClothingItem ClothingItem { get; set; }
-    
-    public string FilePath { get; private set; }
+    public string FilePath { get; set; }
 }

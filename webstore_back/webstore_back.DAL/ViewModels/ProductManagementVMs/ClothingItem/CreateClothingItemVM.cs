@@ -1,6 +1,6 @@
 ﻿using webstore_back.DAL.Models.ProductManagement;
 
-namespace webstore_back.DAL.ViewModels.ProductManagementVMs
+namespace webstore_back.DAL.ViewModels.ProductManagementVMs.ClothingItem
 {
     public class CreateClothingItemVM
     {
