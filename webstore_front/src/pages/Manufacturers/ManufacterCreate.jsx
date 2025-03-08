@@ -5,12 +5,12 @@ import { toast } from "react-toastify";
 
 const ManufacterCreate = () => {
   const { createManufacturer } = useActions();
-
   const [formData, setFormData] = useState({
     name: "",
   });
 
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -19,16 +19,15 @@ const ManufacterCreate = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    //e.preventDefault();
-    const result = createManufacturer(formData.name);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await createManufacturer(formData);
     if (result.success) {
-        setFormData("");
-      closeModal();
+      toast.success("Виробника успішно створено");
+      navigate("/manufacturers");
     } else {
       toast.error(result.message);
     }
-    console.log("Manufacter created:", formData);
   };
 
   return (
@@ -45,34 +44,30 @@ const ManufacterCreate = () => {
             >
               <h3 className="mb-0 text-center">
                 <i className="bi bi-folder-plus me-2"></i>
-                Створити новго виробника
+                Створити нового виробника
               </h3>
             </div>
 
             <div className="card-body p-4">
               <form onSubmit={handleSubmit}>
-                <div className="row">
-                  <div className="mb-4">
-                    <label className="form-label fw-bold">
-                      Назва виробника
-                    </label>
-                    <div className="input-group">
-                      <span
-                        className="input-group-text"
-                        style={{ backgroundColor: "#f8f9fa" }}
-                      >
-                        <i className="bi bi-tag"></i>
-                      </span>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="form-control"
-                        required
-                        placeholder="Введіть назву категорії"
-                      />
-                    </div>
+                <div className="mb-4">
+                  <label className="form-label fw-bold">Назва виробника</label>
+                  <div className="input-group">
+                    <span
+                      className="input-group-text"
+                      style={{ backgroundColor: "#f8f9fa" }}
+                    >
+                      <i className="bi bi-tag"></i>
+                    </span>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="form-control"
+                      required
+                      placeholder="Введіть назву виробника"
+                    />
                   </div>
                 </div>
 
@@ -93,7 +88,6 @@ const ManufacterCreate = () => {
                       backgroundColor: "#6f42c1",
                       transition: "all 0.3s ease",
                     }}
-                    onClick={() => navigate("/manufacturers")}
                   >
                     <i className="bi bi-check-circle me-2"></i>
                     Створити виробника

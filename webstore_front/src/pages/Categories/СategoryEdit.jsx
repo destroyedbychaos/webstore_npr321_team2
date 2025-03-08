@@ -5,31 +5,35 @@ import { useActions } from "../../hooks/useActions";
 import ConfirmationModal from "../../components/DeleteComponent/ConfirmationModal";
 import { toast } from "react-toastify";
 
-const ManufacterEdit = () => {
-  const { updateManufacturer, deleteManufacturer } = useActions();
-  const { id } = useParams();
+const CategoryEdit = () => {
+  const { updateCategory, deleteCategory } = useActions();
+  const { id } = useParams(); // id - це рядок (string)
   const navigate = useNavigate();
-  const { manufacturerList } = useSelector((state) => state.manufacturer);
-  const [manufacterData, setManufacterData] = useState(null);
+  const { categoryList } = useSelector((state) => state.category);
+  const [categoryData, setCategoryData] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-  console.log(id)
 
   const [formData, setFormData] = useState({
     name: "",
+    description: "",
   });
 
   useEffect(() => {
-    const manufacter = manufacturerList.find((m) => m.id === id);
-    if (manufacter) {
-      setManufacterData(manufacter);
-      setFormData({
-        name: manufacter.name,
-      });
-    } else {
-      navigate("/manufacturers");
+    if (categoryList.length > 0) {
+      // Шукаємо категорію за id (без parseInt, бо id - це рядок)
+      const category = categoryList.find((c) => c.id === id);
+      if (category) {
+        setCategoryData(category);
+        setFormData({
+          name: category.name,
+          description: category.description,
+        });
+      } else {
+        // Якщо категорію не знайдено, перенаправляємо на сторінку категорій
+        navigate("/categories");
+      }
     }
-  }, [id, navigate]);
+  }, [id, categoryList, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,26 +45,26 @@ const ManufacterEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await updateManufacturer({ id, ...formData });
+    const result = await updateCategory({ id, ...formData });
     if (result.success) {
-      toast.success("Виробника успішно оновлено");
-      navigate("/manufacturers");
+      toast.success("Категорію успішно оновлено");
+      navigate("/categories");
     } else {
       toast.error(result.message);
     }
   };
 
   const handleDelete = async () => {
-    const result = await deleteManufacturer(id);
+    const result = await deleteCategory(id);
     if (result.success) {
-      toast.success("Виробника успішно видалено");
-      navigate("/manufacturers");
+      toast.success("Категорію успішно видалено");
+      navigate("/categories");
     } else {
       toast.error(result.message);
     }
   };
 
-  if (!manufacterData) {
+  if (!categoryData) {
     return (
       <div className="container py-5 text-center">
         <div className="spinner-border text-primary" role="status">
@@ -84,17 +88,17 @@ const ManufacterEdit = () => {
             >
               <h3 className="mb-0 text-center">
                 <i className="bi bi-pencil-square me-2"></i>
-                Редагувати виробника
+                Редагувати категорію
               </h3>
               <p className="text-white-50 text-center mb-0 mt-2">
-                ID: {manufacterData.id}
+                ID: {categoryData.id}
               </p>
             </div>
 
             <div className="card-body p-4">
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <label className="form-label fw-bold">Назва виробника</label>
+                  <label className="form-label fw-bold">Назва категорії</label>
                   <div className="input-group">
                     <span
                       className="input-group-text"
@@ -109,8 +113,23 @@ const ManufacterEdit = () => {
                       onChange={handleChange}
                       className="form-control"
                       required
+                      placeholder="Введіть назву категорії"
                     />
                   </div>
+                </div>
+
+                <div className="mb-4">
+                  <label className="form-label fw-bold">Опис категорії</label>
+                  <textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows={4}
+                    className="form-control"
+                    required
+                    placeholder="Введіть опис категорії"
+                    style={{ resize: "none" }}
+                  />
                 </div>
 
                 <div className="d-flex justify-content-between align-items-center mt-4">
@@ -120,7 +139,7 @@ const ManufacterEdit = () => {
                     onClick={() => setShowDeleteModal(true)}
                   >
                     <i className="bi bi-trash me-2"></i>
-                    Видалити виробника
+                    Видалити категорію
                   </button>
 
                   <div className="d-flex gap-2">
@@ -128,7 +147,7 @@ const ManufacterEdit = () => {
                       type="button"
                       className="btn btn-outline-secondary px-4"
                       style={{ borderColor: "#6f42c1", color: "#6f42c1" }}
-                      onClick={() => navigate("/manufacturers")}
+                      onClick={() => navigate("/categories")}
                     >
                       <i className="bi bi-x-circle me-2"></i>
                       Скасувати
@@ -156,14 +175,14 @@ const ManufacterEdit = () => {
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onConfirm={handleDelete}
-        title="Видалити виробника?"
-        message="Ви впевнені, що хочете видалити виробника з id"
+        title="Видалити категорію?"
+        message="Ви впевнені, що хочете видалити категорію з id"
         confirmText="Так, видалити"
         cancelText="Скасувати"
-        itemId={manufacterData?.id}
+        itemId={categoryData?.id}
       />
     </div>
   );
 };
 
-export default ManufacterEdit;
+export default CategoryEdit;

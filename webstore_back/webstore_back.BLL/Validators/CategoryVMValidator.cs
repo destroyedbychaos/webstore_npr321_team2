@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
-using webstore_back.DAL.ViewModels.ProductManagementVMs;
+﻿using FluentValidation;
 using webstore_back.DAL.ViewModels.ProductManagementVMs.Category;
 
 namespace webstore_back.BLL.Validators

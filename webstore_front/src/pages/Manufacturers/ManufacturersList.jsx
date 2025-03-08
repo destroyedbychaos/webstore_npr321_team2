@@ -1,5 +1,5 @@
 ﻿import React, { useEffect, useState } from "react";
-import { Search, Plus, Edit2, Trash2, XCircle } from "lucide-react";
+import { Search, Plus, Edit2, Trash2 } from "lucide-react";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -18,22 +18,22 @@ const ManufacturersList = () => {
     getManufacturers();
   }, []);
 
-  const filteredManufacturers = manufacturerList.filter((manufacter) =>
-    manufacter.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredManufacturers = manufacturerList.filter((manufacturer) =>
+    manufacturer.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleDelete = async (id) => {
     const result = await deleteManufacturer(id);
     if (result.success) {
       setManufacturersToDelete(null);
-      console.log(`Виробника з id ${id} видалено`);
+      toast.success("Виробника успішно видалено");
     } else {
       toast.error(result.message);
     }
   };
 
   return (
-    <div className="  manufacter-list-container">
+    <div className="manufacter-list-container">
       <div className="product-list-header">
         <h1 className="product-title">Виробники ({manufacturerList.length})</h1>
         <div className="header-controls">
@@ -63,33 +63,31 @@ const ManufacturersList = () => {
             <tr>
               <th>ID</th>
               <th>ВИРОБНИК</th>
-              <th>ОСТАННЄ ОНОВЛЕНО</th>
               <th>Дії</th>
             </tr>
           </thead>
           <tbody>
-            {filteredManufacturers.map((manufacter) => (
-              <tr key={manufacter.id}>
-                <td>{manufacter.id}</td>
+            {filteredManufacturers.map((manufacturer) => (
+              <tr key={manufacturer.id}>
+                <td>{manufacturer.id}</td>
                 <td>
                   <div className="category-tag category-shoes">
-                    <span>{manufacter.name}</span>
+                    <span>{manufacturer.name}</span>
                   </div>
                 </td>
-                <td>{new Date().toLocaleDateString("uk-UA")}</td>
                 <td>
                   <div className="action-buttons">
                     <button
                       className="edit-button"
                       type="button"
-                      onClick={() => navigate(`edit/${manufacter.id}`)}
+                      onClick={() => navigate(`edit/${manufacturer.id}`)}
                     >
                       <Edit2 size={20} />
                     </button>
                     <button
                       className="delete-button"
                       type="button"
-                      onClick={() => setManufacturersToDelete(manufacter.id)}
+                      onClick={() => setManufacturersToDelete(manufacturer.id)}
                     >
                       <Trash2 size={20} />
                     </button>
@@ -104,7 +102,7 @@ const ManufacturersList = () => {
       <ConfirmationModal
         isOpen={manufacturersToDelete !== null}
         onClose={() => setManufacturersToDelete(null)}
-        onConfirm={handleDelete}
+        onConfirm={() => handleDelete(manufacturersToDelete)}
         title="Видалити виробника?"
         message="Ви впевнені, що хочете видалити виробника з id"
         confirmText="Так, видалити"

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using webstore_back.DAL.Models.Identity;
+using webstore_back.DAL.Models.ProductManagement;
+using webstore_back.DAL.Repositories.ManufacturerRepository;
 
 namespace webstore_back.DAL.Data.Initializer
 {
@@ -14,6 +16,7 @@ namespace webstore_back.DAL.Data.Initializer
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+                var manufacturerManager = scope.ServiceProvider.GetRequiredService<IManufacturerRepository>();
                 var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
                 await context.Database.MigrateAsync();
@@ -63,6 +66,16 @@ namespace webstore_back.DAL.Data.Initializer
 
                     await userManager.AddToRoleAsync(admin, Settings.AdminRole);
                     await userManager.AddToRoleAsync(user, Settings.UserRole);
+                }
+
+                if (!(await manufacturerManager.GetAllAsync()).Any())
+                {
+                    var manufacturer = new Manufacturer()
+                    {
+                        Name = "Nike"
+                    };
+                    
+                    await manufacturerManager.CreateAsync(manufacturer);
                 }
             }
         }

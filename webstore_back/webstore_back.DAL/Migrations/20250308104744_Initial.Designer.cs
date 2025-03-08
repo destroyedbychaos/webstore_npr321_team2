@@ -12,7 +12,7 @@ using webstore_back.DAL.Data;
 namespace webstore_back.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250307091915_Initial")]
+    [Migration("20250308104744_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -235,6 +235,9 @@ namespace webstore_back.DAL.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -312,9 +315,6 @@ namespace webstore_back.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
