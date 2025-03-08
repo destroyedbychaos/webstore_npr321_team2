@@ -5,8 +5,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useShopping } from "../../context/ShoppingContext";
 import productImage from "../../hooks/productImage";
 import { useActions } from "../../hooks/useActions";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const ProductDetails = () => {
   const { clothingItemList } = useSelector((state) => state.product);

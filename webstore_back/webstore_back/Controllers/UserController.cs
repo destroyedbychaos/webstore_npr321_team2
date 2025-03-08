@@ -1,24 +1,15 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
-using webstore_back.DAL.ViewModels;
-using webstore_back.DAL.Models.Identity;
 using webstore_back.BLL.Services;
 using webstore_back.BLL.Services.ImageService;
 using webstore_back.BLL.Services.UserService;
 using webstore_back.BLL.Validators;
+using webstore_back.DAL.Models.Identity;
+using webstore_back.DAL.ViewModels;
 
 namespace webstore_back.Controllers
 {
-    // from base64
-    //public class UserImageVM
-    //{
-    //    public string UserId { get; set; }
-    //    public string Base64Image { get; set; }
-    //}
-
     [ApiController]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //[Authorize(Roles = "admin")]
@@ -93,6 +84,7 @@ namespace webstore_back.Controllers
                     return GetResult(response);
                 }
             }
+            
             if (!string.IsNullOrEmpty(email))
             {
                 var response = await _userService.GetByEmailAsync(email);
@@ -101,6 +93,7 @@ namespace webstore_back.Controllers
                     return GetResult(response);
                 }
             }
+            
             if (!string.IsNullOrEmpty(userName))
             {
                 var response = await _userService.GetByUserNameAsync(userName);
@@ -110,7 +103,16 @@ namespace webstore_back.Controllers
                 }
             }
 
-            return GetResult(ServiceResponse.BadRequestResponse("Не вдалося отримати користувача"));
+            try
+            {
+                var response = await _userService.GetAllAsync();
+                
+                return GetResult(response);
+            }
+            catch (Exception e)
+            {
+                return GetResult(ServiceResponse.BadRequestResponse("Не вдалося отримати користувача"));
+            }
         }
 
         [HttpGet("users")]
