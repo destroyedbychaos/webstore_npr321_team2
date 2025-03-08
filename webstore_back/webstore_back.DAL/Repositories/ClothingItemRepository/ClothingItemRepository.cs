@@ -11,9 +11,21 @@ namespace webstore_back.DAL.Repositories.ClothingItemRepository
         {
         }
 
-        public async Task<ClothingItem?> GetByIdAsync(string id)
+        public async override Task<IEnumerable<ClothingItem>> GetAllAsync()
         {
-            return await _appDbContext.ClothingItems.Include(c => c.Images).FirstOrDefaultAsync(p => p.Id == id);
+            return _appDbContext.ClothingItems
+                .Include(c => c.Images)
+                .Include(c => c.Manufacturer)
+                .Include(c => c.Category);
+        }
+
+        public override async Task<ClothingItem?> GetByIdAsync(string id)
+        {
+            return await _appDbContext.ClothingItems
+                .Include(c => c.Images)
+                .Include(c => c.Manufacturer)
+                .Include(c => c.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<List<ClothingItem>> GetByNameAsync(string name)

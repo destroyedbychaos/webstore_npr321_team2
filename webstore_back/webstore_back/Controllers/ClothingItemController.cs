@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using webstore_back.BLL.Services;
-using webstore_back.BLL.Services.CategoryService;
 using webstore_back.BLL.Services.ClothingItemService;
-using webstore_back.BLL.Validators;
 using webstore_back.BLL.Validators.ClothingItem;
-using webstore_back.DAL.ViewModels.ProductManagementVMs;
-using webstore_back.DAL.ViewModels.ProductManagementVMs.Category;
 using webstore_back.DAL.ViewModels.ProductManagementVMs.ClothingItem;
 
 namespace webstore_back.Controllers

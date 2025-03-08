@@ -82,6 +82,18 @@ namespace webstore_back.BLL.Services.ClothingItemService
             if (category != null && manufacturer != null)
             {
                 var product = _mapper.Map<ClothingItem>(model);
+
+                if (model.ImageFile != null)
+                {
+                    var imageSaveResult = await _imageService.SaveImageFromFileAsync(Settings.ProductImagesPath, model.ImageFile);
+                    if (!imageSaveResult.Success)
+                    {
+                        return ServiceResponse.BadRequestResponse("Помилка при збереженні зображення.");
+                    }
+
+                    var imageEntity = (string)imageSaveResult.Payload!;
+                    product.Images.Add(new ClothingItemImage { ClothingItemId = product.Id, FilePath = imageEntity });
+                }
                 var createdProduct = await _productRepository.CreateAsync(product);
 
                 return ServiceResponse.OkResponse("Товар створено", createdProduct);
@@ -105,9 +117,16 @@ namespace webstore_back.BLL.Services.ClothingItemService
                 return ServiceResponse.BadRequestResponse("Не знайдено товару");
             }
 
+            var deleteImageTasks = product.Images
+                .Select(x => _imageService.DeleteImageAsync(Settings.ProductImagesPath, x.FilePath));
+
+            await Task.WhenAll(deleteImageTasks);
+
             var deletedProduct = await _productRepository.DeleteAsync(id);
-            return ServiceResponse.OkResponse("Товар видалено");
+    
+            return ServiceResponse.OkResponse("Товар видалено", deletedProduct);
         }
+
 
         public async Task<ServiceResponse> GetByCategoryNameAsync(string categoryName)
         {
@@ -163,7 +182,6 @@ namespace webstore_back.BLL.Services.ClothingItemService
                 return ServiceResponse.BadRequestResponse("Товар не знайдено.");
             }
 
-            // Оновлюємо поля продукту
             existingProduct.Name = model.Name;
             existingProduct.Price = model.Price;
             existingProduct.Description = model.Description;
@@ -178,7 +196,7 @@ namespace webstore_back.BLL.Services.ClothingItemService
 
         public async Task<ServiceResponse> UploadImagesAsync(string productId, IFormFileCollection imagesFiles)
         {
-            var product = await _productRepository.GetByIdAsync(productId.ToString());
+            var product = await _productRepository.GetByIdAsync(productId);
             if (product == null)
             {
                 return ServiceResponse.BadRequestResponse("Товар не знайдено.");

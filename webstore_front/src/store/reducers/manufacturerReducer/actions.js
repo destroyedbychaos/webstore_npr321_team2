@@ -19,7 +19,6 @@ export const getManufacturers = () => async (dispatch) => {
 
 export const createManufacturer = (model) => async (dispatch) => {
   try {
-    debugger
     const response = await http.post("manufacturer/create", model);
 
     const { data } = response;

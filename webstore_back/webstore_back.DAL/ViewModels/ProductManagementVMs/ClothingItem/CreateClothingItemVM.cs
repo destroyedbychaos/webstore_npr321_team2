@@ -1,4 +1,5 @@
-﻿using webstore_back.DAL.Models.ProductManagement;
+﻿using Microsoft.AspNetCore.Http;
+using webstore_back.DAL.Models.ProductManagement;
 
 namespace webstore_back.DAL.ViewModels.ProductManagementVMs.ClothingItem
 {
@@ -11,6 +12,6 @@ namespace webstore_back.DAL.ViewModels.ProductManagementVMs.ClothingItem
         public string CategoryId { get; set; }
         public string ManufacturerId { get; set; }
         
-        public List<ClothingItemImage> Images { get; private set; } = [];
+        public IFormFile? ImageFile { get; set; }
     }
 }
