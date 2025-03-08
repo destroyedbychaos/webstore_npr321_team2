@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { products } from "../../data/productsData";
 import { useActions } from "../../hooks/useActions.js";
 import "./style.css";
+import productImage from "../../hooks/productImage.js";
 
 const heroImages = [
   "https://media.boohoo.com/i/boohooamplience/0503_UK_40OFF_SPRING_ESSENTIALS_MENSWEAR_DESK_1920x759?qlt=default&fmt=auto",
@@ -14,13 +15,15 @@ const heroImages = [
 
 const HomePage = () => {
   const { manufacturerList } = useSelector((state) => state.manufacturer);
+  const { clothingItemList } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
-  const { getManufacturers, getCategories } = useActions();
-  const limitedProducts = products.slice(0, 4);
+  const { getManufacturers, getCategories, getClothingItems } = useActions();
+  const limitedProducts = clothingItemList.slice(0, 4);
 
   useEffect(() => {
     getManufacturers();
     getCategories();
+    getClothingItems();
   }, []);
 
   return (
@@ -95,27 +98,18 @@ const HomePage = () => {
           {limitedProducts.map((product) => (
             <div className="col-12 col-md-6 col-lg-3" key={product.id}>
               <div className="card product-card h-100 border-0 position-relative">
-                {product.discount && (
-                  <div className="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 m-2 rounded">
-                    -{product.discount}%
-                  </div>
-                )}
                 <div className="product-image-container">
                   <img
-                    src={product.image}
+                    src={productImage(product.images[0]?.filePath)}
                     className="card-img-top"
-                    alt={product.title}
+                    // style={{ objectFit: "contain" }}
+                    alt={product.name}
                   />
                 </div>
                 <div className="card-body px-0">
-                  <h5 className="card-title">{product.title}</h5>
+                  <h5 className="card-title">{product.name}</h5>
                   <div className="d-flex gap-2 align-items-center">
                     <span className="fw-bold">{product.price} грн</span>
-                    {product.oldPrice && (
-                      <span className="text-muted text-decoration-line-through">
-                        {product.oldPrice} ₴
-                      </span>
-                    )}
                   </div>
                 </div>
               </div>

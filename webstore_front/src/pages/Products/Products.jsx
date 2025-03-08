@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useShopping } from "../../context/ShoppingContext";
-import { products } from "../../data/productsData";
 import { useActions } from "../../hooks/useActions.js";
 import "./style.css";
+import productImage from "../../hooks/productImage.js";
 
 const Products = () => {
   const location = useLocation();
@@ -20,7 +20,8 @@ const Products = () => {
   } = useShopping();
   const { manufacturerList } = useSelector((state) => state.manufacturer);
   const { categoryList } = useSelector((state) => state.category);
-  const { getManufacturers, getCategories } = useActions();
+  const { clothingItemList } = useSelector((state) => state.product);
+  const { getManufacturers, getCategories, getClothingItems } = useActions();
 
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -91,6 +92,7 @@ const Products = () => {
   useEffect(() => {
     getManufacturers();
     getCategories();
+    getClothingItems();
   }, []);
 
   useEffect(() => {
@@ -132,12 +134,12 @@ const Products = () => {
     setSelectedManufacturers([]);
   };
 
-  const filteredProducts = products
+  const filteredProducts = clothingItemList
     .filter((product) => {
       const matchesCategory =
         selectedCategory === "Всі категорії" ||
-        product.category === selectedCategory;
-      const matchesSearch = product.title
+        product.category.name === selectedCategory;
+      const matchesSearch = product.name
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
       const matchesPrice =
@@ -145,7 +147,7 @@ const Products = () => {
         (priceRange.max === "" || product.price <= parseInt(priceRange.max));
       const matchesManufacturer =
         selectedManufacturers.length === 0 ||
-        selectedManufacturers.includes(product.manufacturer);
+        selectedManufacturers.includes(product.manufacturer.name);
 
       return (
         matchesCategory && matchesSearch && matchesPrice && matchesManufacturer
@@ -157,9 +159,9 @@ const Products = () => {
       } else if (sortOption === "price-asc") {
         return a.price - b.price;
       } else if (sortOption === "name-asc") {
-        return a.title.localeCompare(b.title);
+        return a.name.localeCompare(b.name);
       } else if (sortOption === "name-desc") {
-        return b.title.localeCompare(a.title);
+        return b.name.localeCompare(a.name);
       }
       return 0;
     });
@@ -269,42 +271,55 @@ const Products = () => {
         </div>
 
         <div className="col-12 col-md-9">
-          <div className="row g-4">
-            {filteredProducts.map((product) => (
-              <div key={product.id} className="col-12 col-md-6 col-lg-4">
-                <div className="card h-100 product-card">
-                  <div className="card-img-wrapper">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="card-img-top"
-                    />
-                  </div>
-                  <div className="card-body">
-                    <h3 className="h5 mb-2">{product.title}</h3>
-                    <p className="h4 mb-3">{product.price.toFixed(2)} грн</p>
-                    <div className="d-flex gap-2">
-                      <button
-                        type="button"
-                        className="Button"
-                        onClick={() => navigate(`/product/${product.id}`)}
-                      >
-                        <span data-text="Купити">Купити</span>
-                      </button>
-                      <button
-                        className={`cart-button ${
-                          isInCart(product.id) ? "in-cart" : ""
-                        } ${isAnimating ? "animating" : ""}`}
-                        onClick={() => toggleCart(product.id)}
-                      >
-                        <ShoppingCart className="cart-icon" size={20} />
-                      </button>
+          {filteredProducts.length === 0 ? (
+            <div className="text-center py-5">
+              <h3>Товарів не знайдено</h3>
+              <p>Спробуйте змінити фільтри або пошуковий запит.</p>
+              <button
+                className="btn btn-primary"
+                onClick={resetFilters}
+              >
+                Скинути фільтри
+              </button>
+            </div>
+          ) : (
+            <div className="row g-4">
+              {filteredProducts.map((product) => (
+                <div key={product.id} className="col-12 col-md-6 col-lg-4">
+                  <div className="card h-100 product-card">
+                    <div className="card-img-wrapper">
+                      <img
+                        src={productImage(product.images[0]?.filePath)}
+                        alt={product.name}
+                        className="card-img-top"
+                      />
+                    </div>
+                    <div className="card-body">
+                      <h3 className="h5 mb-2">{product.name}</h3>
+                      <p className="h4 mb-3">{product.price.toFixed(2)} грн</p>
+                      <div className="d-flex gap-2">
+                        <button
+                          type="button"
+                          className="Button"
+                          onClick={() => navigate(`/product/${product.id}`)}
+                        >
+                          <span data-text="Купити">Купити</span>
+                        </button>
+                        <button
+                          className={`cart-button ${
+                            isInCart(product.id) ? "in-cart" : ""
+                          } ${isAnimating ? "animating" : ""}`}
+                          onClick={() => toggleCart(product.id)}
+                        >
+                          <ShoppingCart className="cart-icon" size={20} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       {cartItems.length > 0 && (
