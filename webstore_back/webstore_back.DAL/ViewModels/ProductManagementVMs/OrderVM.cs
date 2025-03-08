@@ -11,6 +11,6 @@ namespace webstore_back.DAL.ViewModels.ProductManagementVMs
         public string Id { get; set; }
         public double TotalPrice { get; set; }
         public bool IsCompleted { get; set; }
-        public string UserName { get; set; }
+        public required string UserName { get; set; }
     }
 }

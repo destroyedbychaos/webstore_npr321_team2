@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using culinary_tour.Core.Entities;
 using webstore_back.DAL.Models.Identity;
 
 namespace webstore_back.DAL.Models
 {
-    public class RefreshToken
+    public class RefreshToken : IEntity<string>
     {
         [Key]
         public required string Id { get; set; }

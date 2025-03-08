@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using webstore_back.DAL.Models.ProductManagement;
 using webstore_back.DAL.Repositories.ManufacturerRepository;
-using webstore_back.DAL.ViewModels.ProductManagementVMs;
+using webstore_back.DAL.ViewModels.ProductManagementVMs.Manufacturer;
 
 namespace webstore_back.BLL.Services.ManufacturerService
 {
@@ -42,34 +36,40 @@ namespace webstore_back.BLL.Services.ManufacturerService
             return ServiceResponse.OkResponse("Виробника знайдено", manufacturer);
         }
 
-        public async Task<ServiceResponse> CreateManufacturerAsync(Manufacturer manufacturer)
+        public async Task<ServiceResponse> CreateManufacturerAsync(CreateManufacturerVM model)
         {
-            var createdManufacturer = await _manufacturerRepository.CreateManufacturerAsync(manufacturer);
+            Manufacturer manufacturer = _mapper.Map<Manufacturer>(model);
+            if (manufacturer == null)
+            {
+                return ServiceResponse.BadRequestResponse("Не вдалося створити виробника", null);
+            }
+            var createdManufacturer = await _manufacturerRepository.CreateAsync(manufacturer);
             return ServiceResponse.OkResponse("Виробника створено", createdManufacturer);
         }
 
         public async Task<ServiceResponse> GetAllAsync()
         {
-            var models = await _manufacturerRepository.GetAllAsync().ToListAsync();
+            var models = (await _manufacturerRepository.GetAllAsync()).ToList();
 
             var manufacturers = _mapper.Map<List<ManufacturerVM>>(models);
 
             return ServiceResponse.OkResponse("Виробники отримані", manufacturers);
         }
 
-        public async Task<ServiceResponse> UpdateManufacturerAsync(Manufacturer manufacturer)
+        public async Task<ServiceResponse> UpdateManufacturerAsync(ManufacturerVM model)
         {
-            var updatedManufacturer = await _manufacturerRepository.UpdateManufacturerAsync(manufacturer);
-            if (updatedManufacturer == null)
+            Manufacturer manufacturer = _mapper.Map<Manufacturer>(model);
+            if (manufacturer == null)
             {
                 return ServiceResponse.BadRequestResponse("Не вдалося оновити виробника", null);
             }
+            var updatedManufacturer = await _manufacturerRepository.UpdateAsync(manufacturer);
             return ServiceResponse.OkResponse("Виробника оновлено", updatedManufacturer);
         }
 
         public async Task<ServiceResponse> DeleteManufacturerAsync(string id)
         {
-            var deletedManufacturer = await _manufacturerRepository.DeleteManufacturerAsync(id);
+            var deletedManufacturer = await _manufacturerRepository.DeleteAsync(id);
             if (deletedManufacturer == null)
             {
                 return ServiceResponse.BadRequestResponse("Не вдалося видалити виробника", null);

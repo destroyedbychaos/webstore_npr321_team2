@@ -2,21 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using webstore_back.DAL.Data;
 
 #nullable disable
 
-namespace Webstore.DAL.Persistence.Migrations
+namespace webstore_back.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250302100755_ClothingItems table")]
-    partial class ClothingItemstable
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,6 +232,9 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -283,6 +283,26 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("ClothingItems");
                 });
 
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItemImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClothingItemId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClothingItemId");
+
+                    b.ToTable("ClothingItemImage");
+                });
+
             modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Manufacturer", b =>
                 {
                     b.Property<string>("Id")
@@ -292,9 +312,6 @@ namespace Webstore.DAL.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -402,13 +419,13 @@ namespace Webstore.DAL.Persistence.Migrations
             modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItem", b =>
                 {
                     b.HasOne("webstore_back.DAL.Models.ProductManagement.Category", "Category")
-                        .WithMany("ClothingItems")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webstore_back.DAL.Models.ProductManagement.Manufacturer", "Manufacturer")
-                        .WithMany("ClothingItems")
+                        .WithMany()
                         .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -416,6 +433,15 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItemImage", b =>
+                {
+                    b.HasOne("webstore_back.DAL.Models.ProductManagement.ClothingItem", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ClothingItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("webstore_back.DAL.Models.RefreshToken", b =>
@@ -449,14 +475,9 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Category", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItem", b =>
                 {
-                    b.Navigation("ClothingItems");
-                });
-
-            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Manufacturer", b =>
-                {
-                    b.Navigation("ClothingItems");
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

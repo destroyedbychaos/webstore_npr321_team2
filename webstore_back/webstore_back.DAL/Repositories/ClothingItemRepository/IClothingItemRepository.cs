@@ -1,17 +1,13 @@
 ﻿using webstore_back.DAL.Models.ProductManagement;
+using webstore_back.DAL.Repositories.Common;
 
-namespace webstore_back.DAL.Repositories.ProductRepository
+namespace webstore_back.DAL.Repositories.ClothingItemRepository
 {
-    public interface IClothingItemRepository
+    public interface IClothingItemRepository : IRepository<ClothingItem, string>
     {
-        Task<ClothingItem?> GetByIdAsync(string id);
         Task<List<ClothingItem?>?> GetByNameAsync(string name);
         Task<List<ClothingItem?>?> GetByManufacturerIdAsync(string manufacturerId);
         Task<List<ClothingItem?>?> GetByManufacturerNameAsync(string manufacturerName);
-        Task<ClothingItem?> CreateProductAsync(ClothingItem product);
-        IQueryable<ClothingItem> GetAllAsync();
-        Task<ClothingItem?> UpdateProductAsync(ClothingItem product);
-        Task<ClothingItem?> DeleteProductAsync(string id);
         Task<List<ClothingItem?>?> GetByCategoryNameAsync(string categoryName);
         Task<List<ClothingItem?>?> GetByCategoryIdAsync(string categoryId);
     }

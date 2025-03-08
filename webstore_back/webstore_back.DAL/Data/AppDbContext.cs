@@ -61,6 +61,16 @@ namespace webstore_back.DAL.Data
                     .HasForeignKey(rc => rc.RoleId)
                     .IsRequired();
             });
+            
+            // builder.Entity<ClothingItemImage>(ci => ci.HasOne<ClothingItem>()
+            //     .WithMany(x => x.Images)
+            //     .HasForeignKey(x => x.ClothingItemId)
+            //     .OnDelete(DeleteBehavior.Cascade));
+            
+            // builder.Entity<ClothingItem>(b => b.HasMany(ci => ci.Images)
+            //     .WithOne()
+            //     .HasForeignKey(img => img.ClothingItemId)
+            //     .OnDelete(DeleteBehavior.Cascade));
         }
     }
 }

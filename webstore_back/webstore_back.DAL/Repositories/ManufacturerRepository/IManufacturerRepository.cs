@@ -1,15 +1,10 @@
 ﻿using webstore_back.DAL.Models.ProductManagement;
+using webstore_back.DAL.Repositories.Common;
 
 namespace webstore_back.DAL.Repositories.ManufacturerRepository
 {
-    public interface IManufacturerRepository
+    public interface IManufacturerRepository : IRepository<Manufacturer, string>
     {
-        Task<Manufacturer?> GetByIdAsync (string id);
         Task<Manufacturer?> GetByNameAsync (string name);
-        Task<Manufacturer?> CreateManufacturerAsync (Manufacturer manufacturer);
-        IQueryable<Manufacturer> GetAllAsync();
-        Task<Manufacturer?> UpdateManufacturerAsync (Manufacturer manufacturer);
-        Task<Manufacturer?> DeleteManufacturerAsync (string id);
-        Task<Manufacturer> LoadClothingAsync(Manufacturer manufacturer);
     }
 }

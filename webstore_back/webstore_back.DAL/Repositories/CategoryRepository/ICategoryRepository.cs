@@ -1,15 +1,10 @@
 ﻿using webstore_back.DAL.Models.ProductManagement;
+using webstore_back.DAL.Repositories.Common;
 
 namespace webstore_back.DAL.Repositories.CategoryRepository
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IRepository<Category, string>
     {
-        Task<Category?> GetByIdAsync(string id);
         Task<Category?> GetByNameAsync(string name);
-        Task<Category?> CreateCategoryAsync (Category category);
-        IQueryable<Category> GetAllAsync();
-        Task<Category?> UpdateCategoryAsync (Category category); 
-        Task<Category?> DeleteCategoryAsync (string id);
-        Task<ICollection<ClothingItem?>?> GetCategoryClothingItemsById(string id);
     }
 }

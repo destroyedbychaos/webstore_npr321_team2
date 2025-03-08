@@ -9,10 +9,10 @@ using webstore_back.DAL.Data;
 
 #nullable disable
 
-namespace Webstore.DAL.Persistence.Migrations
+namespace webstore_back.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250212193837_Initial")]
+    [Migration("20250308104744_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Webstore.DAL.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.Role", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -51,7 +51,7 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.RoleClaim", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,7 +76,7 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.User", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -149,7 +149,7 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.UserClaim", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,7 +174,7 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.UserLogin", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.UserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text");
@@ -196,7 +196,7 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.UserRole", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.UserRole", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -211,7 +211,7 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.UserToken", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.UserToken", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -230,7 +230,98 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.RefreshToken", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Category", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItem", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CategoryId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<string>("ManufacturerId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("StockQuantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ManufacturerId");
+
+                    b.ToTable("ClothingItems");
+                });
+
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItemImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClothingItemId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClothingItemId");
+
+                    b.ToTable("ClothingItemImage");
+                });
+
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.Manufacturer", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Manufacturers");
+                });
+
+            modelBuilder.Entity("webstore_back.DAL.Models.RefreshToken", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -265,9 +356,9 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.RoleClaim", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.RoleClaim", b =>
                 {
-                    b.HasOne("Webstore.DAL.Models.Identity.Role", "Role")
+                    b.HasOne("webstore_back.DAL.Models.Identity.Role", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -276,9 +367,9 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.UserClaim", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.UserClaim", b =>
                 {
-                    b.HasOne("Webstore.DAL.Models.Identity.User", "User")
+                    b.HasOne("webstore_back.DAL.Models.Identity.User", "User")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -287,9 +378,9 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.UserLogin", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.UserLogin", b =>
                 {
-                    b.HasOne("Webstore.DAL.Models.Identity.User", "User")
+                    b.HasOne("webstore_back.DAL.Models.Identity.User", "User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -298,15 +389,15 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.UserRole", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.UserRole", b =>
                 {
-                    b.HasOne("Webstore.DAL.Models.Identity.Role", "Role")
+                    b.HasOne("webstore_back.DAL.Models.Identity.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Webstore.DAL.Models.Identity.User", "User")
+                    b.HasOne("webstore_back.DAL.Models.Identity.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -317,9 +408,9 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.UserToken", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.UserToken", b =>
                 {
-                    b.HasOne("Webstore.DAL.Models.Identity.User", "User")
+                    b.HasOne("webstore_back.DAL.Models.Identity.User", "User")
                         .WithMany("Tokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -328,9 +419,37 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.RefreshToken", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItem", b =>
                 {
-                    b.HasOne("Webstore.DAL.Models.Identity.User", "User")
+                    b.HasOne("webstore_back.DAL.Models.ProductManagement.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("webstore_back.DAL.Models.ProductManagement.Manufacturer", "Manufacturer")
+                        .WithMany()
+                        .HasForeignKey("ManufacturerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItemImage", b =>
+                {
+                    b.HasOne("webstore_back.DAL.Models.ProductManagement.ClothingItem", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ClothingItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("webstore_back.DAL.Models.RefreshToken", b =>
+                {
+                    b.HasOne("webstore_back.DAL.Models.Identity.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -339,14 +458,14 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.Role", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.Role", b =>
                 {
                     b.Navigation("RoleClaims");
 
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("Webstore.DAL.Models.Identity.User", b =>
+            modelBuilder.Entity("webstore_back.DAL.Models.Identity.User", b =>
                 {
                     b.Navigation("Claims");
 
@@ -357,6 +476,11 @@ namespace Webstore.DAL.Persistence.Migrations
                     b.Navigation("Tokens");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("webstore_back.DAL.Models.ProductManagement.ClothingItem", b =>
+                {
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

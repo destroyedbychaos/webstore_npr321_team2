@@ -25,14 +25,14 @@ namespace webstore_back.BLL.Services.UserService
         {
             var user = await _userRepository.GetByIdAsync(model.UserId);
 
-            if(user == null)
+            if (user == null)
             {
-                return ServiceResponse.BadRequestResponse($"Користувача з id {model.UserId} не знайдено"); 
+                return ServiceResponse.BadRequestResponse($"Користувача з id {model.UserId} не знайдено");
             }
 
             var response = await _imageService.SaveImageFromFileAsync(Settings.UserImagesPath, model.Image);
 
-            if(!response.Success)
+            if (!response.Success)
             {
                 return response;
             }
@@ -40,7 +40,7 @@ namespace webstore_back.BLL.Services.UserService
             user.Image = response.Payload.ToString();
             var result = await _userRepository.UpdateAsync(user);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 return ServiceResponse.BadRequestResponse(result.Errors.First().Description);
             }
@@ -64,15 +64,15 @@ namespace webstore_back.BLL.Services.UserService
             user.Id = Guid.NewGuid().ToString();
 
             var result = await _userRepository.CreateAsync(user, model.Password);
-            
+
             if (!result.Succeeded)
             {
                 return ServiceResponse.BadRequestResponse(result.Errors.First().Description);
             }
 
-            result = await _userRepository.AddToRoleAsync(user, model.Role);
+            await _userRepository.AddToRoleAsync(user, model.Role);
 
-            return ServiceResponse.ByIdentityResult(result, "Користувач успішно створений");
+            return ServiceResponse.OkResponse("Користувач успішно створений", _mapper.Map<UserVM>(user));
         }
 
         public async Task<ServiceResponse> DeleteAsync(string id)
@@ -114,7 +114,7 @@ namespace webstore_back.BLL.Services.UserService
 
             pageCount = pageCount == 0 ? 1 : pageCount;
 
-            if(page < 1 || page > pageCount)
+            if (page < 1 || page > pageCount)
             {
                 return ServiceResponse.BadRequestResponse($"Page {page} not found");
             }
@@ -193,19 +193,19 @@ namespace webstore_back.BLL.Services.UserService
 
         public async Task<ServiceResponse> UpdateAsync(UpdateUserVM model)
         {
-            if(string.IsNullOrEmpty(model.Id))
+            if (string.IsNullOrEmpty(model.Id))
             {
                 return ServiceResponse.BadRequestResponse("Не вдалося ідентифікувати користувача");
             }
 
             var user = await _userRepository.GetByIdAsync(model.Id, true);
 
-            if(user == null)
+            if (user == null)
             {
                 return ServiceResponse.BadRequestResponse("Користувача не знайдено");
             }
 
-            if(model.Email != user.Email)
+            if (model.Email != user.Email)
             {
                 if (!await _userRepository.IsUniqueEmailAsync(model.Email))
                 {
@@ -225,23 +225,25 @@ namespace webstore_back.BLL.Services.UserService
 
             var result = await _userRepository.UpdateAsync(user);
 
-            if (user.UserRoles.First().Role.NormalizedName != model.Role.ToUpper())
+            if (!user.UserRoles.Any() || user.UserRoles.First().Role.NormalizedName != model.Role.ToUpper())
             {
                 // Видалити попередню роль та записати нову
-                user.UserRoles.Remove(user.UserRoles.First());
+                if (user.UserRoles.Any())
+                {
+                    user.UserRoles.Remove(user.UserRoles.First());
+                    await _userRepository.UpdateAsync(user);
+                }
 
-                await _userRepository.UpdateAsync(user);
 
                 await _userRepository.AddToRoleAsync(user, model.Role);
             }
 
             if (result.Succeeded)
             {
-                return ServiceResponse.OkResponse("Користувача оновлено");
+                return ServiceResponse.OkResponse("Користувача оновлено", _mapper.Map<UserVM>(user));
             }
-            
+
             return ServiceResponse.BadRequestResponse(result.Errors.First().Description);
-            
         }
     }
 }

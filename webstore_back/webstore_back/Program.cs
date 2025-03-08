@@ -16,19 +16,23 @@ using webstore_back.BLL.Services.MailService;
 using webstore_back.BLL.Services.JwtService;
 using webstore_back.BLL.Services.RoleService;
 using webstore_back.BLL.Middlewares;
+using webstore_back.BLL.Services.CategoryService;
+using webstore_back.BLL.Services.ClothingItemService;
 using webstore_back.BLL.Services.ImageService;
 using webstore_back.BLL.Services.UserService;
-using webstore_back.DAL.Repositories.ProductRepository;
 using webstore_back.DAL.Repositories.CategoryRepository;
 using webstore_back.DAL.Repositories.ManufacturerRepository;
 using webstore_back.BLL.Services.ManufacturerService;
+using webstore_back.DAL.Repositories.ClothingItemRepository;
+using webstore_back.DAL.Repositories.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add database context
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseNpgsql("name=Default");
+    // options.UseNpgsql("name=Default");
+    options.UseNpgsql("name=DefaultLocal");
     // options.UseNpgsql("name=PostgreSqlUbuntu");
 });
 
@@ -82,11 +86,14 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
 
 // Add repositories
+builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IClothingItemRepository, ClothingItemRepository>();
@@ -162,6 +169,7 @@ if(!File.Exists(Path.Combine(builder.Environment.WebRootPath, "images")))
 {
     Directory.CreateDirectory(Path.Combine(builder.Environment.WebRootPath, "images"));
 }
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath, "images")),
